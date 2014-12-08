@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ZMSFormulator id="e7308"
+ id_prefix="e">
+<attr_dc_coverage><![CDATA[global.ger]]></attr_dc_coverage>
+<attr_dc_description>
+<lang id="ger"><![CDATA[<p>This example demonstrates the following:</p>
+    <ul>
+      <li>Loading external schemas via ajax (using $ref)</li>
+      <li>Setting the editor's value from javascript (try the Restore to Default button)</li>
+      <li>Validating the editor's contents (try setting name to an empty string)</li>
+      <li>Macro templates (try changing the city or state fields and watch the citystate field update automatically)</li>
+      <li>Enabling and disabling editor fields</li>
+    </ul>]]></lang>
+<lang id="eng"><![CDATA[<p>This example demonstrates the following:</p>
+    <ul>
+      <li>Loading external schemas via ajax (using $ref)</li>
+      <li>Setting the editor's value from javascript (try the Restore to Default button)</li>
+      <li>Validating the editor's contents (try setting name to an empty string)</li>
+      <li>Macro templates (try changing the city or state fields and watch the citystate field update automatically)</li>
+      <li>Enabling and disabling editor fields</li>
+    </ul>]]></lang></attr_dc_description>
+<title>
+<lang id="ger"><![CDATA[Advanced JSON Editor Example]]></lang>
+<lang id="eng"><![CDATA[Advanced JSON Editor Example]]></lang></title>
+<optionsJS>
+<lang id="ger"><![CDATA[// Disable additional properties
+no_additional_properties : true,
+
+// Require all properties by default
+required_by_default : true,
+
+// This is the starting value for the editor
+// We will use this to seed the initial editor 
+// and to provide a "Restore to Default" button.
+startval : {
+  "1_name" : "John Smith",
+  "2_age" : 35,
+  "3_gender" : "male",
+  "4_location" : {
+    "1_city" : "San Francisco",
+    "2_state" : "California",
+    "3_citystate" : ""
+  },
+  "5_pets" : [ {
+    "2_name" : "Spot",
+    "1_type" : "dog",
+    "3_fixed" : true
+  }, {
+    "2_name" : "Whiskers",
+    "1_type" : "cat",
+    "3_fixed" : false
+  } ],
+  "6_interests" : ["Hiking","Biking"],
+  "7_memberships" : ["ABC", "GHI"]
+}]]></lang>
+<lang id="eng"><![CDATA[// Disable additional properties
+no_additional_properties : true,
+
+// Require all properties by default
+required_by_default : true,
+
+// This is the starting value for the editor
+// We will use this to seed the initial editor 
+// and to provide a "Restore to Default" button.
+startval : {
+  "1_name" : "John Smith",
+  "2_age" : 35,
+  "3_gender" : "male",
+  "4_location" : {
+    "1_city" : "San Francisco",
+    "2_state" : "California",
+    "3_citystate" : ""
+  },
+  "5_pets" : [ {
+    "2_name" : "Spot",
+    "1_type" : "dog",
+    "3_fixed" : true
+  }, {
+    "2_name" : "Whiskers",
+    "1_type" : "cat",
+    "3_fixed" : false
+  } ],
+  "6_interests" : ["Hiking","Biking"],
+  "7_memberships" : ["ABC", "GHI"]
+}]]></lang></optionsJS>
+<titlealt>
+<lang id="ger"><![CDATA[Person]]></lang>
+<lang id="eng"><![CDATA[Person]]></lang></titlealt>
+<active>
+<lang id="ger">1</lang>
+<lang id="eng">0</lang></active>
+<_data>
+<lang id="ger">
+<dictionary>
+</dictionary></lang>
+<lang id="eng">
+<dictionary>
+</dictionary></lang></_data><ZMSFormulatorItem id="formulatorItems7309"
+ id_prefix="formulatorItems">
+<titlealt>
+<lang id="ger"><![CDATA[Name]]></lang></titlealt>
+<title>
+<lang id="ger"><![CDATA[Name]]></lang></title>
+<valueMaximum>
+<lang id="ger">0</lang>
+<lang id="eng">0</lang></valueMaximum>
+<valueMinimum>
+<lang id="ger">4</lang>
+<lang id="eng">0</lang></valueMinimum>
+<attr_dc_coverage><![CDATA[global.ger]]></attr_dc_coverage>
+<type>
+<lang id="ger"><![CDATA[string]]></lang></type>
+<attr_dc_description>
+<lang id="ger"><![CDATA[First and Last name]]></lang></attr_dc_description>
+<active>
+<lang id="ger">1</lang>
+<lang id="eng">0</lang></active>
+<identifier>
+<lang id="ger"><![CDATA[e1969]]></lang></identifier></ZMSFormulatorItem>
+<ZMSFormulatorItem id="formulatorItems7310"
+ id_prefix="formulatorItems">
+<titlealt>
+<lang id="ger"><![CDATA[Age]]></lang></titlealt>
+<title>
+<lang id="ger"><![CDATA[Age]]></lang></title>
+<valueDefault>
+<lang id="ger"><![CDATA[21]]></lang></valueDefault>
+<valueMaximum>
+<lang id="ger">99</lang>
+<lang id="eng">0</lang></valueMaximum>
+<valueMinimum>
+<lang id="ger">18</lang>
+<lang id="eng">0</lang></valueMinimum>
+<attr_dc_coverage><![CDATA[global.ger]]></attr_dc_coverage>
+<type>
+<lang id="ger"><![CDATA[integer]]></lang></type>
+<active>
+<lang id="ger">1</lang>
+<lang id="eng">0</lang></active>
+<identifier>
+<lang id="ger"><![CDATA[e1971]]></lang></identifier></ZMSFormulatorItem>
+<ZMSFormulatorItem id="formulatorItems7311"
+ id_prefix="formulatorItems">
+<titlealt>
+<lang id="ger"><![CDATA[Gender]]></lang></titlealt>
+<title>
+<lang id="ger"><![CDATA[Gender]]></lang></title>
+<valueDefault>
+<lang id="ger"><![CDATA[female]]></lang></valueDefault>
+<valueMaximum>
+<lang id="ger">0</lang>
+<lang id="eng">0</lang></valueMaximum>
+<valueMinimum>
+<lang id="ger">0</lang>
+<lang id="eng">0</lang></valueMinimum>
+<attr_dc_coverage><![CDATA[global.ger]]></attr_dc_coverage>
+<valueSelect>
+<lang id="ger"><![CDATA[male
+female]]></lang></valueSelect>
+<type>
+<lang id="ger"><![CDATA[select]]></lang></type>
+<active>
+<lang id="ger">1</lang>
+<lang id="eng">0</lang></active>
+<identifier>
+<lang id="ger"><![CDATA[e1974]]></lang></identifier></ZMSFormulatorItem>
+<ZMSFormulatorItem id="formulatorItems7312"
+ id_prefix="formulatorItems">
+<titlealt>
+<lang id="ger"><![CDATA[Location]]></lang></titlealt>
+<title>
+<lang id="ger"><![CDATA[Location]]></lang></title>
+<valueMaximum>
+<lang id="ger">0</lang>
+<lang id="eng">0</lang></valueMaximum>
+<valueMinimum>
+<lang id="ger">0</lang>
+<lang id="eng">0</lang></valueMinimum>
+<attr_dc_coverage><![CDATA[global.ger]]></attr_dc_coverage>
+<type>
+<lang id="ger"><![CDATA[custom]]></lang></type>
+<rawJSON>
+<lang id="ger"><![CDATA[{
+      "type": "object",
+      "title": "Location",
+      "properties": {
+        "1_city": {
+          "title": "City",
+          "type": "string"
+        },
+        "2_state": {
+          "title": "State",
+          "type": "string"
+        },
+        "3_citystate": {
+          "title": "Citystate",
+          "type": "string",
+          "description": "This is generated automatically from the previous two fields",
+          "template": "{{city}}, {{state}}",
+          "watch": {
+            "city": "person.4_location.1_city",
+            "state": "person.4_location.2_state"
+          }
+        }
+      }
+    }]]></lang></rawJSON>
+<active>
+<lang id="ger">1</lang>
+<lang id="eng">0</lang></active>
+<identifier>
+<lang id="ger"><![CDATA[e1979]]></lang></identifier></ZMSFormulatorItem>
+<ZMSFormulatorItem id="formulatorItems7313"
+ id_prefix="formulatorItems">
+<titlealt>
+<lang id="ger"><![CDATA[Pets]]></lang></titlealt>
+<title>
+<lang id="ger"><![CDATA[Pets]]></lang></title>
+<valueMaximum>
+<lang id="ger">0</lang>
+<lang id="eng">0</lang></valueMaximum>
+<valueMinimum>
+<lang id="ger">0</lang>
+<lang id="eng">0</lang></valueMinimum>
+<attr_dc_coverage><![CDATA[global.ger]]></attr_dc_coverage>
+<type>
+<lang id="ger"><![CDATA[custom]]></lang></type>
+<rawJSON>
+<lang id="ger"><![CDATA[{
+      "type": "array",
+      "format": "table",
+      "title": "Pets",
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "properties": {
+          "1_type": {
+            "type": "string",
+            "title": "Type",
+            "enum": [
+              "cat",
+              "dog",
+              "bird",
+              "reptile",
+              "other"
+            ],
+            "default": "dog"
+          },
+          "2_name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "3_fixed": {
+            "type": "boolean",
+            "title": "spayed / neutered",
+            "default": true
+          }
+        }
+      }
+    }]]></lang></rawJSON>
+<active>
+<lang id="ger">1</lang>
+<lang id="eng">0</lang></active>
+<identifier>
+<lang id="ger"><![CDATA[e1977]]></lang></identifier></ZMSFormulatorItem>
+<ZMSFormulatorItem id="formulatorItems7315"
+ id_prefix="formulatorItems">
+<titlealt>
+<lang id="ger"><![CDATA[Interests]]></lang></titlealt>
+<title>
+<lang id="ger"><![CDATA[Interests]]></lang></title>
+<valueMaximum>
+<lang id="ger">0</lang>
+<lang id="eng">0</lang></valueMaximum>
+<valueMinimum>
+<lang id="ger">0</lang>
+<lang id="eng">0</lang></valueMinimum>
+<attr_dc_coverage><![CDATA[global.ger]]></attr_dc_coverage>
+<valueSelect>
+<lang id="ger"><![CDATA[Hiking
+Biking
+Swimming]]></lang></valueSelect>
+<type>
+<lang id="ger"><![CDATA[multiselect]]></lang></type>
+<active>
+<lang id="ger">1</lang>
+<lang id="eng">0</lang></active>
+<identifier>
+<lang id="ger"><![CDATA[e7314]]></lang></identifier></ZMSFormulatorItem>
+<ZMSFormulatorItem id="formulatorItems7317"
+ id_prefix="formulatorItems">
+<titlealt>
+<lang id="ger"><![CDATA[Memberships]]></lang></titlealt>
+<title>
+<lang id="ger"><![CDATA[Memberships]]></lang></title>
+<valueMaximum>
+<lang id="ger">0</lang>
+<lang id="eng">0</lang></valueMaximum>
+<valueMinimum>
+<lang id="ger">0</lang>
+<lang id="eng">0</lang></valueMinimum>
+<attr_dc_coverage><![CDATA[global.ger]]></attr_dc_coverage>
+<valueSelect>
+<lang id="ger"><![CDATA[ABC
+DEF
+GHI]]></lang></valueSelect>
+<type>
+<lang id="ger"><![CDATA[checkbox]]></lang></type>
+<active>
+<lang id="ger">1</lang>
+<lang id="eng">0</lang></active>
+<identifier>
+<lang id="ger"><![CDATA[e7316]]></lang></identifier></ZMSFormulatorItem>
+</ZMSFormulator>

@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<?mso-application progid="Excel.Sheet"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:x="urn:schemas-microsoft-com:office:excel"
+xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+xmlns:html="http://www.w3.org/TR/REC-html40">
+<Styles>
+<Style ss:ID="head">
+<Font x:Family="Swiss" ss:Bold="1"/>
+<Interior ss:Color="#EEEE00" ss:Pattern="Solid"/>
+</Style>
+<Style ss:ID="string">
+<Alignment ss:Vertical="Top" />
+</Style>
+</Styles>
+<Worksheet ss:Name="Tabelle1">
+<Table>
+<Row>
+<Cell ss:StyleID="head"><Data ss:Type="String">key</Data></Cell>
+<Cell ss:StyleID="head"><Data ss:Type="String">ger</Data></Cell>
+<Cell ss:StyleID="head"><Data ss:Type="String">eng</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="string"><Data ss:Type="String">TYPE_ZMSFORMULATORITEM</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">Webformular-Item</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">Web Form Item</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="string"><Data ss:Type="String">TYPE_ZMSFORMULATOR</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">Webformular</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">Web Form</Data></Cell>
+</Row>
+</Table>
+</Worksheet>
+</Workbook>
