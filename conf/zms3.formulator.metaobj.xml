@@ -53,13 +53,34 @@
                 <dictionary>
                   <item key="custom"><![CDATA[<!-- ZMSFormulator.standard_html -->
 
-<tal:block tal:condition="python:this.isFeatureEnabled('%zms3.formulator%')" tal:define="global this options/zmscontext">
-  <h1 tal:content="python:this.attr('title')">title</h1>
-  <div tal:content="structure python:this.attr('attr_dc_description')">attr_dc_description</div>
-  <tal:block tal:replace="structure python:this.getJSONEditor()"></tal:block>
+<tal:block
+  tal:condition="python:this.isFeatureEnabled('%zms3.formulator%')"
+  tal:define="
+    global this options/zmscontext;
+    global cols_pagecontent_row python:'col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1';
+    global cols_pagecontent_title python:'col-lg-10 col-lg-offset-2 col-md-11 col-md-offset-1'">
+  <div class="row skin-gutter-wide">
+    <div tal:attributes="class python:request.get('cols_pagecontent_title',cols_pagecontent_title)">
+      <h1 tal:condition="python:this.getTitle(request)" tal:content="structure python:this.getTitle(request)">title</h1>
+      <p tal:condition="python:this.attr('attr_dc_description')" tal:content="structure python:this.attr('attr_dc_description')" class="lead">attr_dc_description</p>
+    </div>
+  </div>
+  <div class="row skin-gutter-wide">
+    <div
+      tal:attributes="class python:this.get_pagecontent_row_classes(cols_pagecontent_row=request.get('cols_pagecontent_row',cols_pagecontent_row))"
+      tal:content="structure python:this.getJSONEditor()">
+    </div>
+  </div>
 </tal:block>
-<tal:block tal:condition="python:not this.isFeatureEnabled('%zms3.formulator%')" tal:define="global this options/zmscontext">
-<pre class="alert alert-danger">zms3.formulator not activated</pre>
+<tal:block
+  tal:condition="python:not this.isFeatureEnabled('%zms3.formulator%')"
+  tal:define="global this options/zmscontext">
+  <div class="row skin-gutter-wide">
+    <div
+      tal:attributes="class python:this.get_pagecontent_row_classes(cols_pagecontent_row=request.get('cols_pagecontent_row',cols_pagecontent_row))">
+      <pre class="alert alert-danger">zms3.formulator not activated</pre>
+    </div>
+  </div>
 </tal:block>
 
 <!-- /ZMSFormulator.standard_html -->]]>
@@ -181,22 +202,26 @@ required_by_default : true]]>
           </item>
           <item key="access" type="dictionary">
             <dictionary>
-              <item key="delete" type="list">
-                <list>
-                  <item><![CDATA[ZMSAdministrator]]></item>
-                  <item><![CDATA[ZMSAuthor]]></item>
-                  <item><![CDATA[ZMSEditor]]></item>
-                </list>
-              </item>
               <item key="delete_custom"></item>
-              <item key="insert" type="list">
+              <item key="delete_deny" type="list">
                 <list>
-                  <item><![CDATA[ZMSAdministrator]]></item>
-                  <item><![CDATA[ZMSAuthor]]></item>
-                  <item><![CDATA[ZMSEditor]]></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
                 </list>
               </item>
               <item key="insert_custom"><![CDATA[{$}]]></item>
+              <item key="insert_deny" type="list">
+                <list>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                </list>
+              </item>
             </dictionary>
           </item>
           <item key="enabled" type="int">1</item>
@@ -568,13 +593,9 @@ def getJSONSchema(self):
 def printData(self):
   if self.REQUEST.get('URL').find('/manage')>0:
     f = ZMSFormulator(self)
-    return f.printRawData()
+    return f.printDataRaw()
   else:
-    print "[zms3.formulator.lib.printData] Forbidden."
-
-
-
-]]>
+    print "[zms3.formulator.lib.printData] Forbidden."]]>
                   </item>
                   <item key="id"><![CDATA[printData]]></item>
                   <item key="mandatory" type="int">0</item>
@@ -590,8 +611,7 @@ def printData(self):
 
 def putData(self):
   f = ZMSFormulator(self)
-  f.receiveData()
-]]>
+  f.receiveData()]]>
                   </item>
                   <item key="id"><![CDATA[putData]]></item>
                   <item key="mandatory" type="int">0</item>

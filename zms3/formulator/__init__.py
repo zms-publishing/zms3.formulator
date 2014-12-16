@@ -81,7 +81,7 @@ class ZMSFormulator:
         print "\n[sendMail] FAILED:", mto, msubject, mbody
     """
 
-  def printRawData(self):
+  def printDataRaw(self):
     
     s = ''
     d = self.getData()
@@ -101,6 +101,12 @@ class ZMSFormulator:
       s = s + self.this.re_sub('[_\[\]]','',s1)+' | '+s2+' | '
     
     return s
+
+  def printDataPretty(self):
+    
+    # TODO: printDataPretty
+    
+    return
 
 class ZMSFormulatorItem:
 
