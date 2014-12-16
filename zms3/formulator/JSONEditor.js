@@ -1,3 +1,4 @@
+// zms3.formulator.JSONEditor.js
 
 // Initialize the editor
 var editor = new JSONEditor(document.getElementById('editor_holder'), {
@@ -38,7 +39,7 @@ document.getElementById('submit').addEventListener('click', function() {
 		
 		$.ajax({
 			type : 'POST',
-			url : '%s/putJSONData',
+			url : '%s/putData',
 			data : data,
 			dataType : 'json'
 		}).success(function(response) {
