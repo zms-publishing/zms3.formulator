@@ -1,7 +1,7 @@
 import os
 from setuptools import setup
 
-VERSION = '3.2.0dev'
+VERSION = '3.2.0dev1'
 
 DEPENDENCY_LINKS = [
 ]
