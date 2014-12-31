@@ -1,5 +1,4 @@
 """zms3.formulator.JSONEditor
-
 """
 import json
 import os

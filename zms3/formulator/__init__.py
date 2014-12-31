@@ -1,5 +1,4 @@
 """zms3.formulator
-
 """
 from Zope2.App.startup import getConfiguration
 import time
