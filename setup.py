@@ -14,7 +14,7 @@ for path in sys.path:
   if path.endswith('site-packages'):
     site_packages = path
 
-VERSION = '3.2.0dev1'
+VERSION = '3.2.0dev2'
 
 DATA_FILES = [
   (os.path.join(site_packages, 'zms3/formulator/'), ['zms3/formulator/JSONEditor.js']),
@@ -23,11 +23,11 @@ DATA_FILES = [
 ]
 
 CLASSIFIERS = [
-  'License :: OSI Approved :: GNU General Public License (GPL)',
-  'Environment :: Web Environment',
-  'Framework :: Zope2',
+  'Development Status :: 3 - Alpha'
+  'Framework :: ZMS3',
   'Programming Language :: Python :: 2.7',
   'Operating System :: OS Independent',
+  'Environment :: Web Environment',
   'Topic :: Internet :: WWW/HTTP :: Site Management',
   'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
   'Intended Audience :: Education',
@@ -38,19 +38,20 @@ CLASSIFIERS = [
   'Intended Audience :: Information Technology',
   'Intended Audience :: Telecommunications Industry',
   'Intended Audience :: Financial and Insurance Industry',
+  'License :: OSI Approved :: GNU General Public License (GPL)',
 ]
 
 setup(
   name                  = 'zms3.formulator',
   description           = 'JSON-based HTML-Forms',
-#  long_description      = README,
+# long_description      = README,
   version               = VERSION,
   author                = 'HOFFMANN+LIEBENBERG in association with SNTL Publishing, Berlin',
   author_email          = 'zms@sntl-publishing.com',
   url                   = 'http://www.zms-publishing.com',
   download_url          = 'https://code.zms3.com/formulator',
   packages              = ['zms3','zms3.formulator'],
-  py_modules            = ['zms3.formulator.JSONEditor'],
+# py_modules            = ['zms3.formulator.ZMSFormulator','zms3.formulator.JSONEditor'],
   data_files            = DATA_FILES,
   classifiers           = CLASSIFIERS,
   include_package_data  = True,

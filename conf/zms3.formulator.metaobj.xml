@@ -53,34 +53,13 @@
                 <dictionary>
                   <item key="custom"><![CDATA[<!-- ZMSFormulator.standard_html -->
 
-<tal:block
-  tal:condition="python:this.isFeatureEnabled('%zms3.formulator%')"
-  tal:define="
-    global this options/zmscontext;
-    global cols_pagecontent_row python:'col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1';
-    global cols_pagecontent_title python:'col-lg-10 col-lg-offset-2 col-md-11 col-md-offset-1'">
-  <div class="row skin-gutter-wide">
-    <div tal:attributes="class python:request.get('cols_pagecontent_title',cols_pagecontent_title)">
-      <h1 tal:condition="python:this.getTitle(request)" tal:content="structure python:this.getTitle(request)">title</h1>
-      <p tal:condition="python:this.attr('attr_dc_description')" tal:content="structure python:this.attr('attr_dc_description')" class="lead">attr_dc_description</p>
-    </div>
-  </div>
-  <div class="row skin-gutter-wide">
-    <div
-      tal:attributes="class python:this.get_pagecontent_row_classes(cols_pagecontent_row=request.get('cols_pagecontent_row',cols_pagecontent_row))"
-      tal:content="structure python:this.getJSONEditor()">
-    </div>
-  </div>
+<tal:block tal:define="global this options/zmscontext"
+  tal:condition="python:this.isFeatureEnabled('%zms3.formulator%')">
+<div tal:content="structure python:this.getJSONEditor()"></div>
 </tal:block>
-<tal:block
-  tal:condition="python:not this.isFeatureEnabled('%zms3.formulator%')"
-  tal:define="global this options/zmscontext">
-  <div class="row skin-gutter-wide">
-    <div
-      tal:attributes="class python:this.get_pagecontent_row_classes(cols_pagecontent_row=request.get('cols_pagecontent_row',cols_pagecontent_row))">
-      <pre class="alert alert-danger">zms3.formulator not activated</pre>
-    </div>
-  </div>
+<tal:block tal:define="global this options/zmscontext"
+  tal:condition="python:not this.isFeatureEnabled('%zms3.formulator%')">  
+<div><pre class="alert alert-danger">zms3.formulator not activated</pre></div>
 </tal:block>
 
 <!-- /ZMSFormulator.standard_html -->]]>
@@ -208,15 +187,11 @@ required_by_default : true]]>
                   <item></item>
                   <item></item>
                   <item></item>
-                  <item></item>
-                  <item></item>
                 </list>
               </item>
               <item key="insert_custom"><![CDATA[{$}]]></item>
               <item key="insert_deny" type="list">
                 <list>
-                  <item></item>
-                  <item></item>
                   <item></item>
                   <item></item>
                   <item></item>
@@ -228,7 +203,7 @@ required_by_default : true]]>
           <item key="id"><![CDATA[ZMSFormulator]]></item>
           <item key="name"><![CDATA[ZMSFormulator]]></item>
           <item key="package"><![CDATA[zms3.formulator]]></item>
-          <item key="revision"><![CDATA[3.1.1]]></item>
+          <item key="revision"><![CDATA[3.1.2]]></item>
           <item key="type"><![CDATA[ZMSDocument]]></item>
         </dictionary>
       </item>
@@ -513,7 +488,7 @@ textarea.form-control.rawJSON {
           <item key="id"><![CDATA[zms3.formulator]]></item>
           <item key="name"><![CDATA[zms3.formulator]]></item>
           <item key="package"></item>
-          <item key="revision"><![CDATA[3.2.0dev1]]></item>
+          <item key="revision"><![CDATA[3.2.0dev2]]></item>
           <item key="type"><![CDATA[ZMSPackage]]></item>
         </dictionary>
       </item>
@@ -625,23 +600,23 @@ def putData(self):
           </item>
           <item key="access" type="dictionary">
             <dictionary>
-              <item key="delete" type="list">
-                <list>
-                </list>
-              </item>
               <item key="delete_custom"></item>
-              <item key="insert" type="list">
+              <item key="delete_deny" type="list">
                 <list>
                 </list>
               </item>
               <item key="insert_custom"></item>
+              <item key="insert_deny" type="list">
+                <list>
+                </list>
+              </item>
             </dictionary>
           </item>
           <item key="enabled" type="int">0</item>
           <item key="id"><![CDATA[zms3.formulator.lib]]></item>
           <item key="name"><![CDATA[zms3.formulator.lib]]></item>
           <item key="package"><![CDATA[zms3.formulator]]></item>
-          <item key="revision"><![CDATA[3.2.0]]></item>
+          <item key="revision"><![CDATA[3.2.0dev2]]></item>
           <item key="type"><![CDATA[ZMSLibrary]]></item>
         </dictionary>
       </item>
