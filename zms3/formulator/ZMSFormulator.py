@@ -78,13 +78,20 @@ class ZMSFormulator:
         print "\n[sendMail] FAILED:", mto, msubject, mbody
     """
 
+  def clearData(self):
+    
+    self._data.clear()
+    self.this.attr('_data', self._data)
+    self.this.onChangeObj(self.this.REQUEST)
+
   def printDataRaw(self):
     
-    s = ''
+    s = s1 = s2 = ''
     d = self.getData()
-    for _, v in sorted(d.iteritems()):
+    for t, v in sorted(d.iteritems()):
       header = ['\nDATE']
       output = []
+      output.append(time.strftime('%c', time.gmtime(t)))
       for i in sorted(v):
         i1, i2 = i
         header.append(i1.split('_', 1)[1].upper())
@@ -93,9 +100,11 @@ class ZMSFormulator:
         outstr = outstr.replace('$','').replace('|','').replace(';','')
         outstr = outstr.replace('<','').replace('>','').replace('&','')
         output.append(outstr.replace('\n','; '))
+      output.append('\n')
       s1 = ' | '.join(header)
-      s2 = ' | '.join(output)
-      s = s + self.this.re_sub('[_\[\]]','',s1)+' | '+s2+' | '
+      s2 += ' | '.join(output)      
+    
+    s = s + self.this.re_sub('[_\[\]]','',s1) + '\n' + s2
     
     return s
 
