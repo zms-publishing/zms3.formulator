@@ -54,7 +54,19 @@ def getSchema(obj):
       JSONDict['properties'][var]['type']           = 'string'
       JSONDict['properties'][var]['enum']           = []
       for val in values:
-        JSONDict['properties'][var]['enum'].append(val)      
+        JSONDict['properties'][var]['enum'].append(val)
+    
+    if item.type == 'textarea':
+      JSONDict['properties'][var]['type']           = 'string'
+      JSONDict['properties'][var]['format']         = 'textarea'
+    
+    if item.type == 'color':
+      JSONDict['properties'][var]['type']           = 'string'
+      JSONDict['properties'][var]['format']         = 'color'
+
+    if item.type == 'date':
+      JSONDict['properties'][var]['type']           = 'string'
+      JSONDict['properties'][var]['format']         = 'date'
       
     if item.type in ['checkbox', 'multiselect'] and len(values)>0:
       JSONDict['properties'][var]['type']           = 'array'
@@ -69,6 +81,6 @@ def getSchema(obj):
 
     if item.type in ['custom'] and item.rawJSON != '':
       JSONDict['properties'][var]                   = json.loads(item.rawJSON)
-        
+
   JSONSchema = json.dumps(JSONDict, sort_keys=True, indent=4, separators=(',', ': '))
   return JSONSchema

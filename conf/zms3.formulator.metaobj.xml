@@ -272,11 +272,14 @@ $ZMI.registerReady(function(){
                   <item key="keys" type="list">
                     <list>
                       <item><![CDATA[string]]></item>
+                      <item><![CDATA[textarea]]></item>
+                      <item><![CDATA[date]]></item>
                       <item><![CDATA[select]]></item>
                       <item><![CDATA[multiselect]]></item>
                       <item><![CDATA[checkbox]]></item>
                       <item><![CDATA[integer]]></item>
                       <item><![CDATA[float]]></item>
+                      <item><![CDATA[color]]></item>
                       <item><![CDATA[custom]]></item>
                     </list>
                   </item>
@@ -372,8 +375,8 @@ $ZMI.registerReady(function(){
                   <item key="id"><![CDATA[interface]]></item>
                   <item key="mandatory" type="int">0</item>
                   <item key="multilang" type="int">0</item>
-                  <item key="name"><![CDATA[<script>
-$(document).ready(function() {
+                  <item key="name"><![CDATA[<script type="text/javascript">
+$ZMI.registerReady(function(){
 $('#tabProperties .accordion-inner').attr('class','accordion-inner ' + $('#tr_type_ger :selected').text())
 $('#tr_type_ger select').change(function() {
   $('#tabProperties .accordion-inner').attr('class','accordion-inner ' + $('#tr_type_ger :selected').text())
@@ -388,7 +391,7 @@ $('#tr_type_ger select').change(function() {
               <item type="dictionary">
                 <dictionary>
                   <item key="custom">
-                    <data content_type="text/css" filename="formulator.css" type="file"><![CDATA[textarea.form-control.optionsJS,
+                    <data content_type="text/css" filename="ZMSFormulatorItem.f_css_defaults.css" type="file"><![CDATA[textarea.form-control.optionsJS,
 textarea.form-control.rawJSON {
     font-family: Courier New;
 }
@@ -403,6 +406,24 @@ textarea.form-control.rawJSON {
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner.custom #tr_valueMinimum_ger,
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner.custom #tr_valueMaximum,
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner.custom #tr_valueMaximum_ger,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.textarea #tr_valueDefault,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.textarea #tr_valueDefault_ger,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.textarea #tr_valueMinimum,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.textarea #tr_valueMinimum_ger,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.textarea #tr_valueMaximum,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.textarea #tr_valueMaximum_ger,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.date #tr_valueDefault,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.date #tr_valueDefault_ger,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.date #tr_valueMinimum,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.date #tr_valueMinimum_ger,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.date #tr_valueMaximum,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.date #tr_valueMaximum_ger,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.color #tr_valueDefault,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.color #tr_valueDefault_ger,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.color #tr_valueMinimum,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.color #tr_valueMinimum_ger,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.color #tr_valueMaximum,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.color #tr_valueMaximum_ger,
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner.checkbox #tr_valueMinimum,
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner.checkbox #tr_valueMinimum_ger,
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner.checkbox #tr_valueMaximum,
@@ -462,29 +483,37 @@ textarea.form-control.rawJSON {
           </item>
           <item key="access" type="dictionary">
             <dictionary>
-              <item key="delete" type="list">
-                <list>
-                  <item><![CDATA[ZMSAdministrator]]></item>
-                  <item><![CDATA[ZMSAuthor]]></item>
-                  <item><![CDATA[ZMSEditor]]></item>
-                </list>
-              </item>
               <item key="delete_custom"></item>
-              <item key="insert" type="list">
+              <item key="delete_deny" type="list">
                 <list>
-                  <item><![CDATA[ZMSAdministrator]]></item>
-                  <item><![CDATA[ZMSAuthor]]></item>
-                  <item><![CDATA[ZMSEditor]]></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
                 </list>
               </item>
               <item key="insert_custom"><![CDATA[{$}]]></item>
+              <item key="insert_deny" type="list">
+                <list>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                </list>
+              </item>
             </dictionary>
           </item>
           <item key="enabled" type="int">0</item>
           <item key="id"><![CDATA[ZMSFormulatorItem]]></item>
           <item key="name"><![CDATA[ZMSFormulatorItem]]></item>
           <item key="package"><![CDATA[zms3.formulator]]></item>
-          <item key="revision"><![CDATA[3.1.3]]></item>
+          <item key="revision"><![CDATA[3.1.4]]></item>
           <item key="type"><![CDATA[ZMSObject]]></item>
         </dictionary>
       </item>
