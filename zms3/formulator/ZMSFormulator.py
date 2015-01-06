@@ -106,7 +106,7 @@ class ZMSFormulator:
     s = s1 = s2 = ''
     d = self.getData()
     for t, v in sorted(d.iteritems()):
-      header = ['\nDATE']
+      header = ['DATE']
       output = []
       output.append(time.strftime('%c', time.gmtime(t)))
       for i in sorted(v):
