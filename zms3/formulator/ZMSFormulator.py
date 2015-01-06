@@ -1,6 +1,8 @@
 """zms3.formulator.ZMSFormulator
 """
 from Zope2.App.startup import getConfiguration
+from Products.zms import _globals
+import zExceptions
 import time
 
 class ZMSFormulator:
@@ -10,12 +12,13 @@ class ZMSFormulator:
     self.this         = this
     self.thisURLPath  = this.absolute_url()
     self.baseURLPath  = this.getDocumentElement().absolute_url()
+    self.thisMaster   = this.breadcrumbs_obj_path(True)[0]
     self.titlealt     = this.attr('titlealt')
     self.title        = this.attr('title')
     self.description  = this.attr('attr_dc_description')
     self.options      = this.attr('optionsJS')
     self.sendViaMail  = this.attr('sendViaMail')
-    self.mailAddress  = this.attr('sendViaMailAddress')
+    self.mailAddress  = this.attr('sendViaMailAddress').strip()
     self.items        = []
     self._data        = {}
     
@@ -32,22 +35,34 @@ class ZMSFormulator:
     data = self.this.attr('_data')
     self._data.update(data)
     return self._data
+
+  def clearData(self):
+    
+    self._data.clear()
+    zodb = getConfiguration().dbtab.getDatabase('/', is_root=1)._storage
+    if not zodb.isReadOnly():
+      self.this.attr('_data', self._data)
+      self.this.onChangeObj(self.this.REQUEST)
+      return True
+    else:
+      _globals.writeBlock(self.thisMaster, "[ZMSFormulator.clearData] zodb.isReadOnly")
+      return False
     
   def setData(self, data):
 
-    zodb = getConfiguration().dbtab.getDatabase('/', is_root=1)._storage
-    
     if type(data) is dict:
       self._data.update(data)
+      zodb = getConfiguration().dbtab.getDatabase('/', is_root=1)._storage
       if not zodb.isReadOnly():
         self.this.attr('_data', self._data)
         self.this.onChangeObj(self.this.REQUEST)
+        return True
       else:
-        print "[ZMSFormulator.setData] zodb.isReadOnly"
-      return True
+        _globals.writeBlock(self.thisMaster, "[ZMSFormulator.setData] zodb.isReadOnly")
+        return False
     else:
-      print "[ZMSFormulator.setData] data is not a dict"
-      return False
+      _globals.writeError(self.thisMaster, "[ZMSFormulator.setData] unexpected data (not dict)")
+      return None
 
   def receiveData(self, data=None):
      
@@ -55,34 +70,36 @@ class ZMSFormulator:
       data = self.this.REQUEST.form.items()
     
     # TODO: parse input data
-    print "[ZMSFormulator.receiveData]", data
-    
+    _globals.writeBlock(self.thisMaster, "[ZMSFormulator.receiveData] %s"%data) 
+        
     if type(data) is list and len(data)>0:
+      # add current timestamp to data list and store as dictionary
       self.setData({time.time(): data})
-      
-    # TODO: send data by mail
+      if self.sendViaMail == True:
+        self.sendData()
+    else:
+      _globals.writeError(self.thisMaster, "[ZMSFormulator.setData] unexpected data (not list)")
+      return False
 
   def sendData(self):      
-    """
-    if (self.attr('sendViaMail')==True and self.attr('sendViaMailAddress').strip()!=''):
-      mto = self.attr('sendViaMailAddress').strip()
-      msubject = '%s: %s'%(self.getLangStr('TYPE_ZMSFORMULATOR'), self.getTitlealt(self.REQUEST))
-      mbody = []
-      mbody.append(self.getTitle(self.REQUEST))
-      mbody.append('\n')
-      mbody.append(self.getHref2IndexHtml(self.REQUEST))
-      mbody.append('\n')
-      mbody.append(getJSONData(self, dataINP))
-      mbody = ''.join(mbody)
-      if self.sendMail(mto, msubject, mbody, self.REQUEST)<0:
-        print "\n[sendMail] FAILED:", mto, msubject, mbody
-    """
 
-  def clearData(self):
-    
-    self._data.clear()
-    self.this.attr('_data', self._data)
-    self.this.onChangeObj(self.this.REQUEST)
+    if self.mailAddress != '':
+      msubj = '[%s] Data submitted: %s' % (self.this.getLangStr('TYPE_ZMSFORMULATOR'), self.titlealt)
+      mbody = []
+      mbody.append(self.title)
+      mbody.append('\n')
+      base = ''
+      href = self.this.getHref2IndexHtml(self.this.REQUEST)
+      if self.thisMaster.getConfProperty('ZMS.pathcropping',0)==1:
+        base = self.this.REQUEST.get('BASE0','')
+      mbody.append('%s entries at %s:' % (len(self.getData()), base+href))      
+      mbody.append('\n')
+      mbody.append(self.printDataRaw())
+      mbody = ''.join(mbody)
+      if self.thisMaster.sendMail(self.mailAddress, msubj, mbody, self.this.REQUEST) < 0:
+        _globals.writeError(self.thisMaster, "[ZMSFormulator.sendData] failed to send mail")
+    else:
+      _globals.writeError(self.thisMaster, "[ZMSFormulator.sendData] no mail address specified")      
 
   def printDataRaw(self):
     
