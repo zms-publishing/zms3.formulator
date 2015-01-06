@@ -17,6 +17,7 @@ class ZMSFormulator:
     self.title        = this.attr('title')
     self.description  = this.attr('attr_dc_description')
     self.options      = this.attr('optionsJS')
+    self.onReady      = this.attr('onReadyJS')
     self.sendViaMail  = this.attr('sendViaMail')
     self.mailAddress  = this.attr('sendViaMailAddress').strip()
     self.items        = []

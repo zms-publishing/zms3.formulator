@@ -138,6 +138,16 @@ required_by_default : true]]>
               </item>
               <item type="dictionary">
                 <dictionary>
+                  <item key="id"><![CDATA[onReadyJS]]></item>
+                  <item key="mandatory" type="int">0</item>
+                  <item key="multilang" type="int">1</item>
+                  <item key="name"><![CDATA[onReady [JS]]]></item>
+                  <item key="repetitive" type="int">0</item>
+                  <item key="type"><![CDATA[text]]></item>
+                </dictionary>
+              </item>
+              <item type="dictionary">
+                <dictionary>
                   <item key="id"><![CDATA[ZMSFORMULATORINTERFACE]]></item>
                   <item key="mandatory" type="int">0</item>
                   <item key="multilang" type="int">0</item>
@@ -318,7 +328,7 @@ $ZMI.registerReady(function() {
           <item key="id"><![CDATA[ZMSFormulator]]></item>
           <item key="name"><![CDATA[ZMSFormulator]]></item>
           <item key="package"><![CDATA[zms3.formulator]]></item>
-          <item key="revision"><![CDATA[3.1.5]]></item>
+          <item key="revision"><![CDATA[3.2.0]]></item>
           <item key="type"><![CDATA[ZMSDocument]]></item>
         </dictionary>
       </item>
@@ -478,8 +488,10 @@ $('#tr_type_ger select').change(function() {
                 <dictionary>
                   <item key="custom">
                     <data content_type="text/css" filename="ZMSFormulatorItem.f_css_defaults.css" type="file"><![CDATA[textarea.form-control.optionsJS,
+textarea.form-control.onReadyJS,
 textarea.form-control.rawJSON {
     font-family: Courier New;
+    height: 20em;
 }
 
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner #tr_rawJSON,
@@ -599,7 +611,7 @@ textarea.form-control.rawJSON {
           <item key="id"><![CDATA[ZMSFormulatorItem]]></item>
           <item key="name"><![CDATA[ZMSFormulatorItem]]></item>
           <item key="package"><![CDATA[zms3.formulator]]></item>
-          <item key="revision"><![CDATA[3.1.4]]></item>
+          <item key="revision"><![CDATA[3.2.0]]></item>
           <item key="type"><![CDATA[ZMSObject]]></item>
         </dictionary>
       </item>

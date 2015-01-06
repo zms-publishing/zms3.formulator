@@ -2,6 +2,7 @@
 
 // Initialize the editor
 var editor = new JSONEditor(document.getElementById('editor_holder'), {
+	
 	// Enable fetching schemas via ajax
 	ajax : true,
 
@@ -15,7 +16,14 @@ var editor = new JSONEditor(document.getElementById('editor_holder'), {
 	disable_properties : true,
 	theme : 'bootstrap3',
 	
-	// Options (JS)
+	// Options [JS]
+	%s
+});
+
+// Now the api methods will be available
+editor.on('ready',function() {
+	
+	// onReady [JS]
 	%s
 });
 
@@ -67,6 +75,7 @@ document.getElementById('restore').addEventListener('click', function() {
 });
 
 // Hook up the enable/disable button
+/*
 document.getElementById('enable_disable').addEventListener('click', function() {
 	// Enable form
 	if (!editor.isEnabled()) {
@@ -77,6 +86,7 @@ document.getElementById('enable_disable').addEventListener('click', function() {
 		editor.disable();
 	}
 });
+*/
 
 // Hook up the validation indicator to update its 
 // status whenever the editor changes
