@@ -41,6 +41,16 @@
               </item>
               <item type="dictionary">
                 <dictionary>
+                  <item key="id"><![CDATA[TAB_METADATA]]></item>
+                  <item key="mandatory" type="int">0</item>
+                  <item key="multilang" type="int">1</item>
+                  <item key="name"><![CDATA[TAB_METADATA]]></item>
+                  <item key="repetitive" type="int">0</item>
+                  <item key="type"><![CDATA[delimiter]]></item>
+                </dictionary>
+              </item>
+              <item type="dictionary">
+                <dictionary>
                   <item key="id"><![CDATA[attr_dc_description]]></item>
                   <item key="mandatory" type="int">0</item>
                   <item key="multilang" type="int">1</item>
@@ -51,56 +61,53 @@
               </item>
               <item type="dictionary">
                 <dictionary>
-                  <item key="custom"><![CDATA[<!-- ZMSFormulator.standard_html -->
-
-<tal:block tal:define="global this options/zmscontext"
-  tal:condition="python:this.isFeatureEnabled('%zms3.formulator%')">
-<div tal:content="structure python:this.getJSONEditor()"></div>
-</tal:block>
-<tal:block tal:define="global this options/zmscontext"
-  tal:condition="python:not this.isFeatureEnabled('%zms3.formulator%')">  
-<div><pre class="alert alert-danger">zms3.formulator not activated</pre></div>
-</tal:block>
-
-<!-- /ZMSFormulator.standard_html -->]]>
-                  </item>
-                  <item key="id"><![CDATA[standard_html]]></item>
-                  <item key="mandatory" type="int">0</item>
-                  <item key="multilang" type="int">0</item>
-                  <item key="name"><![CDATA[Template: ZMSFormulator]]></item>
-                  <item key="repetitive" type="int">0</item>
-                  <item key="type"><![CDATA[zpt]]></item>
-                </dictionary>
-              </item>
-              <item type="dictionary">
-                <dictionary>
-                  <item key="id"><![CDATA[formulatorItems]]></item>
-                  <item key="mandatory" type="int">0</item>
-                  <item key="multilang" type="int">0</item>
-                  <item key="name"><![CDATA[Items]]></item>
-                  <item key="repetitive" type="int">1</item>
-                  <item key="type"><![CDATA[ZMSFormulatorItem]]></item>
-                </dictionary>
-              </item>
-              <item type="dictionary">
-                <dictionary>
                   <item key="default"><![CDATA[0]]></item>
-                  <item key="id"><![CDATA[sendViaMail]]></item>
+                  <item key="id"><![CDATA[attr_dc_accessrights_restricted]]></item>
                   <item key="mandatory" type="int">0</item>
-                  <item key="multilang" type="int">1</item>
-                  <item key="name"><![CDATA[Send Data by Mail]]></item>
+                  <item key="multilang" type="int">0</item>
+                  <item key="name"><![CDATA[Zugriffsschutz]]></item>
                   <item key="repetitive" type="int">0</item>
-                  <item key="type"><![CDATA[boolean]]></item>
+                  <item key="type"><![CDATA[attr_dc_accessrights_restricted]]></item>
                 </dictionary>
               </item>
               <item type="dictionary">
                 <dictionary>
-                  <item key="id"><![CDATA[sendViaMailAddress]]></item>
+                  <item key="id"><![CDATA[attr_dc_identifier_url_node]]></item>
                   <item key="mandatory" type="int">0</item>
                   <item key="multilang" type="int">1</item>
-                  <item key="name"><![CDATA[Mail Address [TO]]]></item>
+                  <item key="name"><![CDATA[URL Name]]></item>
                   <item key="repetitive" type="int">0</item>
-                  <item key="type"><![CDATA[string]]></item>
+                  <item key="type"><![CDATA[attr_dc_identifier_url_node]]></item>
+                </dictionary>
+              </item>
+              <item type="dictionary">
+                <dictionary>
+                  <item key="id"><![CDATA[CACHE_PURGE]]></item>
+                  <item key="mandatory" type="int">0</item>
+                  <item key="multilang" type="int">0</item>
+                  <item key="name"><![CDATA[<dtml-call "REQUEST.set('preview','')">
+<script language="javascript">
+function purgeurl() {
+  $.ajax({
+    url:'purgecache?url_input=<dtml-var "getHref2IndexHtml(REQUEST)">',
+    context: document.body,
+    success: function(data){ 
+      $('#cache').addClass('alert-success');
+      alert('DOCUMENT CACHE SUCCESSFULLY PURGED: \n' +data);
+      $('#cache').removeClass('alert-success');
+    }
+  })
+};
+</script>
+<dtml-call "REQUEST.set('preview','preview')">
+
+<div class="form-group" id="tr_cache">
+<label class="col-sm-2 control-label mandatory" for="cache"><span>Cache</span></label>
+<div class="col-sm-10"><input class="form-control cache" type="button" id="cache" name="cache" value="Purge" onclick="javascript:purgeurl();" /></div>
+</div>]]>
+                  </item>
+                  <item key="repetitive" type="int">0</item>
+                  <item key="type"><![CDATA[interface]]></item>
                 </dictionary>
               </item>
               <item type="dictionary">
@@ -163,14 +170,50 @@ required_by_default : true]]>
               </item>
               <item type="dictionary">
                 <dictionary>
+                  <item key="id"><![CDATA[interface2]]></item>
+                  <item key="mandatory" type="int">0</item>
+                  <item key="multilang" type="int">0</item>
+                  <item key="name"><![CDATA[<div class="form-group" id="tr_buttons">
+<div class="col-sm-2"></div>
+<div class="col-sm-10">
+	<button type="button" name="btn" class="btn btn-primary" id="BTN_Export" value="Download">Download</button>
+	<button type="button" name="btn" class="btn btn-primary" id="BTN_Export" value="Export" disabled="disabled">Export</button>
+	<button type="button" name="btn" class="btn btn-default" id="BTN_Reset" value="Reset">Reset</button>
+</div>
+</div>]]>
+                  </item>
+                  <item key="repetitive" type="int">0</item>
+                  <item key="type"><![CDATA[interface]]></item>
+                </dictionary>
+              </item>
+              <item type="dictionary">
+                <dictionary>
+                  <item key="default"><![CDATA[0]]></item>
+                  <item key="id"><![CDATA[sendViaMail]]></item>
+                  <item key="mandatory" type="int">0</item>
+                  <item key="multilang" type="int">1</item>
+                  <item key="name"><![CDATA[Send by Mail]]></item>
+                  <item key="repetitive" type="int">0</item>
+                  <item key="type"><![CDATA[boolean]]></item>
+                </dictionary>
+              </item>
+              <item type="dictionary">
+                <dictionary>
+                  <item key="id"><![CDATA[sendViaMailAddress]]></item>
+                  <item key="mandatory" type="int">0</item>
+                  <item key="multilang" type="int">1</item>
+                  <item key="name"><![CDATA[Mail Address [TO]]]></item>
+                  <item key="repetitive" type="int">0</item>
+                  <item key="type"><![CDATA[string]]></item>
+                </dictionary>
+              </item>
+              <item type="dictionary">
+                <dictionary>
                   <item key="id"><![CDATA[interface]]></item>
                   <item key="mandatory" type="int">0</item>
                   <item key="multilang" type="int">0</item>
                   <item key="name"><![CDATA[<tal:block tal:condition="python:this.isFeatureEnabled('%zms3.formulator%')" tal:define="global this options/zmscontext">
 <pre id="DATA_Preview" style="font-size: x-small;" tal:content="structure python:'%i entries:\n%s'%(len(this.attr('_data')),this.printData())">data</pre>
-<button type="button" name="btn" class="btn btn-primary" id="BTN_Export" value="Download">Download</button>
-<button type="button" name="btn" class="btn btn-primary" id="BTN_Export" value="Export" disabled="disabled">Export</button>
-<button type="button" name="btn" class="btn btn-default" id="BTN_Reset" value="Reset">Reset</button>
 <script type="text/javascript">
 $ZMI.registerReady(function() {
 	$('#BTN_Reset').click(function() {
@@ -203,6 +246,39 @@ $ZMI.registerReady(function() {
                   </item>
                   <item key="repetitive" type="int">0</item>
                   <item key="type"><![CDATA[interface]]></item>
+                </dictionary>
+              </item>
+              <item type="dictionary">
+                <dictionary>
+                  <item key="id"><![CDATA[formulatorItems]]></item>
+                  <item key="mandatory" type="int">0</item>
+                  <item key="multilang" type="int">0</item>
+                  <item key="name"><![CDATA[Items]]></item>
+                  <item key="repetitive" type="int">1</item>
+                  <item key="type"><![CDATA[ZMSFormulatorItem]]></item>
+                </dictionary>
+              </item>
+              <item type="dictionary">
+                <dictionary>
+                  <item key="custom"><![CDATA[<!-- ZMSFormulator.standard_html -->
+
+<tal:block tal:define="global this options/zmscontext"
+  tal:condition="python:this.isFeatureEnabled('%zms3.formulator%')">
+<div tal:content="structure python:this.getJSONEditor()"></div>
+</tal:block>
+<tal:block tal:define="global this options/zmscontext"
+  tal:condition="python:not this.isFeatureEnabled('%zms3.formulator%')">  
+<div><pre class="alert alert-danger">zms3.formulator not activated</pre></div>
+</tal:block>
+
+<!-- /ZMSFormulator.standard_html -->]]>
+                  </item>
+                  <item key="id"><![CDATA[standard_html]]></item>
+                  <item key="mandatory" type="int">0</item>
+                  <item key="multilang" type="int">0</item>
+                  <item key="name"><![CDATA[Template: ZMSFormulator]]></item>
+                  <item key="repetitive" type="int">0</item>
+                  <item key="type"><![CDATA[zpt]]></item>
                 </dictionary>
               </item>
             </list>
@@ -239,7 +315,7 @@ $ZMI.registerReady(function() {
           <item key="id"><![CDATA[ZMSFormulator]]></item>
           <item key="name"><![CDATA[ZMSFormulator]]></item>
           <item key="package"><![CDATA[zms3.formulator]]></item>
-          <item key="revision"><![CDATA[3.1.4]]></item>
+          <item key="revision"><![CDATA[3.1.5]]></item>
           <item key="type"><![CDATA[ZMSDocument]]></item>
         </dictionary>
       </item>
