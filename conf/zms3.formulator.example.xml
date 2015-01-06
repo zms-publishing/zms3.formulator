@@ -33,25 +33,25 @@ required_by_default : true,
 // We will use this to seed the initial editor 
 // and to provide a "Restore to Default" button.
 startval : {
-  "1_name" : "John Smith",
-  "2_age" : 35,
-  "3_gender" : "male",
-  "4_location" : {
-    "1_city" : "San Francisco",
-    "2_state" : "California",
-    "3_citystate" : ""
+  "name" : "John Smith",
+  "age" : 35,
+  "gender" : "male",
+  "location" : {
+    "city" : "San Francisco",
+    "state" : "California",
+    "citystate" : ""
   },
-  "5_pets" : [ {
-    "2_name" : "Spot",
-    "1_type" : "dog",
-    "3_fixed" : true
+  "pets" : [ {
+    "name" : "Spot",
+    "type" : "dog",
+    "fixed" : true
   }, {
-    "2_name" : "Whiskers",
-    "1_type" : "cat",
-    "3_fixed" : false
+    "name" : "Whiskers",
+    "type" : "cat",
+    "fixed" : false
   } ],
-  "6_interests" : ["Hiking","Biking"],
-  "7_memberships" : ["ABC", "GHI"]
+  "interests" : ["Hiking","Biking"],
+  "memberships" : ["ABC", "GHI"]
 }]]></lang>
 <lang id="eng"><![CDATA[// Disable additional properties
 no_additional_properties : true,
@@ -63,25 +63,25 @@ required_by_default : true,
 // We will use this to seed the initial editor 
 // and to provide a "Restore to Default" button.
 startval : {
-  "1_name" : "John Smith",
-  "2_age" : 35,
-  "3_gender" : "male",
-  "4_location" : {
-    "1_city" : "San Francisco",
-    "2_state" : "California",
-    "3_citystate" : ""
+  "name" : "John Smith",
+  "age" : 35,
+  "gender" : "male",
+  "location" : {
+    "city" : "San Francisco",
+    "state" : "California",
+    "citystate" : ""
   },
-  "5_pets" : [ {
-    "2_name" : "Spot",
-    "1_type" : "dog",
-    "3_fixed" : true
+  "pets" : [ {
+    "name" : "Spot",
+    "type" : "dog",
+    "fixed" : true
   }, {
-    "2_name" : "Whiskers",
-    "1_type" : "cat",
-    "3_fixed" : false
+    "name" : "Whiskers",
+    "type" : "cat",
+    "fixed" : false
   } ],
-  "6_interests" : ["Hiking","Biking"],
-  "7_memberships" : ["ABC", "GHI"]
+  "interests" : ["Hiking","Biking"],
+  "memberships" : ["ABC", "GHI"]
 }]]></lang></optionsJS>
 <titlealt>
 <lang id="ger"><![CDATA[Person]]></lang>
@@ -183,23 +183,24 @@ female]]></lang></valueSelect>
 <lang id="ger"><![CDATA[{
       "type": "object",
       "title": "Location",
+      "propertyOrder": 4,
       "properties": {
-        "1_city": {
+        "city": {
           "title": "City",
           "type": "string"
         },
-        "2_state": {
+        "state": {
           "title": "State",
           "type": "string"
         },
-        "3_citystate": {
+        "citystate": {
           "title": "Citystate",
           "type": "string",
           "description": "This is generated automatically from the previous two fields",
           "template": "{{city}}, {{state}}",
           "watch": {
-            "city": "person.4_location.1_city",
-            "state": "person.4_location.2_state"
+            "city": "person.location.city",
+            "state": "person.location.state"
           }
         }
       }
@@ -229,11 +230,12 @@ female]]></lang></valueSelect>
       "type": "array",
       "format": "table",
       "title": "Pets",
+      "propertyOrder": 5,
       "uniqueItems": true,
       "items": {
         "type": "object",
         "properties": {
-          "1_type": {
+          "type": {
             "type": "string",
             "title": "Type",
             "enum": [
@@ -245,11 +247,11 @@ female]]></lang></valueSelect>
             ],
             "default": "dog"
           },
-          "2_name": {
+          "name": {
             "type": "string",
             "title": "Name"
           },
-          "3_fixed": {
+          "fixed": {
             "type": "boolean",
             "title": "spayed / neutered",
             "default": true

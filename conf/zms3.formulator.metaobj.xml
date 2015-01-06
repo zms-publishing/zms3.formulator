@@ -716,7 +716,7 @@ def printData(self):
     raise zExceptions.Unauthorized
   else:
     f = ZMSFormulator.ZMSFormulator(self)
-    return f.printDataRaw()
+    return f.printDataRaw().replace(';',' | ')
 ]]>
                   </item>
                   <item key="id"><![CDATA[printData]]></item>
@@ -776,8 +776,8 @@ def downloadData(self):
   else:
     f = ZMSFormulator.ZMSFormulator(self)
     RESPONSE = self.REQUEST.RESPONSE
-    content_type = 'text/plain; charset=utf-8'
-    filename = '"%s_%s.txt"'%(self.getLangStr('TYPE_ZMSFORMULATOR'),f.titlealt)
+    content_type = 'text/csv; charset=utf-8'
+    filename = '"%s_%s.csv"'%(self.getLangStr('TYPE_ZMSFORMULATOR'),f.titlealt)
     RESPONSE.setHeader('Content-Type',content_type)
     RESPONSE.setHeader('Content-Disposition','attachment;filename='+filename)
     RESPONSE.setHeader('Cache-Control', 'no-cache')

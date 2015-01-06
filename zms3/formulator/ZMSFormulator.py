@@ -92,8 +92,8 @@ class ZMSFormulator:
       href = self.this.getHref2IndexHtml(self.this.REQUEST)
       if self.thisMaster.getConfProperty('ZMS.pathcropping',0)==1:
         base = self.this.REQUEST.get('BASE0','')
-      mbody.append('%s entries at %s:' % (len(self.getData()), base+href))      
-      mbody.append('\n')
+      mbody.append('%s entries at %s' % (len(self.getData()), base+href))      
+      mbody.append('\n\n')
       mbody.append(self.printDataRaw())
       mbody = ''.join(mbody)
       if self.thisMaster.sendMail(self.mailAddress, msubj, mbody, self.this.REQUEST) < 0:
@@ -111,25 +111,19 @@ class ZMSFormulator:
       output.append(time.strftime('%c', time.gmtime(t)))
       for i in sorted(v):
         i1, i2 = i
-        header.append(i1.split('_', 1)[1].upper())
+        header.append(i1.upper())
         outstr = self.this.str_item(i2)
         outstr = outstr.replace('`','').replace('\'','').replace('"','')
         outstr = outstr.replace('$','').replace('|','').replace(';','')
         outstr = outstr.replace('<','').replace('>','').replace('&','')
-        output.append(outstr.replace('\n','; '))
-      output.append('\n')
-      s1 = ' | '.join(header)
-      s2 += ' | '.join(output)      
+        output.append(outstr.replace('\n',', '))
+      #output.append('\n')
+      s1 = ';'.join(header)
+      s2 += ';'.join(output) + '\n'
     
     s = s + self.this.re_sub('[_\[\]]','',s1) + '\n' + s2
     
     return s
-
-  def printDataPretty(self):
-    
-    # TODO: printDataPretty
-    
-    return
 
 class ZMSFormulatorItem:
 

@@ -27,13 +27,14 @@ def getSchema(obj):
 
   for i, item in enumerate(obj.items, start=1):
 
-    var = '%i_%s'%(i, item.titlealt.lower())
+    var = '%s'%(item.titlealt.lower())
     values = item.select.strip().splitlines()
     
     JSONDict['properties'][var]                     = {}
     JSONDict['properties'][var]['type']             = item.type == 'float' and 'number' or item.type
     JSONDict['properties'][var]['title']            = item.title
     JSONDict['properties'][var]['description']      = item.description
+    JSONDict['properties'][var]['propertyOrder']    = i
 
     if item.default.strip() != '':
       JSONDict['properties'][var]['default']        = item.default 
