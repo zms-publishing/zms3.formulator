@@ -235,7 +235,7 @@ $ZMI.registerReady(function() {
 				data : '',
 				dataType : ''
 			});
-			$('#DATA_Preview').html('0 entries:\n\n');
+			$('#DATA_Preview').html('0 entries:\n\n\n');
 		}
 	});
 	$('#BTN_Download').click(function() {
@@ -728,8 +728,7 @@ def printData(self):
     raise zExceptions.Unauthorized
   else:
     f = ZMSFormulator.ZMSFormulator(self)
-    return f.printDataRaw().replace(';',' | ')
-]]>
+    return f.printDataRaw().replace(';',' | ')]]>
                   </item>
                   <item key="id"><![CDATA[printData]]></item>
                   <item key="mandatory" type="int">0</item>

@@ -118,7 +118,6 @@ class ZMSFormulator:
         outstr = outstr.replace('$','').replace('|','').replace(';','')
         outstr = outstr.replace('<','').replace('>','').replace('&','')
         output.append(outstr.replace('\n',', '))
-      #output.append('\n')
       s1 = ';'.join(header)
       s2 += ';'.join(output) + '\n'
     
