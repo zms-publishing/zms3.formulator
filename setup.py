@@ -14,7 +14,7 @@ for path in sys.path:
   if path.endswith('site-packages'):
     site_packages = path
 
-VERSION = '3.2.0dev2'
+VERSION = '3.2.0dev3'
 
 DATA_FILES = [
   (os.path.join(site_packages, 'zms3/formulator/'), ['zms3/formulator/JSONEditor.js']),

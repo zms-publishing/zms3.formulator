@@ -1,12 +1,12 @@
 // zms3.formulator.JSONEditor.js
 
-// Initialize the editor
-var editor = new JSONEditor(document.getElementById('editor_holder'), {
+// Initialize the ZMSFormulator
+var ZMSFormulator = new JSONEditor(document.getElementById('editor_holder'), {
 	
 	// Enable fetching schemas via ajax
 	ajax : true,
 
-	// The schema for the editor
+	// The schema for the ZMSFormulator
 	schema : {
 		"$ref" : "%s/getJSONSchema"
 	},
@@ -14,32 +14,30 @@ var editor = new JSONEditor(document.getElementById('editor_holder'), {
 	disable_collapse : true,
 	disable_edit_json : true,
 	disable_properties : true,
-	theme : 'bootstrap3',
-	
-	// Options [JS]
-	%s
+	theme : 'bootstrap3'
 });
 
-// Now the api methods will be available
-editor.on('ready',function() {
-	
-	// onReady [JS]
+// Options (JS)
+%s
+
+// onReady (JS)
+ZMSFormulator.on('ready',function() {
 	%s
 });
 
 // Hook up the submit button to log to the console
 document.getElementById('submit').addEventListener('click', function() {
 
-	var errors = editor.validate();
+	var errors = ZMSFormulator.validate();
 
 	if (!errors.length) {
 
-		// Get the value from the editor
-		var data = editor.getValue();
+		// Get the value from the ZMSFormulator
+		var data = ZMSFormulator.getValue();
 
 		//console.log(data);
 		//alert(JSON.stringify(data));
-		editor.disable();
+		ZMSFormulator.disable();
 		document.getElementById('submit').disabled = true;
 		document.getElementById('restore').disabled = true;
 		document.getElementById('valid_indicator').style.color = 'green';
@@ -71,28 +69,28 @@ document.getElementById('submit').addEventListener('click', function() {
 
 // Hook up the Restore to Default button
 document.getElementById('restore').addEventListener('click', function() {
-	editor.setValue(editor.options.startval);
+	ZMSFormulator.setValue(ZMSFormulator.options.startval);
 });
 
 // Hook up the enable/disable button
 /*
 document.getElementById('enable_disable').addEventListener('click', function() {
 	// Enable form
-	if (!editor.isEnabled()) {
-		editor.enable();
+	if (!ZMSFormulator.isEnabled()) {
+		ZMSFormulator.enable();
 	}
 	// Disable form
 	else {
-		editor.disable();
+		ZMSFormulator.disable();
 	}
 });
 */
 
 // Hook up the validation indicator to update its 
-// status whenever the editor changes
-editor.on('change', function() {
+// status whenever the ZMSFormulator changes
+ZMSFormulator.on('change', function() {
 	// Get an array of errors from the validator
-	var errors = editor.validate();
+	var errors = ZMSFormulator.validate();
 
 	var indicator = document.getElementById('valid_indicator');
 

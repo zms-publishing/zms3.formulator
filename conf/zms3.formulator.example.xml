@@ -5,10 +5,10 @@
 <lang id="ger"><![CDATA[Person]]></lang></titlealt>
 <onReadyJS>
 <lang id="ger"><![CDATA[// Disable part of the form
-editor.getEditor('root.message').disable();
+ZMSFormulator.getEditor('root.message').disable();
 
 // Get/Set Value
-var msg = editor.getEditor('root.message');
+var msg = ZMSFormulator.getEditor('root.message');
 
 if(msg) {
   msg.setValue("Hello World!\nHello Europe!\nHello America!");
@@ -17,15 +17,15 @@ if(msg) {
 <attr_dc_coverage><![CDATA[global.ger]]></attr_dc_coverage>
 <optionsJS>
 <lang id="ger"><![CDATA[// Disable additional properties
-no_additional_properties : true,
+ZMSFormulator.options.no_additional_properties = true;
 
 // Require all properties by default
-required_by_default : true,
+ZMSFormulator.options.required_by_default = true;
 
 // This is the starting value for the editor
 // We will use this to seed the initial editor 
 // and to provide a "Restore to Default" button.
-startval : {
+ZMSFormulator.options.startval = {
   "message" : "Will be set via onReady-Javascript below...",
   "name" : "John Smith",
   "age" : 35,
@@ -46,7 +46,7 @@ startval : {
   } ],
   "interests" : ["Hiking","Biking"],
   "memberships" : ["ABC", "GHI"]
-}]]></lang>
+};]]></lang>
 </optionsJS>
 <attr_dc_description>
 <lang id="ger"><![CDATA[<p>This example demonstrates the following:</p>

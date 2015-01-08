@@ -23,13 +23,13 @@ xmlns:html="http://www.w3.org/TR/REC-html40">
 </Row>
 <Row>
 <Cell ss:StyleID="string"><Data ss:Type="String">TYPE_ZMSFORMULATORITEM</Data></Cell>
-<Cell ss:StyleID="string"><Data ss:Type="String">Webformular-Item</Data></Cell>
-<Cell ss:StyleID="string"><Data ss:Type="String">Web Form Item</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">ZMSFormular-Item</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">ZMSFormular-Item</Data></Cell>
 </Row>
 <Row>
 <Cell ss:StyleID="string"><Data ss:Type="String">TYPE_ZMSFORMULATOR</Data></Cell>
-<Cell ss:StyleID="string"><Data ss:Type="String">Webformular</Data></Cell>
-<Cell ss:StyleID="string"><Data ss:Type="String">Web Form</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">ZMSFormular</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">ZMSFormular</Data></Cell>
 </Row>
 </Table>
 </Worksheet>
