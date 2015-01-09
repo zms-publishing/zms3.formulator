@@ -69,8 +69,7 @@ class ZMSFormulator:
      
     if data is None:
       data = self.this.REQUEST.form.items()
-    
-    # TODO: parse input data
+
     _globals.writeBlock(self.thisMaster, "[ZMSFormulator.receiveData] %s"%data) 
         
     if type(data) is list and len(data)>0:
@@ -93,7 +92,7 @@ class ZMSFormulator:
       href = self.this.getHref2IndexHtml(self.this.REQUEST)
       if self.thisMaster.getConfProperty('ZMS.pathcropping',0)==1:
         base = self.this.REQUEST.get('BASE0','')
-      mbody.append('%s entries at %s' % (len(self.getData()), base+href))      
+      mbody.append(base+href)      
       mbody.append('\n\n')
       mbody.append(self.printDataRaw())
       mbody = ''.join(mbody)
@@ -104,8 +103,9 @@ class ZMSFormulator:
 
   def printDataRaw(self):
     
-    s = s1 = s2 = ''
     d = self.getData()
+    s = '%s entries:\n\n'%len(d)
+    s1 = s2 = ''
     for t, v in sorted(d.iteritems()):
       header = ['DATE']
       output = []
@@ -114,9 +114,9 @@ class ZMSFormulator:
         i1, i2 = i
         header.append(i1.upper())
         outstr = self.this.str_item(i2)
-        outstr = outstr.replace('`','').replace('\'','').replace('"','')
-        outstr = outstr.replace('$','').replace('|','').replace(';','')
-        outstr = outstr.replace('<','').replace('>','').replace('&','')
+        outstr = outstr.replace('`','').replace('´','').replace('\'','')
+        outstr = outstr.replace('|','').replace('\\','').replace(';','')
+        outstr = outstr.replace('<','').replace('>','').replace('"','')
         output.append(outstr.replace('\n',', '))
       s1 = ';'.join(header)
       s2 += ';'.join(output) + '\n'

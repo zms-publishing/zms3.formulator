@@ -131,7 +131,7 @@ required_by_default : true]]>
                   <item key="id"><![CDATA[optionsJS]]></item>
                   <item key="mandatory" type="int">0</item>
                   <item key="multilang" type="int">1</item>
-                  <item key="name"><![CDATA[Options (JS)]]></item>
+                  <item key="name"><![CDATA[Options [JS]]]></item>
                   <item key="repetitive" type="int">0</item>
                   <item key="type"><![CDATA[text]]></item>
                 </dictionary>
@@ -158,7 +158,7 @@ required_by_default : true]]>
                   <item key="id"><![CDATA[onReadyJS]]></item>
                   <item key="mandatory" type="int">0</item>
                   <item key="multilang" type="int">1</item>
-                  <item key="name"><![CDATA[onReady (JS)]]></item>
+                  <item key="name"><![CDATA[onReady [JS]]]></item>
                   <item key="repetitive" type="int">0</item>
                   <item key="type"><![CDATA[text]]></item>
                 </dictionary>
@@ -224,6 +224,7 @@ required_by_default : true]]>
 <div class="col-sm-10">
 	<button type="button" name="btn" class="btn btn-primary" id="BTN_Download" value="Download">Download</button>
 	<button type="button" name="btn" class="btn btn-primary" id="BTN_Export" value="Export" disabled="disabled">Export</button>
+	<button type="button" name="btn" class="btn btn-default" id="BTN_Refresh" value="Refresh">Refresh</button>
 	<button type="button" name="btn" class="btn btn-default" id="BTN_Reset" value="Reset">Reset</button>
 </div>
 </div>]]>
@@ -260,7 +261,7 @@ required_by_default : true]]>
                   <item key="multilang" type="int">0</item>
                   <item key="name"><![CDATA[<!-- DATA Preview -->
 <tal:block tal:condition="python:this.isFeatureEnabled('%zms3.formulator%')" tal:define="global this options/zmscontext">
-<pre id="DATA_Preview" style="font-size: x-small;" tal:content="structure python:'%i entries:\n\n%s'%(len(this.attr('_data')),this.printData())">data</pre>
+<pre id="DATA_Preview" style="font-size: x-small;" tal:content="python:this.printData()">data</pre>
 </tal:block>
 <tal:block tal:condition="python:not this.isFeatureEnabled('%zms3.formulator%')" tal:define="global this options/zmscontext">
 <pre class="alert alert-danger">zms3.formulator not activated</pre>
@@ -311,6 +312,16 @@ required_by_default : true]]>
                   <item key="name"><![CDATA[<script type="text/javascript" charset="UTF-8" src="/++resource++zms_/ace.ajax.org/ace.js"></script>
 <script type="text/javascript">
 $ZMI.registerReady(function() {
+	$('#BTN_Refresh').click(function() {
+		$.ajax({
+			type : 'GET',
+			url : 'printData',
+			data : '',
+			dataType : ''
+		}).done(function(data) {
+		    $("#DATA_Preview").html(data);
+			});
+	});
 	$('#BTN_Reset').click(function() {
 		var res = confirm("Daten wirklich loeschen?");
 		if (res == true) {
@@ -319,8 +330,9 @@ $ZMI.registerReady(function() {
 				url : 'resetData',
 				data : '',
 				dataType : ''
-			});
-			$('#DATA_Preview').html('0 entries:\n\n\n');
+			}).done(function(data) {
+				$("#DATA_Preview").html('0 entries:\n\n\n');
+				});
 		}
 	});
 	$('#BTN_Download').click(function() {
@@ -555,7 +567,7 @@ $ZMI.registerReady(function() {
                   <item key="id"><![CDATA[rawJSON]]></item>
                   <item key="mandatory" type="int">0</item>
                   <item key="multilang" type="int">1</item>
-                  <item key="name"><![CDATA[Schema (JSON)]]></item>
+                  <item key="name"><![CDATA[Schema [JSON]]]></item>
                   <item key="repetitive" type="int">0</item>
                   <item key="type"><![CDATA[text]]></item>
                 </dictionary>
