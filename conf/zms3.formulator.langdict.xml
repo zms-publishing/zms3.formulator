@@ -19,17 +19,20 @@ xmlns:html="http://www.w3.org/TR/REC-html40">
 <Row>
 <Cell ss:StyleID="head"><Data ss:Type="String">key</Data></Cell>
 <Cell ss:StyleID="head"><Data ss:Type="String">ger</Data></Cell>
+<Cell ss:StyleID="head"><Data ss:Type="String">fra</Data></Cell>
 <Cell ss:StyleID="head"><Data ss:Type="String">eng</Data></Cell>
 </Row>
 <Row>
 <Cell ss:StyleID="string"><Data ss:Type="String">TYPE_ZMSFORMULATORITEM</Data></Cell>
-<Cell ss:StyleID="string"><Data ss:Type="String">ZMSFormular-Item</Data></Cell>
-<Cell ss:StyleID="string"><Data ss:Type="String">ZMSFormular-Item</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">Formular Item</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">Élément formulaire</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">Form item</Data></Cell>
 </Row>
 <Row>
 <Cell ss:StyleID="string"><Data ss:Type="String">TYPE_ZMSFORMULATOR</Data></Cell>
-<Cell ss:StyleID="string"><Data ss:Type="String">ZMSFormular</Data></Cell>
-<Cell ss:StyleID="string"><Data ss:Type="String">ZMSFormular</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">Formular</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">Formulaire</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">Form</Data></Cell>
 </Row>
 </Table>
 </Worksheet>
