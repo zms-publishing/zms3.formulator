@@ -2,22 +2,19 @@ import os
 import sys
 from setuptools import setup
 
-# @see https://docs.python.org/2/library/site.html
-# says site.getusersitepackages() "New in version 2.7" but it is still missing at
-# 2.7.5 (default, Mar  9 2014, 22:15:05)
-# [GCC 4.2.1 Compatible Apple LLVM 5.0 (clang-500.0.68)]
-#
-# site_packages = site.getusersitepackages()
-#
-# therefore get it from sys.path
 for path in sys.path:
   if path.endswith('site-packages'):
     site_packages = path
 
-VERSION = '3.2.0dev3'
+VERSION = '3.2.0dev4'
+
+INSTALL_REQUIRES = [
+# 'ZMS3>=3.1.0',
+]
 
 DATA_FILES = [
   (os.path.join(site_packages, 'zms3/formulator/'), ['zms3/formulator/JSONEditor.js']),
+  (os.path.join(site_packages, 'zms3/formulator/conf'), ['conf/zms3.formulator.example.xml']),
   (os.path.join(site_packages, 'zms3/formulator/conf'), ['conf/zms3.formulator.langdict.xml']),
   (os.path.join(site_packages, 'zms3/formulator/conf'), ['conf/zms3.formulator.metaobj.xml']),
 ]
@@ -52,7 +49,7 @@ setup(
   download_url          = 'https://code.zms3.com/formulator',
   namespace_packages    = ['zms3'],
   packages              = ['zms3.formulator'],
-# py_modules            = ['zms3.formulator.ZMSFormulator','zms3.formulator.JSONEditor'],
+  install_requires      = INSTALL_REQUIRES,
   data_files            = DATA_FILES,
   classifiers           = CLASSIFIERS,
   include_package_data  = True,

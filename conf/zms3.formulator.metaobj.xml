@@ -221,12 +221,16 @@ required_by_default : true]]>
                   <item key="name"><![CDATA[<!-- DATA Buttons -->
 <div class="form-group" id="tr_buttons">
 <div class="col-sm-2"></div>
+<tal:block tal:define="
+  auth_user_roles python:context.getUserRoles(request['AUTHENTICATED_USER']);
+  reset_allowed_for python:['Manager','ZMSAdministrator','ZMSEditor'];">
 <div class="col-sm-10">
-	<button type="button" name="btn" class="btn btn-primary" id="BTN_Download" value="Download">Download</button>
-	<button type="button" name="btn" class="btn btn-primary" id="BTN_Export" value="Export" disabled="disabled">Export</button>
-	<button type="button" name="btn" class="btn btn-default" id="BTN_Refresh" value="Refresh">Refresh</button>
-	<button type="button" name="btn" class="btn btn-default" id="BTN_Reset" value="Reset">Reset</button>
+  <button type="button" name="btn" class="btn btn-primary" id="BTN_Download" value="Download">Download</button>
+  <button type="button" name="btn" class="btn btn-primary" id="BTN_Export" value="Export" disabled="disabled">Export</button>
+  <button type="button" name="btn" class="btn btn-default" id="BTN_Refresh" value="Refresh">Refresh</button>
+  <button type="button" name="btn" class="btn btn-default" id="BTN_Reset" value="Reset" tal:condition="python:len(context.intersection_list(auth_user_roles,reset_allowed_for))>0">Reset</button>
 </div>
+</tal:block>
 </div>]]>
                   </item>
                   <item key="repetitive" type="int">0</item>
@@ -418,11 +422,19 @@ $ZMI.registerReady(function() {
                   <item></item>
                   <item></item>
                   <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
                 </list>
               </item>
               <item key="insert_custom"><![CDATA[{$}]]></item>
               <item key="insert_deny" type="list">
                 <list>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
                   <item></item>
                   <item></item>
                   <item></item>
@@ -817,7 +829,7 @@ textarea.form-control.rawJSON {
           <item key="id"><![CDATA[zms3.formulator]]></item>
           <item key="name"><![CDATA[zms3.formulator]]></item>
           <item key="package"></item>
-          <item key="revision"><![CDATA[3.2.0dev3]]></item>
+          <item key="revision"><![CDATA[3.2.0dev4]]></item>
           <item key="type"><![CDATA[ZMSPackage]]></item>
         </dictionary>
       </item>
@@ -933,7 +945,9 @@ def putData(self):
 import zExceptions
 
 def resetData(self):
-  authorized = self.REQUEST.get('AUTHENTICATED_USER').has_role('Authenticated')
+  auth_user_roles = self.getUserRoles(self.REQUEST['AUTHENTICATED_USER'])
+  reset_allowed_for = ['Manager','ZMSAdministrator','ZMSEditor']
+  authorized = len(self.intersection_list(auth_user_roles,reset_allowed_for))>0 and True or False
   if not authorized:
     raise zExceptions.Unauthorized
   else:
@@ -996,7 +1010,7 @@ def downloadData(self):
           <item key="id"><![CDATA[zms3.formulator.lib]]></item>
           <item key="name"><![CDATA[zms3.formulator.lib]]></item>
           <item key="package"><![CDATA[zms3.formulator]]></item>
-          <item key="revision"><![CDATA[3.2.0dev3]]></item>
+          <item key="revision"><![CDATA[3.2.0dev4]]></item>
           <item key="type"><![CDATA[ZMSLibrary]]></item>
         </dictionary>
       </item>
