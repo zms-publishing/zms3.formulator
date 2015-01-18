@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ZMSFormulator id="e40717">
+<ZMSFolder id="e41334"
+ id_prefix="e">
 <attr_dc_accessrights_restricted>0</attr_dc_accessrights_restricted>
+<titlealt>
+<lang id="ger"><![CDATA[ZMSFormular-Examples]]></lang></titlealt>
+<attr_dc_coverage><![CDATA[global.ger]]></attr_dc_coverage>
+<active>
+<lang id="ger">0</lang>
+<lang id="fra">0</lang>
+<lang id="eng">0</lang></active>
+<title>
+<lang id="ger"><![CDATA[ZMSFormular-Examples]]></lang></title>
+<attr_dc_type>
+<lang id="ger"><![CDATA[Resource]]></lang></attr_dc_type><ZMSFormulator id="e41335"
+ id_prefix="e">
 <titlealt>
 <lang id="ger"><![CDATA[Person]]></lang></titlealt>
 <onReadyJS>
@@ -47,7 +60,16 @@ ZMSFormulator.options.startval = {
   "interests" : ["Hiking","Biking"],
   "memberships" : ["ABC", "GHI"]
 };]]></lang>
-</optionsJS>
+<lang id="fra"><![CDATA[// Disable additional properties
+no_additional_properties : true,
+
+// Require all properties by default
+required_by_default : true]]></lang>
+<lang id="eng"><![CDATA[// Disable additional properties
+no_additional_properties : true,
+
+// Require all properties by default
+required_by_default : true]]></lang></optionsJS>
 <attr_dc_description>
 <lang id="ger"><![CDATA[<p>This example demonstrates the following:</p>
     <ul>
@@ -59,17 +81,24 @@ ZMSFormulator.options.startval = {
     </ul>]]></lang></attr_dc_description>
 <active>
 <lang id="ger">1</lang>
-</active>
+<lang id="fra">1</lang>
+<lang id="eng">1</lang></active>
 <_data>
 <lang id="ger">
 <dictionary>
 </dictionary></lang>
-</_data>
-<title>
-<lang id="ger"><![CDATA[Advanced JSON Editor Example]]></lang></title>
+<lang id="fra">
+<dictionary>
+</dictionary></lang>
+<lang id="eng">
+<dictionary>
+</dictionary></lang></_data>
 <sendViaMail>
 <lang id="ger">0</lang>
-</sendViaMail><ZMSFormulatorItem id="formulatorItems40732"
+<lang id="fra">0</lang>
+<lang id="eng">0</lang></sendViaMail>
+<title>
+<lang id="ger"><![CDATA[Advanced JSON Editor Example]]></lang></title><ZMSFormulatorItem id="formulatorItems41336"
  id_prefix="formulatorItems">
 <titlealt>
 <lang id="ger"><![CDATA[Message]]></lang></titlealt>
@@ -77,43 +106,49 @@ ZMSFormulator.options.startval = {
 <lang id="ger"><![CDATA[Hello World!]]></lang></valueDefault>
 <valueMaximum>
 <lang id="ger">0</lang>
-</valueMaximum>
+<lang id="fra">0</lang>
+<lang id="eng">0</lang></valueMaximum>
 <valueMinimum>
 <lang id="ger">0</lang>
-</valueMinimum>
+<lang id="fra">0</lang>
+<lang id="eng">0</lang></valueMinimum>
 <attr_dc_coverage><![CDATA[global.ger]]></attr_dc_coverage>
 <active>
 <lang id="ger">1</lang>
-</active>
+<lang id="fra">1</lang>
+<lang id="eng">1</lang></active>
 <type>
 <lang id="ger"><![CDATA[textarea]]></lang></type>
 <title>
 <lang id="ger"><![CDATA[Message]]></lang></title>
 <identifier>
 <lang id="ger"><![CDATA[e40731]]></lang></identifier></ZMSFormulatorItem>
-<ZMSFormulatorItem id="formulatorItems40718"
+<ZMSFormulatorItem id="formulatorItems41337"
  id_prefix="formulatorItems">
 <titlealt>
 <lang id="ger"><![CDATA[Name]]></lang></titlealt>
 <valueMaximum>
 <lang id="ger">0</lang>
-</valueMaximum>
+<lang id="fra">0</lang>
+<lang id="eng">0</lang></valueMaximum>
 <valueMinimum>
 <lang id="ger">4</lang>
-</valueMinimum>
+<lang id="fra">0</lang>
+<lang id="eng">0</lang></valueMinimum>
 <attr_dc_coverage><![CDATA[global.ger]]></attr_dc_coverage>
 <attr_dc_description>
 <lang id="ger"><![CDATA[First and Last name]]></lang></attr_dc_description>
 <active>
 <lang id="ger">1</lang>
-</active>
+<lang id="fra">1</lang>
+<lang id="eng">1</lang></active>
 <type>
 <lang id="ger"><![CDATA[string]]></lang></type>
 <title>
 <lang id="ger"><![CDATA[Name]]></lang></title>
 <identifier>
 <lang id="ger"><![CDATA[e1969]]></lang></identifier></ZMSFormulatorItem>
-<ZMSFormulatorItem id="formulatorItems40719"
+<ZMSFormulatorItem id="formulatorItems41338"
  id_prefix="formulatorItems">
 <titlealt>
 <lang id="ger"><![CDATA[Age]]></lang></titlealt>
@@ -121,41 +156,47 @@ ZMSFormulator.options.startval = {
 <lang id="ger"><![CDATA[21]]></lang></valueDefault>
 <valueMaximum>
 <lang id="ger">99</lang>
-</valueMaximum>
+<lang id="fra">0</lang>
+<lang id="eng">0</lang></valueMaximum>
 <valueMinimum>
 <lang id="ger">18</lang>
-</valueMinimum>
+<lang id="fra">0</lang>
+<lang id="eng">0</lang></valueMinimum>
 <attr_dc_coverage><![CDATA[global.ger]]></attr_dc_coverage>
 <active>
 <lang id="ger">1</lang>
-</active>
+<lang id="fra">1</lang>
+<lang id="eng">1</lang></active>
 <type>
 <lang id="ger"><![CDATA[integer]]></lang></type>
 <title>
 <lang id="ger"><![CDATA[Age]]></lang></title>
 <identifier>
 <lang id="ger"><![CDATA[e1971]]></lang></identifier></ZMSFormulatorItem>
-<ZMSFormulatorItem id="formulatorItems40727"
+<ZMSFormulatorItem id="formulatorItems41339"
  id_prefix="formulatorItems">
 <titlealt>
 <lang id="ger"><![CDATA[Birthday]]></lang></titlealt>
 <valueMaximum>
 <lang id="ger">0</lang>
-</valueMaximum>
+<lang id="fra">0</lang>
+<lang id="eng">0</lang></valueMaximum>
 <valueMinimum>
 <lang id="ger">0</lang>
-</valueMinimum>
+<lang id="fra">0</lang>
+<lang id="eng">0</lang></valueMinimum>
 <attr_dc_coverage><![CDATA[global.ger]]></attr_dc_coverage>
 <active>
 <lang id="ger">1</lang>
-</active>
+<lang id="fra">1</lang>
+<lang id="eng">1</lang></active>
 <type>
 <lang id="ger"><![CDATA[date]]></lang></type>
 <title>
 <lang id="ger"><![CDATA[Birthday]]></lang></title>
 <identifier>
 <lang id="ger"><![CDATA[e40726]]></lang></identifier></ZMSFormulatorItem>
-<ZMSFormulatorItem id="formulatorItems40720"
+<ZMSFormulatorItem id="formulatorItems41340"
  id_prefix="formulatorItems">
 <titlealt>
 <lang id="ger"><![CDATA[Gender]]></lang></titlealt>
@@ -163,37 +204,43 @@ ZMSFormulator.options.startval = {
 <lang id="ger"><![CDATA[female]]></lang></valueDefault>
 <valueMaximum>
 <lang id="ger">0</lang>
-</valueMaximum>
+<lang id="fra">0</lang>
+<lang id="eng">0</lang></valueMaximum>
 <valueMinimum>
 <lang id="ger">0</lang>
-</valueMinimum>
+<lang id="fra">0</lang>
+<lang id="eng">0</lang></valueMinimum>
 <attr_dc_coverage><![CDATA[global.ger]]></attr_dc_coverage>
 <valueSelect>
 <lang id="ger"><![CDATA[male
 female]]></lang></valueSelect>
 <active>
 <lang id="ger">1</lang>
-</active>
+<lang id="fra">1</lang>
+<lang id="eng">1</lang></active>
 <type>
 <lang id="ger"><![CDATA[select]]></lang></type>
 <title>
 <lang id="ger"><![CDATA[Gender]]></lang></title>
 <identifier>
 <lang id="ger"><![CDATA[e1974]]></lang></identifier></ZMSFormulatorItem>
-<ZMSFormulatorItem id="formulatorItems40721"
+<ZMSFormulatorItem id="formulatorItems41341"
  id_prefix="formulatorItems">
 <titlealt>
 <lang id="ger"><![CDATA[Location]]></lang></titlealt>
 <valueMaximum>
 <lang id="ger">0</lang>
-</valueMaximum>
+<lang id="fra">0</lang>
+<lang id="eng">0</lang></valueMaximum>
 <valueMinimum>
 <lang id="ger">0</lang>
-</valueMinimum>
+<lang id="fra">0</lang>
+<lang id="eng">0</lang></valueMinimum>
 <attr_dc_coverage><![CDATA[global.ger]]></attr_dc_coverage>
 <active>
 <lang id="ger">1</lang>
-</active>
+<lang id="fra">1</lang>
+<lang id="eng">1</lang></active>
 <type>
 <lang id="ger"><![CDATA[custom]]></lang></type>
 <rawJSON>
@@ -226,20 +273,23 @@ female]]></lang></valueSelect>
 <lang id="ger"><![CDATA[Location]]></lang></title>
 <identifier>
 <lang id="ger"><![CDATA[e1979]]></lang></identifier></ZMSFormulatorItem>
-<ZMSFormulatorItem id="formulatorItems40722"
+<ZMSFormulatorItem id="formulatorItems41342"
  id_prefix="formulatorItems">
 <titlealt>
 <lang id="ger"><![CDATA[Pets]]></lang></titlealt>
 <valueMaximum>
 <lang id="ger">0</lang>
-</valueMaximum>
+<lang id="fra">0</lang>
+<lang id="eng">0</lang></valueMaximum>
 <valueMinimum>
 <lang id="ger">0</lang>
-</valueMinimum>
+<lang id="fra">0</lang>
+<lang id="eng">0</lang></valueMinimum>
 <attr_dc_coverage><![CDATA[global.ger]]></attr_dc_coverage>
 <active>
 <lang id="ger">1</lang>
-</active>
+<lang id="fra">1</lang>
+<lang id="eng">1</lang></active>
 <type>
 <lang id="ger"><![CDATA[custom]]></lang></type>
 <rawJSON>
@@ -280,16 +330,18 @@ female]]></lang></valueSelect>
 <lang id="ger"><![CDATA[Pets]]></lang></title>
 <identifier>
 <lang id="ger"><![CDATA[e1977]]></lang></identifier></ZMSFormulatorItem>
-<ZMSFormulatorItem id="formulatorItems40723"
+<ZMSFormulatorItem id="formulatorItems41343"
  id_prefix="formulatorItems">
 <titlealt>
 <lang id="ger"><![CDATA[Interests]]></lang></titlealt>
 <valueMaximum>
 <lang id="ger">0</lang>
-</valueMaximum>
+<lang id="fra">0</lang>
+<lang id="eng">0</lang></valueMaximum>
 <valueMinimum>
 <lang id="ger">0</lang>
-</valueMinimum>
+<lang id="fra">0</lang>
+<lang id="eng">0</lang></valueMinimum>
 <attr_dc_coverage><![CDATA[global.ger]]></attr_dc_coverage>
 <valueSelect>
 <lang id="ger"><![CDATA[Hiking
@@ -297,23 +349,26 @@ Biking
 Swimming]]></lang></valueSelect>
 <active>
 <lang id="ger">1</lang>
-</active>
+<lang id="fra">1</lang>
+<lang id="eng">1</lang></active>
 <type>
 <lang id="ger"><![CDATA[multiselect]]></lang></type>
 <title>
 <lang id="ger"><![CDATA[Interests]]></lang></title>
 <identifier>
 <lang id="ger"><![CDATA[e7314]]></lang></identifier></ZMSFormulatorItem>
-<ZMSFormulatorItem id="formulatorItems40724"
+<ZMSFormulatorItem id="formulatorItems41344"
  id_prefix="formulatorItems">
 <titlealt>
 <lang id="ger"><![CDATA[Memberships]]></lang></titlealt>
 <valueMaximum>
 <lang id="ger">0</lang>
-</valueMaximum>
+<lang id="fra">0</lang>
+<lang id="eng">0</lang></valueMaximum>
 <valueMinimum>
 <lang id="ger">0</lang>
-</valueMinimum>
+<lang id="fra">0</lang>
+<lang id="eng">0</lang></valueMinimum>
 <attr_dc_coverage><![CDATA[global.ger]]></attr_dc_coverage>
 <valueSelect>
 <lang id="ger"><![CDATA[ABC
@@ -321,7 +376,8 @@ DEF
 GHI]]></lang></valueSelect>
 <active>
 <lang id="ger">1</lang>
-</active>
+<lang id="fra">1</lang>
+<lang id="eng">1</lang></active>
 <type>
 <lang id="ger"><![CDATA[checkbox]]></lang></type>
 <title>
@@ -329,3 +385,4 @@ GHI]]></lang></valueSelect>
 <identifier>
 <lang id="ger"><![CDATA[e7316]]></lang></identifier></ZMSFormulatorItem>
 </ZMSFormulator>
+</ZMSFolder>
