@@ -12,7 +12,7 @@ def render(obj):
   f.close()
   
   script = '<script src="%s/metaobj_manager/zms3.formulator.lib.jsoneditor.min.js"></script>\n<script>%s</script>'  
-  editor = editor % (obj.thisURLPath, obj.options, obj.onReady, obj.thisURLPath)
+  editor = editor % (obj.thisURLPath, obj.GoogleAPIKey, obj.options, obj.onReady, obj.thisURLPath)
   output = script % (obj.baseURLPath, editor)
   
   return output

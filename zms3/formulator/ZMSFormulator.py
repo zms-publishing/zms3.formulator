@@ -4,6 +4,10 @@ from Zope2.App.startup import getConfiguration
 from Products.zms import _globals
 import zExceptions
 import time
+import json
+import urllib
+import urllib2
+
 
 class ZMSFormulator:
   
@@ -13,6 +17,8 @@ class ZMSFormulator:
     self.thisURLPath  = this.absolute_url()
     self.baseURLPath  = this.getDocumentElement().absolute_url()
     self.thisMaster   = this.breadcrumbs_obj_path(True)[0]
+    self.GoogleAPIKey = self.thisMaster.getConfProperty('Google.API.sitekey.password','your_site_key')
+    self.GoogleAPISec = self.thisMaster.getConfProperty('Google.API.secretkey.password','your_secret_key')
     self.titlealt     = this.attr('titlealt')
     self.title        = this.attr('title')
     self.description  = this.attr('attr_dc_description')
@@ -63,20 +69,61 @@ class ZMSFormulator:
         return False
     else:
       _globals.writeError(self.thisMaster, "[ZMSFormulator.setData] unexpected data (not dict)")
-      return None
+      return False
 
   def receiveData(self, data=None):
-     
+    
     if data is None:
       data = self.this.REQUEST.form.items()
 
-    _globals.writeBlock(self.thisMaster, "[ZMSFormulator.receiveData] %s"%data) 
-        
+    _globals.writeBlock(self.thisMaster, "[ZMSFormulator.receiveData] %s"%data)
+    
     if type(data) is list and len(data)>0:
-      # add current timestamp to data list and store as dictionary
-      self.setData({time.time(): data})
-      if self.sendViaMail == True:
-        self.sendData()
+      
+      for i, item in enumerate(data):
+        key, val = item
+        if key == 'reCAPTCHA':
+          reCAPTCHA = val
+          pos = i
+      
+      # check if input was sent by a robot
+      # hand over response value to reCAPTCHA service by Google
+      url = 'https://www.google.com/recaptcha/api/siteverify'
+      val = {'secret' : self.GoogleAPISec,
+             'response' : reCAPTCHA}
+      dat = urllib.urlencode(val)
+      req = urllib2.Request(url, dat)
+      res = urllib2.urlopen(req)
+      ret = res.read()
+      
+      verification = json.loads(ret)
+      
+      isOK = False
+      error = None
+      if 'success' in verification:
+        isOK = verification['success']
+        if not isOK:
+          if 'error-codes' in verification:
+            error = verification['error-codes']
+      
+      if isOK:
+        # remove reCAPTCHA response value from data to be stored
+        data.pop(pos)
+        # add current timestamp to data list and store as dictionary
+        self.setData({time.time(): data})
+        # send data by mail if configured      
+        if self.sendViaMail == True:
+          self.sendData()
+        return True 
+
+      elif error:
+        _globals.writeError(self.thisMaster, "[ZMSFormulator.setData] error occurred while using reCAPTCHA service by Google: %s"%error)        
+        return False        
+
+      else:
+        _globals.writeError(self.thisMaster, "[ZMSFormulator.setData] input by robot detected")        
+        return False
+    
     else:
       _globals.writeError(self.thisMaster, "[ZMSFormulator.setData] unexpected data (not list)")
       return False

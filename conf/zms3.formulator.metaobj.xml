@@ -74,7 +74,7 @@
                   <item key="id"><![CDATA[attr_dc_identifier_url_node]]></item>
                   <item key="mandatory" type="int">0</item>
                   <item key="multilang" type="int">1</item>
-                  <item key="name"><![CDATA[URL Name]]></item>
+                  <item key="name"><![CDATA[URL Pfadname]]></item>
                   <item key="repetitive" type="int">0</item>
                   <item key="type"><![CDATA[attr_dc_identifier_url_node]]></item>
                 </dictionary>
@@ -404,6 +404,16 @@ $ZMI.registerReady(function() {
                   <item key="type"><![CDATA[interface]]></item>
                 </dictionary>
               </item>
+              <item type="dictionary">
+                <dictionary>
+                  <item key="id"></item>
+                  <item key="mandatory" type="int">0</item>
+                  <item key="multilang" type="int">0</item>
+                  <item key="name"></item>
+                  <item key="repetitive" type="int">0</item>
+                  <item key="type"></item>
+                </dictionary>
+              </item>
             </list>
           </item>
           <item key="access" type="dictionary">
@@ -418,11 +428,17 @@ $ZMI.registerReady(function() {
                   <item></item>
                   <item></item>
                   <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
                 </list>
               </item>
               <item key="insert_custom"><![CDATA[{$}]]></item>
               <item key="insert_deny" type="list">
                 <list>
+                  <item></item>
+                  <item></item>
+                  <item></item>
                   <item></item>
                   <item></item>
                   <item></item>
@@ -821,7 +837,7 @@ textarea.form-control.rawJSON {
           <item key="id"><![CDATA[zms3.formulator]]></item>
           <item key="name"><![CDATA[zms3.formulator]]></item>
           <item key="package"></item>
-          <item key="revision"><![CDATA[3.2.0dev4]]></item>
+          <item key="revision"><![CDATA[3.2.0dev5]]></item>
           <item key="type"><![CDATA[ZMSPackage]]></item>
         </dictionary>
       </item>
@@ -863,11 +879,14 @@ var b=this.getElementEditor(0,!0);this.item_default=b.getDefault(),this.width=b.
 def getJSONEditor(self):
   f = ZMSFormulator.ZMSFormulator(self)
   output = '''
-    <div id='editor_holder'></div>
-    <button id='submit'>Submit</button>
-    <button id='restore'>Restore</button>
-    <span id='valid_indicator'></span>
-  '''
+    <div id="editor_holder"></div>
+    <div id="reCAPTCHA" style="margin:1em 0;"></div>
+    <button id="submit">Submit</button>
+    <button id="restore">Restore</button>
+    <span id="valid_indicator"></span>
+    <div class="g-recaptcha" data-sitekey="%s"></div>
+    <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
+  '''%f.GoogleAPIKey
   return output + JSONEditor.render(f)]]>
                   </item>
                   <item key="id"><![CDATA[getJSONEditor]]></item>
@@ -921,7 +940,11 @@ def printData(self):
 
 def putData(self):
   f = ZMSFormulator.ZMSFormulator(self)
-  f.receiveData()]]>
+  res = f.receiveData()
+  if res:
+    return 'Data was sent.'
+  else:
+    return 'Data was not sent. Are you a robot?']]>
                   </item>
                   <item key="id"><![CDATA[putData]]></item>
                   <item key="mandatory" type="int">0</item>
@@ -1002,7 +1025,7 @@ def downloadData(self):
           <item key="id"><![CDATA[zms3.formulator.lib]]></item>
           <item key="name"><![CDATA[zms3.formulator.lib]]></item>
           <item key="package"><![CDATA[zms3.formulator]]></item>
-          <item key="revision"><![CDATA[3.2.0dev4]]></item>
+          <item key="revision"><![CDATA[3.2.0dev5]]></item>
           <item key="type"><![CDATA[ZMSLibrary]]></item>
         </dictionary>
       </item>

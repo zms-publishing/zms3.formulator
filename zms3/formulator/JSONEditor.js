@@ -17,6 +17,16 @@ var ZMSFormulator = new JSONEditor(document.getElementById('editor_holder'), {
 	theme : 'bootstrap3'
 });
 
+var onloadCallback = function() {
+    grecaptcha.render('reCAPTCHA', {
+    	'sitekey' : '%s',
+    	'theme' : 'light',
+    	'callback' : function(response) {
+            //console.log(response);
+        }
+    });
+};
+
 // Options (JS)
 %s
 
@@ -34,35 +44,33 @@ document.getElementById('submit').addEventListener('click', function() {
 
 		// Get the value from the ZMSFormulator
 		var data = ZMSFormulator.getValue();
-
-		//console.log(data);
-		//alert(JSON.stringify(data));
-		ZMSFormulator.disable();
-		document.getElementById('submit').disabled = true;
-		document.getElementById('restore').disabled = true;
-		document.getElementById('valid_indicator').style.color = 'green';
-		document.getElementById('valid_indicator').textContent = "Data sent.";
 		
+		// Add the response value from the reCAPTCHA service by Google
+		// for server-side verification
+		data['reCAPTCHA'] = grecaptcha.getResponse();
+				
 		$.ajax({
 			type : 'POST',
 			url : '%s/putData',
 			data : data,
 			dataType : 'json'
-		}).success(function(response) {
-			if (response && response.id) {
-				/*  success actions */
-
-			} else {
-				/* server-side validation error */
-
+		})
+		.always(function(res) {
+			var text = res.responseText;
+			console.log(text);
+			document.getElementById('valid_indicator').textContent = text;			
+			if (text == 'Data was sent.') {
+				document.getElementById('valid_indicator').style.color = 'green';
+				ZMSFormulator.disable();
+				document.getElementById('submit').disabled = true;
+				document.getElementById('restore').disabled = true;
 			}
-		}).error(function() {
-			/* ajax error */
-
-		});
-
-	} else {
-		/* client-side validation error */
+			else {
+				document.getElementById('valid_indicator').style.color = 'red';				
+			}
+		});	
+	}
+	else {
 
 	}
 });
