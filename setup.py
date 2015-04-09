@@ -49,6 +49,7 @@ setup(
   download_url          = 'https://code.zms3.com/formulator',
   namespace_packages    = ['zms3'],
   packages              = ['zms3.formulator'],
+  package_data          = { '': ['*.js', 'conf/*.xml'] },
   install_requires      = INSTALL_REQUIRES,
   data_files            = DATA_FILES,
   classifiers           = CLASSIFIERS,
