@@ -3,10 +3,10 @@ import sys
 from setuptools import setup
 
 for path in sys.path:
-  if path.endswith('site-packages'):
+  if path.startswith(sys.prefix) and path.endswith('site-packages'):
     site_packages = path
 
-VERSION = '3.2.0dev5'
+VERSION = '3.2.0dev6'
 
 INSTALL_REQUIRES = [
 # 'ZMS3>=3.1.0',
@@ -49,7 +49,6 @@ setup(
   download_url          = 'https://code.zms3.com/formulator',
   namespace_packages    = ['zms3'],
   packages              = ['zms3.formulator'],
-  package_data          = { '': ['*.js', 'conf/*.xml'] },
   install_requires      = INSTALL_REQUIRES,
   data_files            = DATA_FILES,
   classifiers           = CLASSIFIERS,
