@@ -123,10 +123,10 @@ function purgeurl() {
               <item type="dictionary">
                 <dictionary>
                   <item key="default"><![CDATA[// Disable additional properties
-no_additional_properties : true,
+ZMSFormulator.options.no_additional_properties = true;
 
 // Require all properties by default
-required_by_default : true]]>
+ZMSFormulator.options.required_by_default = true;]]>
                   </item>
                   <item key="id"><![CDATA[optionsJS]]></item>
                   <item key="mandatory" type="int">0</item>
