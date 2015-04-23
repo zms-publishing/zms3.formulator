@@ -887,6 +887,8 @@ def getJSONEditor(self):
     <div class="g-recaptcha" data-sitekey="%s"></div>
     <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
   '''%f.GoogleAPIKey
+  self.REQUEST.RESPONSE.setHeader('Cache-Control', 'no-cache')
+  self.REQUEST.RESPONSE.setHeader('Pragma', 'no-cache')
   return output + JSONEditor.render(f)]]>
                   </item>
                   <item key="id"><![CDATA[getJSONEditor]]></item>
@@ -903,6 +905,8 @@ def getJSONEditor(self):
 
 def getJSONSchema(self):
   f = ZMSFormulator.ZMSFormulator(self)
+  self.REQUEST.RESPONSE.setHeader('Cache-Control', 'no-cache')
+  self.REQUEST.RESPONSE.setHeader('Pragma', 'no-cache')
   return JSONEditor.getSchema(f)]]>
                   </item>
                   <item key="id"><![CDATA[getJSONSchema]]></item>
@@ -924,6 +928,8 @@ def printData(self):
     raise zExceptions.Unauthorized
   else:
     f = ZMSFormulator.ZMSFormulator(self)
+    self.REQUEST.RESPONSE.setHeader('Cache-Control', 'no-cache')
+    self.REQUEST.RESPONSE.setHeader('Pragma', 'no-cache')
     return f.printDataRaw().replace(';',' | ')]]>
                   </item>
                   <item key="id"><![CDATA[printData]]></item>
@@ -941,6 +947,8 @@ def printData(self):
 def putData(self):
   f = ZMSFormulator.ZMSFormulator(self)
   res = f.receiveData()
+  self.REQUEST.RESPONSE.setHeader('Cache-Control', 'no-cache')
+  self.REQUEST.RESPONSE.setHeader('Pragma', 'no-cache')
   if res:
     return 'Data was sent.'
   else:
@@ -988,13 +996,12 @@ def downloadData(self):
     raise zExceptions.Unauthorized
   else:
     f = ZMSFormulator.ZMSFormulator(self)
-    RESPONSE = self.REQUEST.RESPONSE
     content_type = 'text/csv; charset=utf-8'
     filename = '"%s_%s.csv"'%(self.getLangStr('TYPE_ZMSFORMULATOR'),f.titlealt)
-    RESPONSE.setHeader('Content-Type',content_type)
-    RESPONSE.setHeader('Content-Disposition','attachment;filename='+filename)
-    RESPONSE.setHeader('Cache-Control', 'no-cache')
-    RESPONSE.setHeader('Pragma', 'no-cache')
+    self.REQUEST.RESPONSE.setHeader('Content-Type',content_type)
+    self.REQUEST.RESPONSE.setHeader('Content-Disposition','attachment;filename='+filename)
+    self.REQUEST.RESPONSE.setHeader('Cache-Control', 'no-cache')
+    self.REQUEST.RESPONSE.setHeader('Pragma', 'no-cache')
     return f.printDataRaw()]]>
                   </item>
                   <item key="id"><![CDATA[downloadData]]></item>
