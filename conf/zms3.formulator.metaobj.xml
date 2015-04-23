@@ -454,7 +454,7 @@ $ZMI.registerReady(function() {
           <item key="id"><![CDATA[ZMSFormulator]]></item>
           <item key="name"><![CDATA[ZMSFormulator]]></item>
           <item key="package"><![CDATA[zms3.formulator]]></item>
-          <item key="revision"><![CDATA[3.2.0]]></item>
+          <item key="revision"><![CDATA[3.2.1]]></item>
           <item key="type"><![CDATA[ZMSDocument]]></item>
         </dictionary>
       </item>
@@ -804,7 +804,7 @@ textarea.form-control.rawJSON {
           <item key="id"><![CDATA[ZMSFormulatorItem]]></item>
           <item key="name"><![CDATA[ZMSFormulatorItem]]></item>
           <item key="package"><![CDATA[zms3.formulator]]></item>
-          <item key="revision"><![CDATA[3.2.0]]></item>
+          <item key="revision"><![CDATA[3.2.1]]></item>
           <item key="type"><![CDATA[ZMSObject]]></item>
         </dictionary>
       </item>
@@ -837,7 +837,7 @@ textarea.form-control.rawJSON {
           <item key="id"><![CDATA[zms3.formulator]]></item>
           <item key="name"><![CDATA[zms3.formulator]]></item>
           <item key="package"></item>
-          <item key="revision"><![CDATA[3.2.0dev6]]></item>
+          <item key="revision"><![CDATA[3.2.1dev]]></item>
           <item key="type"><![CDATA[ZMSPackage]]></item>
         </dictionary>
       </item>
@@ -1032,7 +1032,7 @@ def downloadData(self):
           <item key="id"><![CDATA[zms3.formulator.lib]]></item>
           <item key="name"><![CDATA[zms3.formulator.lib]]></item>
           <item key="package"><![CDATA[zms3.formulator]]></item>
-          <item key="revision"><![CDATA[3.2.0dev6]]></item>
+          <item key="revision"><![CDATA[3.2.1dev]]></item>
           <item key="type"><![CDATA[ZMSLibrary]]></item>
         </dictionary>
       </item>
