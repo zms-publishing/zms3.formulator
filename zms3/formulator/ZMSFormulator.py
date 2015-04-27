@@ -33,8 +33,8 @@ class ZMSFormulator:
     self.thisURLPath  = this.absolute_url()
     self.baseURLPath  = this.getDocumentElement().absolute_url()
     self.thisMaster   = this.breadcrumbs_obj_path(True)[0]
-    self.GoogleAPIKey = self.thisMaster.getConfProperty('Google.API.sitekey.password','your_site_key')
-    self.GoogleAPISec = self.thisMaster.getConfProperty('Google.API.secretkey.password','your_secret_key')
+    self.GoogleAPIKey = self.this.getConfProperty('Google.API.sitekey.password', self.thisMaster.getConfProperty('Google.API.sitekey.password','no_site_key'))
+    self.GoogleAPISec = self.this.getConfProperty('Google.API.secretkey.password', self.thisMaster.getConfProperty('Google.API.secretkey.password','no_secret_key'))
     self.titlealt     = this.attr('titlealt')
     self.title        = this.attr('title')
     self.description  = this.attr('attr_dc_description')
@@ -96,35 +96,44 @@ class ZMSFormulator:
     
     if type(data) is list and len(data)>0:
       
-      for i, item in enumerate(data):
-        key, val = item
-        if key == 'reCAPTCHA':
-          reCAPTCHA = val
-          pos = i
-      
-      # check if input was sent by a robot
-      # hand over response value to reCAPTCHA service by Google
-      url = 'https://www.google.com/recaptcha/api/siteverify'
-      val = {'secret' : self.GoogleAPISec,
-             'response' : reCAPTCHA}
-      dat = urllib.urlencode(val)
-      req = urllib2.Request(url, dat)
-      res = urllib2.urlopen(req)
-      ret = res.read()
-      
-      verification = json.loads(ret)
-      
       isOK = False
       error = None
-      if 'success' in verification:
-        isOK = verification['success']
-        if not isOK:
-          if 'error-codes' in verification:
-            error = verification['error-codes']
+      pos = 0
+
+      # Google.API.sitekey.password not configured
+      if self.GoogleAPIKey == 'no_site_key':
+        isOK = True
+
+      # check if input was sent by a robot
+      # hand over response value to reCAPTCHA service by Google
+      else:
+        
+        for i, item in enumerate(data):
+          key, val = item
+          if key == 'reCAPTCHA':
+            reCAPTCHA = val
+            pos = i
+
+        url = 'https://www.google.com/recaptcha/api/siteverify'
+        val = {'secret' : self.GoogleAPISec,
+               'response' : reCAPTCHA}
+        dat = urllib.urlencode(val)
+        req = urllib2.Request(url, dat)
+        res = urllib2.urlopen(req)
+        ret = res.read()
+        
+        verification = json.loads(ret)
+      
+        if 'success' in verification:
+          isOK = verification['success']
+          if not isOK:
+            if 'error-codes' in verification:
+              error = verification['error-codes']
       
       if isOK:
         # remove reCAPTCHA response value from data to be stored
-        data.pop(pos)
+        if pos > 0:
+          data.pop(pos)
         # add current timestamp to data list and store as dictionary
         self.setData({time.time(): data})
         # send data by mail if configured      

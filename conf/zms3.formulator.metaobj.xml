@@ -878,15 +878,26 @@ if(d(a,function(a,d){d.path===b.path?c.push(d):e.push(d)}),this.error_holder)if(
 
 def getJSONEditor(self):
   f = ZMSFormulator.ZMSFormulator(self)
-  output = '''
-    <div id="editor_holder"></div>
-    <div id="reCAPTCHA" style="margin:1em 0;"></div>
-    <button id="submit">Submit</button>
-    <button id="restore">Restore</button>
-    <span id="valid_indicator"></span>
-    <div class="g-recaptcha" data-sitekey="%s"></div>
-    <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
-  '''%f.GoogleAPIKey
+  
+  # Google.API.sitekey.password not configured
+  if f.GoogleAPIKey == 'no_site_key':
+    output = '''
+      <div id="editor_holder"></div>
+      <button id="submit">Submit</button>
+      <button id="restore">Restore</button>
+      <span id="valid_indicator"></span>
+    '''
+  else:
+	  output = '''
+	    <div id="editor_holder"></div>
+	    <div id="reCAPTCHA" style="margin:1em 0;"></div>
+	    <button id="submit">Submit</button>
+	    <button id="restore">Restore</button>
+	    <span id="valid_indicator"></span>
+	    <div class="g-recaptcha" data-sitekey="%s"></div>
+	    <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
+	  '''%f.GoogleAPIKey
+
   self.REQUEST.RESPONSE.setHeader('Cache-Control', 'no-cache')
   self.REQUEST.RESPONSE.setHeader('Pragma', 'no-cache')
   return output + JSONEditor.render(f)]]>

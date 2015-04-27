@@ -40,15 +40,19 @@ var ZMSFormulator = new JSONEditor(document.getElementById('editor_holder'), {
 	theme : 'bootstrap3'
 });
 
-var onloadCallback = function() {
-    grecaptcha.render('reCAPTCHA', {
-    	'sitekey' : '%s',
-    	'theme' : 'light',
-    	'callback' : function(response) {
-            //console.log(response);
-        }
-    });
-};
+
+var GoogleAPISitekey = '%s';
+if (GoogleAPISitekey != 'no_site_key') {
+	var onloadCallback = function() {
+	    grecaptcha.render('reCAPTCHA', {
+	    	'sitekey' : GoogleAPISitekey,
+	    	'theme' : 'light',
+	    	'callback' : function(response) {
+	            //console.log(response);
+	        }
+	    });
+	};
+}
 
 // Options (JS)
 %s
@@ -70,7 +74,9 @@ document.getElementById('submit').addEventListener('click', function() {
 		
 		// Add the response value from the reCAPTCHA service by Google
 		// for server-side verification
-		data['reCAPTCHA'] = grecaptcha.getResponse();
+		if (GoogleAPISitekey != 'no_site_key') {
+			data['reCAPTCHA'] = grecaptcha.getResponse();
+		}
 				
 		$.ajax({
 			type : 'POST',
