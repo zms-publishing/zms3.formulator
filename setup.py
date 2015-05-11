@@ -25,7 +25,7 @@ for path in sys.path:
   if path.startswith(sys.prefix) and path.endswith('site-packages'):
     site_packages = path
 
-VERSION = '3.2.1dev'
+VERSION = '3.2.2dev'
 
 INSTALL_REQUIRES = [
 # 'ZMS3>=3.1.0',
