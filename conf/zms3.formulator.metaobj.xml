@@ -61,12 +61,32 @@
               </item>
               <item type="dictionary">
                 <dictionary>
+                  <item key="id"><![CDATA[attr_dc_subject]]></item>
+                  <item key="mandatory" type="int">0</item>
+                  <item key="multilang" type="int">1</item>
+                  <item key="name"><![CDATA[DC.Subject]]></item>
+                  <item key="repetitive" type="int">0</item>
+                  <item key="type"><![CDATA[attr_dc_subject]]></item>
+                </dictionary>
+              </item>
+              <item type="dictionary">
+                <dictionary>
+                  <item key="id"><![CDATA[attr_dc_creator]]></item>
+                  <item key="mandatory" type="int">0</item>
+                  <item key="multilang" type="int">1</item>
+                  <item key="name"><![CDATA[DC.Creator]]></item>
+                  <item key="repetitive" type="int">0</item>
+                  <item key="type"><![CDATA[attr_dc_creator]]></item>
+                </dictionary>
+              </item>
+              <item type="dictionary">
+                <dictionary>
                   <item key="id"><![CDATA[attr_dc_accessrights_restricted]]></item>
                   <item key="mandatory" type="int">0</item>
                   <item key="multilang" type="int">0</item>
                   <item key="name"><![CDATA[Zugriffsschutz]]></item>
                   <item key="repetitive" type="int">0</item>
-                  <item key="type"></item>
+                  <item key="type"><![CDATA[attr_dc_accessrights_restricted]]></item>
                 </dictionary>
               </item>
               <item type="dictionary">
@@ -373,16 +393,6 @@ $ZMI.registerReady(function() {
                   <item key="type"><![CDATA[interface]]></item>
                 </dictionary>
               </item>
-              <item type="dictionary">
-                <dictionary>
-                  <item key="id"></item>
-                  <item key="mandatory" type="int">0</item>
-                  <item key="multilang" type="int">0</item>
-                  <item key="name"></item>
-                  <item key="repetitive" type="int">0</item>
-                  <item key="type"></item>
-                </dictionary>
-              </item>
             </list>
           </item>
           <item key="access" type="dictionary">
@@ -400,11 +410,61 @@ $ZMI.registerReady(function() {
                   <item></item>
                   <item></item>
                   <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
                 </list>
               </item>
               <item key="insert_custom"><![CDATA[{$}]]></item>
               <item key="insert_deny" type="list">
                 <list>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
                   <item></item>
                   <item></item>
                   <item></item>
