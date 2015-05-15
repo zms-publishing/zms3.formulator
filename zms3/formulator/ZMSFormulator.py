@@ -64,8 +64,11 @@ class ZMSFormulator:
     self._data.clear()
     zodb = getConfiguration().dbtab.getDatabase('/', is_root=1)._storage
     if not zodb.isReadOnly():
+      self.this.REQUEST.set('lang', self.this.getPrimaryLanguage())
+      self.this.setObjStateModified(self.this.REQUEST)
       self.this.attr('_data', self._data)
       self.this.onChangeObj(self.this.REQUEST)
+      self.this.commitObj(self.this.REQUEST,forced=True)
       return True
     else:
       _globals.writeBlock(self.thisMaster, "[ZMSFormulator.clearData] zodb.isReadOnly")
@@ -77,8 +80,11 @@ class ZMSFormulator:
       self._data.update(data)
       zodb = getConfiguration().dbtab.getDatabase('/', is_root=1)._storage
       if not zodb.isReadOnly():
+        self.this.REQUEST.set('lang', self.this.getPrimaryLanguage())
+        self.this.setObjStateModified(self.this.REQUEST)
         self.this.attr('_data', self._data)
         self.this.onChangeObj(self.this.REQUEST)
+        self.this.commitObj(self.this.REQUEST,forced=True)
         return True
       else:
         _globals.writeBlock(self.thisMaster, "[ZMSFormulator.setData] zodb.isReadOnly")
