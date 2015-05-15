@@ -81,37 +81,6 @@
               </item>
               <item type="dictionary">
                 <dictionary>
-                  <item key="id"><![CDATA[CACHE_PURGE]]></item>
-                  <item key="mandatory" type="int">0</item>
-                  <item key="multilang" type="int">0</item>
-                  <item key="name"><![CDATA[<!-- CACHE PURGE -->
-<dtml-call "REQUEST.set('preview','')">
-<script language="javascript">
-function purgeurl() {
-  $.ajax({
-    url:'purgecache?url_input=<dtml-var "getHref2IndexHtml(REQUEST)">',
-    context: document.body,
-    success: function(data){ 
-      $('#cache').addClass('alert-success');
-      alert('DOCUMENT CACHE SUCCESSFULLY PURGED: \n' +data);
-      $('#cache').removeClass('alert-success');
-    }
-  })
-};
-</script>
-<dtml-call "REQUEST.set('preview','preview')">
-
-<div class="form-group" id="tr_cache">
-<label class="col-sm-2 control-label mandatory" for="cache"><span>Cache</span></label>
-<div class="col-sm-10"><input class="form-control cache" type="button" id="cache" name="cache" value="Purge" onclick="javascript:purgeurl();" /></div>
-</div>]]>
-                  </item>
-                  <item key="repetitive" type="int">0</item>
-                  <item key="type"><![CDATA[interface]]></item>
-                </dictionary>
-              </item>
-              <item type="dictionary">
-                <dictionary>
                   <item key="id"><![CDATA[delimiter_Advanced]]></item>
                   <item key="mandatory" type="int">0</item>
                   <item key="multilang" type="int">1</item>
