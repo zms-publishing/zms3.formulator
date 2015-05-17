@@ -1,6 +1,6 @@
 ################################################################################
 #
-#  Copyright (c) HOFFMANN+LIEBENBERG in association with SNTL Publishing, Berlin
+#  Copyright (c) 2015 HOFFMANN+LIEBENBERG in association with SNTL Publishing
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU Affero General Public License as published by

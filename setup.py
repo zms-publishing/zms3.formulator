@@ -1,6 +1,6 @@
 ################################################################################
 #
-#  Copyright (c) HOFFMANN+LIEBENBERG in association with SNTL Publishing, Berlin
+#  Copyright (c) 2015 HOFFMANN+LIEBENBERG in association with SNTL Publishing
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU Affero General Public License as published by
@@ -25,7 +25,7 @@ for path in sys.path:
   if path.startswith(sys.prefix) and path.endswith('site-packages'):
     site_packages = path
 
-VERSION = '3.2.2dev'
+VERSION = '3.3.0dev'
 
 INSTALL_REQUIRES = [
 # 'ZMS3>=3.1.0',
@@ -38,9 +38,27 @@ DATA_FILES = [
   (os.path.join(site_packages, 'zms3/formulator/conf'), ['conf/zms3.formulator.metaobj.xml']),
 ]
 
+PACKAGE_DATA = []
+# Exclude special folders and files
+for dirpath, dirnames, filenames in os.walk('.'):
+  if (
+    '.'                           != dirpath and
+    '.settings'                   not in dirpath and
+    '.git'                        not in dirpath and
+    'dist'                        not in dirpath and
+    'json-editor'                 not in dirpath and
+    'select2'                     not in dirpath
+    ): 
+    if filenames: 
+      for filename in filenames:
+        if filename != '.DS_Store' and filename != '.gitignore':
+          PACKAGE_DATA.append(dirpath[2:]+'/%s' % filename)
+# Include files from root path (because '.' is exclude above)
+PACKAGE_DATA.append('*.txt')
+
 CLASSIFIERS = [
-  'Development Status :: 3 - Alpha'
-  'Framework :: ZMS3',
+  'Development Status :: 3 - Alpha',
+  'Framework :: Zope2',
   'Programming Language :: Python :: 2.7',
   'Operating System :: OS Independent',
   'Environment :: Web Environment',
@@ -65,9 +83,11 @@ setup(
   author                = 'HOFFMANN+LIEBENBERG in association with SNTL Publishing, Berlin',
   author_email          = 'zms@sntl-publishing.com',
   url                   = 'http://www.zms-publishing.com',
-  download_url          = 'https://bitbucket.org/zms3/formulator',
+  download_url          = 'https://bitbucket.org/zms3/formulator/downloads',
   namespace_packages    = ['zms3'],
   packages              = ['zms3.formulator'],
+  package_dir           = {'zms3.formulator': 'zms3/formulator'},
+  package_data          = {'zms3.formulator': PACKAGE_DATA},
   install_requires      = INSTALL_REQUIRES,
   data_files            = DATA_FILES,
   classifiers           = CLASSIFIERS,
