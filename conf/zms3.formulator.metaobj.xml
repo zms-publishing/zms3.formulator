@@ -81,6 +81,7 @@
               </item>
               <item type="dictionary">
                 <dictionary>
+                  <item key="default"><![CDATA[0]]></item>
                   <item key="id"><![CDATA[attr_dc_accessrights_restricted]]></item>
                   <item key="mandatory" type="int">0</item>
                   <item key="multilang" type="int">0</item>
@@ -229,10 +230,21 @@ ZMSFormulator.options.required_by_default = true;]]>
               <item type="dictionary">
                 <dictionary>
                   <item key="default"><![CDATA[0]]></item>
+                  <item key="id"><![CDATA[dataStorageDisabled]]></item>
+                  <item key="mandatory" type="int">0</item>
+                  <item key="multilang" type="int">1</item>
+                  <item key="name"><![CDATA[Disable Storage of Data]]></item>
+                  <item key="repetitive" type="int">0</item>
+                  <item key="type"><![CDATA[boolean]]></item>
+                </dictionary>
+              </item>
+              <item type="dictionary">
+                <dictionary>
+                  <item key="default"><![CDATA[0]]></item>
                   <item key="id"><![CDATA[sendViaMail]]></item>
                   <item key="mandatory" type="int">0</item>
                   <item key="multilang" type="int">1</item>
-                  <item key="name"><![CDATA[Send by Mail]]></item>
+                  <item key="name"><![CDATA[Send Data by Mail]]></item>
                   <item key="repetitive" type="int">0</item>
                   <item key="type"><![CDATA[boolean]]></item>
                 </dictionary>

@@ -40,6 +40,7 @@ class ZMSFormulator:
     self.description  = this.attr('attr_dc_description')
     self.options      = this.attr('optionsJS')
     self.onReady      = this.attr('onReadyJS')
+    self.noStorage    = this.attr('dataStorageDisabled')
     self.sendViaMail  = this.attr('sendViaMail')
     self.mailAddress  = this.attr('sendViaMailAddress').strip()
     self.items        = []
@@ -63,7 +64,7 @@ class ZMSFormulator:
     
     self._data.clear()
     zodb = getConfiguration().dbtab.getDatabase('/', is_root=1)._storage
-    if not zodb.isReadOnly():
+    if not zodb.isReadOnly() and not self.noStorage:
       self.this.REQUEST.set('lang', self.this.getPrimaryLanguage())
       self.this.setObjStateModified(self.this.REQUEST)
       self.this.attr('_data', self._data)
@@ -79,7 +80,7 @@ class ZMSFormulator:
     if type(data) is dict:
       self._data.update(data)
       zodb = getConfiguration().dbtab.getDatabase('/', is_root=1)._storage
-      if not zodb.isReadOnly():
+      if not zodb.isReadOnly() and not self.noStorage:
         self.this.REQUEST.set('lang', self.this.getPrimaryLanguage())
         self.this.setObjStateModified(self.this.REQUEST)
         self.this.attr('_data', self._data)
