@@ -25,10 +25,22 @@ for path in sys.path:
   if path.startswith(sys.prefix) and path.endswith('site-packages'):
     site_packages = path
 
-VERSION = '3.3.0dev'
+VERSION = '3.3.0dev-sqlstorage'
 
 INSTALL_REQUIRES = [
+# Upstream requirement - install explicitly!
 # 'ZMS3>=3.1.0',
+    
+# ATTENTION
+# Do not include these requirements here, because they may update
+# dependent Python Packages using incompatible versions.
+# Suitable versions are fetched by the ZMS3-Installer (see ZMS3/setup.py)
+# 'Products.ZSQLiteDA',
+# 'Products.ZSQLMethods',
+
+# The following Python Packages require a installed MySQL Database System:
+# 'MySQL-python',
+# 'Products.ZMySQLDA',
 ]
 
 DATA_FILES = [
