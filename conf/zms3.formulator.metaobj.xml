@@ -1064,6 +1064,57 @@ def downloadData(self):
                   <item key="type"><![CDATA[External Method]]></item>
                 </dictionary>
               </item>
+              <item type="dictionary">
+                <dictionary>
+                  <item key="custom"><![CDATA[<connection>Z MySQL Database Connection (MySQL_database_connection), which is connected</connection>
+<params></params>
+
+CREATE TABLE IF NOT EXISTS ZMSFormulator (
+  ZMSFormulatorID int NOT NULL AUTO_INCREMENT,
+  ZMSFormulatorURL varchar(255) NOT NULL,
+  PRIMARY KEY (ZMSFormulatorID)
+);]]>
+                  </item>
+                  <item key="id"><![CDATA[initSQLData]]></item>
+                  <item key="mandatory" type="int">0</item>
+                  <item key="multilang" type="int">0</item>
+                  <item key="name"><![CDATA[initSQLData]]></item>
+                  <item key="repetitive" type="int">0</item>
+                  <item key="type"><![CDATA[Z SQL Method]]></item>
+                </dictionary>
+              </item>
+              <item type="dictionary">
+                <dictionary>
+                  <item key="custom"><![CDATA[<connection>Z MySQL Database Connection (MySQL_database_connection), which is connected</connection>
+<params></params>
+
+INSERT INTO ZMSFormulator (ZMSFormulatorURL) VALUES ('http://domain.com/path/to/formular1');
+INSERT INTO ZMSFormulator (ZMSFormulatorURL) VALUES ('http://domain.com/path/to/formular2');
+INSERT INTO ZMSFormulator (ZMSFormulatorURL) VALUES ('http://domain.com/path/to/formular3');]]>
+                  </item>
+                  <item key="id"><![CDATA[storeSQLData]]></item>
+                  <item key="mandatory" type="int">0</item>
+                  <item key="multilang" type="int">0</item>
+                  <item key="name"><![CDATA[storeSQLData]]></item>
+                  <item key="repetitive" type="int">0</item>
+                  <item key="type"><![CDATA[Z SQL Method]]></item>
+                </dictionary>
+              </item>
+              <item type="dictionary">
+                <dictionary>
+                  <item key="custom"><![CDATA[<connection>Z MySQL Database Connection (MySQL_database_connection), which is connected</connection>
+<params></params>
+
+SELECT * FROM ZMSFormulator]]>
+                  </item>
+                  <item key="id"><![CDATA[getSQLData]]></item>
+                  <item key="mandatory" type="int">0</item>
+                  <item key="multilang" type="int">0</item>
+                  <item key="name"><![CDATA[getSQLData]]></item>
+                  <item key="repetitive" type="int">0</item>
+                  <item key="type"><![CDATA[Z SQL Method]]></item>
+                </dictionary>
+              </item>
             </list>
           </item>
           <item key="access" type="dictionary">
@@ -1084,7 +1135,7 @@ def downloadData(self):
           <item key="id"><![CDATA[zms3.formulator.lib]]></item>
           <item key="name"><![CDATA[zms3.formulator.lib]]></item>
           <item key="package"><![CDATA[zms3.formulator]]></item>
-          <item key="revision"><![CDATA[3.2.2]]></item>
+          <item key="revision"><![CDATA[3.3.0dev]]></item>
           <item key="type"><![CDATA[ZMSLibrary]]></item>
         </dictionary>
       </item>
