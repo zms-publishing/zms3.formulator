@@ -288,7 +288,8 @@ ZMSFormulator.options.required_by_default = true;]]>
                   <item key="custom"><![CDATA[<!-- ZMSFormulator.standard_html -->
 
 <tal:block tal:define="global this options/zmscontext">
-<div tal:content="structure python:this.getJSONEditor()"></div>
+<div class="col-lg-8 col-lg-offset-3 col-md-10 col-md-offset-1"
+  tal:content="structure python:this.getJSONEditor()"></div>
 </tal:block>
 
 <!-- /ZMSFormulator.standard_html -->]]>
@@ -495,7 +496,7 @@ $ZMI.registerReady(function() {
           <item key="id"><![CDATA[ZMSFormulator]]></item>
           <item key="name"><![CDATA[ZMSFormulator]]></item>
           <item key="package"><![CDATA[zms3.formulator]]></item>
-          <item key="revision"><![CDATA[3.2.2]]></item>
+          <item key="revision"><![CDATA[3.2.3]]></item>
           <item key="type"><![CDATA[ZMSDocument]]></item>
         </dictionary>
       </item>
