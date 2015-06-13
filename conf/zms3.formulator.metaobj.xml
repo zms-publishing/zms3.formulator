@@ -276,11 +276,17 @@ ZMSFormulator.options.required_by_default = true;]]>
               <item type="dictionary">
                 <dictionary>
                   <item key="id"><![CDATA[formulatorItems]]></item>
+                  <item key="keys" type="list">
+                    <list>
+                      <item><![CDATA[ZMSFormulatorItem]]></item>
+                      <item><![CDATA[ZMSTextarea]]></item>
+                    </list>
+                  </item>
                   <item key="mandatory" type="int">0</item>
                   <item key="multilang" type="int">0</item>
                   <item key="name"><![CDATA[Items]]></item>
                   <item key="repetitive" type="int">1</item>
-                  <item key="type"><![CDATA[ZMSFormulatorItem]]></item>
+                  <item key="type"><![CDATA[*]]></item>
                 </dictionary>
               </item>
               <item type="dictionary">
@@ -496,7 +502,7 @@ $ZMI.registerReady(function() {
           <item key="id"><![CDATA[ZMSFormulator]]></item>
           <item key="name"><![CDATA[ZMSFormulator]]></item>
           <item key="package"><![CDATA[zms3.formulator]]></item>
-          <item key="revision"><![CDATA[3.2.3]]></item>
+          <item key="revision"><![CDATA[3.2.4]]></item>
           <item key="type"><![CDATA[ZMSDocument]]></item>
         </dictionary>
       </item>
@@ -920,25 +926,40 @@ b.input.value=a,b.refreshValue(),b.is_dirty=!0,b.onChange(!0)})}b.theme.afterInp
 
 def getJSONEditor(self):
   f = ZMSFormulator.ZMSFormulator(self)
+  objs = filter(lambda ob: ob.isActive(self.REQUEST), f.this.getObjChildren('formulatorItems', self.REQUEST, ['ZMSTextarea']))
   
+  if len(objs)==1:
+    beforeZMSTextarea = objs[0].getBodyContent(self.REQUEST)
+    afterZMSTextarea  = ''
+  elif len(objs)>=2:
+    beforeZMSTextarea = objs[0].getBodyContent(self.REQUEST)
+    afterZMSTextarea  = objs[1].getBodyContent(self.REQUEST)
+  else:
+    beforeZMSTextarea = ''
+    afterZMSTextarea  = ''
+    
   # Google.API.sitekey.password not configured
   if f.GoogleAPIKey == 'no_site_key':
     output = '''
+      %s
       <div id="editor_holder"></div>
       <button id="submit">Submit</button>
       <button id="restore">Restore</button>
       <span id="valid_indicator"></span>
-    '''
+      <br />%s
+    '''%(beforeZMSTextarea, afterZMSTextarea)
   else:
 	  output = '''
-	    <div id="editor_holder"></div>
-	    <div id="reCAPTCHA" style="margin:1em 0;"></div>
-	    <button id="submit">Submit</button>
-	    <button id="restore">Restore</button>
-	    <span id="valid_indicator"></span>
-	    <div class="g-recaptcha" data-sitekey="%s"></div>
-	    <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
-	  '''%f.GoogleAPIKey
+		%s
+		<div id="editor_holder"></div>
+		<div id="reCAPTCHA" style="margin:1em 0;"></div>
+		<button id="submit">Submit</button>
+		<button id="restore">Restore</button>
+		<span id="valid_indicator"></span>
+		<div class="g-recaptcha" data-sitekey="%s"></div>
+		<script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
+		<br />%s
+	  '''%(beforeZMSTextarea, f.GoogleAPIKey, afterZMSTextarea)
 
   self.REQUEST.RESPONSE.setHeader('Cache-Control', 'no-cache')
   self.REQUEST.RESPONSE.setHeader('Pragma', 'no-cache')
@@ -1085,7 +1106,7 @@ def downloadData(self):
           <item key="id"><![CDATA[zms3.formulator.lib]]></item>
           <item key="name"><![CDATA[zms3.formulator.lib]]></item>
           <item key="package"><![CDATA[zms3.formulator]]></item>
-          <item key="revision"><![CDATA[3.2.2]]></item>
+          <item key="revision"><![CDATA[3.2.3]]></item>
           <item key="type"><![CDATA[ZMSLibrary]]></item>
         </dictionary>
       </item>
