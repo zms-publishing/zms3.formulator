@@ -51,18 +51,20 @@ def getSchema(obj):
     JSONDict['properties'][var]['title']            = item.title
     JSONDict['properties'][var]['description']      = item.description
     JSONDict['properties'][var]['propertyOrder']    = i
+    JSONDict['properties'][var]['options']          = {}
 
     if item.default.strip() != '':
       JSONDict['properties'][var]['default']        = item.default 
 
+    # TODO: explicit mandatory fields
     if item.minimum>0:
-      if item.type == 'string':
+      if item.type in ['string', 'textarea']:
         JSONDict['properties'][var]['minLength']    = item.minimum
       else:
         JSONDict['properties'][var]['minimum']      = item.minimum
 
     if item.maximum>0:
-      if item.type == 'string':
+      if item.type in ['string', 'textarea']:
         JSONDict['properties'][var]['maxLength']    = item.maximum
       else:
         JSONDict['properties'][var]['maximum']      = item.maximum
@@ -76,6 +78,7 @@ def getSchema(obj):
     if item.type == 'textarea':
       JSONDict['properties'][var]['type']           = 'string'
       JSONDict['properties'][var]['format']         = 'textarea'
+      JSONDict['properties'][var]['options']['input_height']  = '150px'
     
     if item.type == 'color':
       JSONDict['properties'][var]['type']           = 'string'
@@ -98,6 +101,9 @@ def getSchema(obj):
 
     if item.type in ['custom'] and item.rawJSON != '':
       JSONDict['properties'][var]                   = json.loads(item.rawJSON)
+    
+    # TODO: explicit hidden fields
+    #JSONDict['properties'][var]['options']['hidden']  = 'true'
 
   JSONSchema = json.dumps(JSONDict, sort_keys=True, indent=4, separators=(',', ': '))
   return JSONSchema
