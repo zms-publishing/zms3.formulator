@@ -41,6 +41,8 @@ INSTALL_REQUIRES = [
 # The following Python Packages require a installed MySQL Database System:
 # 'MySQL-python',
 # 'Products.ZMySQLDA',
+
+  'sqlalchemy',
 ]
 
 DATA_FILES = [
