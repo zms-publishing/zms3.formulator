@@ -943,23 +943,23 @@ def getJSONEditor(self):
     output = '''
       %s
       <div id="editor_holder"></div>
-      <button id="submit">Submit</button>
-      <button id="restore">Restore</button>
+      <button id="submit">%s</button>
+      <button id="restore">%s</button>
       <span id="valid_indicator"></span>
       <br />%s
-    '''%(beforeZMSTextarea, afterZMSTextarea)
+    '''%(beforeZMSTextarea, self.getLangStr('SUBMIT',self.REQUEST.get('lang')), self.getLangStr('SUBMIT',self.REQUEST.get('lang')), afterZMSTextarea)
   else:
 	  output = '''
 		%s
 		<div id="editor_holder"></div>
 		<div id="reCAPTCHA" style="margin:1em 0;"></div>
-		<button id="submit">Submit</button>
-		<button id="restore">Restore</button>
+		<button id="submit">%s</button>
+		<button id="restore">%s</button>
 		<span id="valid_indicator"></span>
 		<div class="g-recaptcha" data-sitekey="%s"></div>
 		<script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
 		<br />%s
-	  '''%(beforeZMSTextarea, f.GoogleAPIKey, afterZMSTextarea)
+	  '''%(beforeZMSTextarea, self.getLangStr('SUBMIT',self.REQUEST.get('lang')), self.getLangStr('RESTORE',self.REQUEST.get('lang')), f.GoogleAPIKey, afterZMSTextarea)
 
   self.REQUEST.RESPONSE.setHeader('Cache-Control', 'no-cache')
   self.REQUEST.RESPONSE.setHeader('Pragma', 'no-cache')

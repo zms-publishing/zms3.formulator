@@ -34,6 +34,18 @@ xmlns:html="http://www.w3.org/TR/REC-html40">
 <Cell ss:StyleID="string"><Data ss:Type="String">Formulaire</Data></Cell>
 <Cell ss:StyleID="string"><Data ss:Type="String">Form</Data></Cell>
 </Row>
+<Row>
+<Cell ss:StyleID="string"><Data ss:Type="String">SUBMIT</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">Absenden</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">Soumettre</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">Submit</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="string"><Data ss:Type="String">RESTORE</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">Zurücksetzen</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">Restaurer</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">Restore</Data></Cell>
+</Row>
 </Table>
 </Worksheet>
 </Workbook>
