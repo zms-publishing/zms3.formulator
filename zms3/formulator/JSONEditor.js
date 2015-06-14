@@ -128,17 +128,18 @@ document.getElementById('enable_disable').addEventListener('click', function() {
 ZMSFormulator.on('change', function() {
 	// Get an array of errors from the validator
 	var errors = ZMSFormulator.validate();
-
+	console.log(errors);
+	 
 	var indicator = document.getElementById('valid_indicator');
 
 	// Not valid
 	if (errors.length) {
 		indicator.style.color = 'red';
-		indicator.textContent = "Form invalid.";
+		indicator.textContent = "Please check your input!";
 	}
 	// Valid
 	else {
-		//indicator.style.color = 'green';
-		//indicator.textContent = "valid";
+		indicator.style.color = 'green';
+		indicator.textContent = "";
 	}
 });

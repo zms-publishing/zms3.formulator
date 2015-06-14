@@ -105,7 +105,7 @@
                   <item key="id"><![CDATA[delimiter_Advanced]]></item>
                   <item key="mandatory" type="int">0</item>
                   <item key="multilang" type="int">1</item>
-                  <item key="name"><![CDATA[Advanced]]></item>
+                  <item key="name"><![CDATA[Advanced (JavaScript)]]></item>
                   <item key="repetitive" type="int">0</item>
                   <item key="type"><![CDATA[delimiter]]></item>
                 </dictionary>
@@ -121,7 +121,7 @@ ZMSFormulator.options.required_by_default = true;]]>
                   <item key="id"><![CDATA[optionsJS]]></item>
                   <item key="mandatory" type="int">0</item>
                   <item key="multilang" type="int">1</item>
-                  <item key="name"><![CDATA[Options [JS]]]></item>
+                  <item key="name"><![CDATA[Options]]></item>
                   <item key="repetitive" type="int">0</item>
                   <item key="type"><![CDATA[text]]></item>
                 </dictionary>
@@ -148,7 +148,7 @@ ZMSFormulator.options.required_by_default = true;]]>
                   <item key="id"><![CDATA[onReadyJS]]></item>
                   <item key="mandatory" type="int">0</item>
                   <item key="multilang" type="int">1</item>
-                  <item key="name"><![CDATA[onReady [JS]]]></item>
+                  <item key="name"><![CDATA[onReady]]></item>
                   <item key="repetitive" type="int">0</item>
                   <item key="type"><![CDATA[text]]></item>
                 </dictionary>
@@ -343,13 +343,13 @@ $ZMI.registerReady(function() {
 		window.open('downloadData');
 	});
 	if ($('#sendViaMail').is(':checked') == true) {
-		$('#tr_sendViaMailAddress_ger').show();
+		$('#tr_sendViaMailAddress_'+getZMILang()).show();
 	}
 	else {
-		$('#tr_sendViaMailAddress_ger').hide();
+		$('#tr_sendViaMailAddress_'+getZMILang()).hide();
 	}
 	$('#sendViaMail').change(function() {
-		$('#tr_sendViaMailAddress_ger').toggle();
+		$('#tr_sendViaMailAddress_'+getZMILang()).toggle();
 	});
     var dom = require("ace/lib/dom");
     // add command to all new editor instances
@@ -364,7 +364,7 @@ $ZMI.registerReady(function() {
     	}
 	});
 	var edit1 = ace.edit("ACE_Editor1");
-	var text1 = $('textarea#optionsJS_ger').hide();	
+	var text1 = $('textarea#optionsJS_'+getZMILang()).hide();	
 	edit1.setTheme("ace/theme/chrome");
 	edit1.getSession().setMode("ace/mode/javascript");
 	edit1.getSession().setValue(text1.val());
@@ -372,7 +372,7 @@ $ZMI.registerReady(function() {
 		text1.val(edit1.getSession().getValue()).change();
 	});
 	var edit2 = ace.edit("ACE_Editor2");
-	var text2 = $('textarea#onReadyJS_ger').hide();
+	var text2 = $('textarea#onReadyJS_'+getZMILang()).hide();
 	edit2.setTheme("ace/theme/chrome");
 	edit2.getSession().setMode("ace/mode/javascript");	
 	edit2.getSession().setValue(text2.val());
@@ -538,6 +538,28 @@ $ZMI.registerReady(function() {
               </item>
               <item type="dictionary">
                 <dictionary>
+                  <item key="default"><![CDATA[0]]></item>
+                  <item key="id"><![CDATA[mandatoryField]]></item>
+                  <item key="mandatory" type="int">0</item>
+                  <item key="multilang" type="int">1</item>
+                  <item key="name"><![CDATA[Mandatory?]]></item>
+                  <item key="repetitive" type="int">0</item>
+                  <item key="type"><![CDATA[boolean]]></item>
+                </dictionary>
+              </item>
+              <item type="dictionary">
+                <dictionary>
+                  <item key="default"><![CDATA[0]]></item>
+                  <item key="id"><![CDATA[hiddenField]]></item>
+                  <item key="mandatory" type="int">0</item>
+                  <item key="multilang" type="int">1</item>
+                  <item key="name"><![CDATA[Hidden?]]></item>
+                  <item key="repetitive" type="int">0</item>
+                  <item key="type"><![CDATA[boolean]]></item>
+                </dictionary>
+              </item>
+              <item type="dictionary">
+                <dictionary>
                   <item key="id"><![CDATA[type]]></item>
                   <item key="keys" type="list">
                     <list>
@@ -635,7 +657,7 @@ $ZMI.registerReady(function() {
                   <item key="id"><![CDATA[rawJSON]]></item>
                   <item key="mandatory" type="int">0</item>
                   <item key="multilang" type="int">1</item>
-                  <item key="name"><![CDATA[Schema [JSON]]]></item>
+                  <item key="name"><![CDATA[JSON-Schema]]></item>
                   <item key="repetitive" type="int">0</item>
                   <item key="type"><![CDATA[text]]></item>
                 </dictionary>
@@ -665,10 +687,10 @@ $ZMI.registerReady(function() {
                   <item key="name"><![CDATA[<script type="text/javascript" charset="UTF-8" src="/++resource++zms_/ace.ajax.org/ace.js"></script>
 <script type="text/javascript">
 $ZMI.registerReady(function() {
-  $('#tabProperties .accordion-inner').attr('class','accordion-inner ' + $('#tr_type_ger :selected').text())
-  $('#tr_type_ger select').change(function() {
-    $('#tabProperties .accordion-inner').attr('class','accordion-inner ' + $('#tr_type_ger :selected').text())
-    if ($('#tr_type_ger select').val() != 'custom') {
+  $('#tabProperties .accordion-inner').attr('class','accordion-inner ' + $('#tr_type_'+getZMILang()+' :selected').text())
+  $('#tr_type_'+getZMILang()+' select').change(function() {
+    $('#tabProperties .accordion-inner').attr('class','accordion-inner ' + $('#tr_type_'+getZMILang()+' :selected').text())
+    if ($('#tr_type_'+getZMILang()+' select').val() != 'custom') {
       $('#ACE_Editor1').hide();
       $('.ACE_Editor').height(0);
     }
@@ -677,7 +699,7 @@ $ZMI.registerReady(function() {
       $('.ACE_Editor').height('20em');
     }
   });
-  if ($('#tr_type_ger select').val() != 'custom') {
+  if ($('#tr_type_'+getZMILang()+' select').val() != 'custom') {
 	  $('#ACE_Editor1').hide();
   }
   var dom = require("ace/lib/dom");
@@ -693,7 +715,7 @@ $ZMI.registerReady(function() {
     }
   });
   var edit1 = ace.edit("ACE_Editor1");
-  var text1 = $('textarea#rawJSON_ger').hide(); 
+  var text1 = $('textarea#rawJSON_'+getZMILang()).hide(); 
   edit1.setTheme("ace/theme/chrome");
   edit1.getSession().setMode("ace/mode/javascript");
   edit1.getSession().setValue(text1.val());
@@ -743,59 +765,119 @@ textarea.form-control.rawJSON {
     height: 20em;
 }
 
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner .ACE_Editor,
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner #tr_rawJSON,
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner #tr_rawJSON_ger,
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner #tr_valueSelect,
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner #tr_valueSelect_ger,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner #tr_valueSelect_eng,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner #tr_valueSelect_fra,
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner.custom #tr_valueDefault,
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner.custom #tr_valueDefault_ger,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.custom #tr_valueDefault_eng,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.custom #tr_valueDefault_fra,
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner.custom #tr_valueMinimum,
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner.custom #tr_valueMinimum_ger,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.custom #tr_valueMinimum_eng,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.custom #tr_valueMinimum_fra,
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner.custom #tr_valueMaximum,
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner.custom #tr_valueMaximum_ger,
-.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.textarea #tr_valueDefault,
-.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.textarea #tr_valueDefault_ger,
-.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.textarea #tr_valueMinimum,
-.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.textarea #tr_valueMinimum_ger,
-.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.textarea #tr_valueMaximum,
-.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.textarea #tr_valueMaximum_ger,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.custom #tr_valueMaximum_eng,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.custom #tr_valueMaximum_fra,
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner.date #tr_valueDefault,
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner.date #tr_valueDefault_ger,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.date #tr_valueDefault_eng,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.date #tr_valueDefault_fra,
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner.date #tr_valueMinimum,
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner.date #tr_valueMinimum_ger,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.date #tr_valueMinimum_eng,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.date #tr_valueMinimum_fra,
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner.date #tr_valueMaximum,
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner.date #tr_valueMaximum_ger,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.date #tr_valueMaximum_eng,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.date #tr_valueMaximum_fra,
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner.color #tr_valueDefault,
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner.color #tr_valueDefault_ger,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.color #tr_valueDefault_eng,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.color #tr_valueDefault_fra,
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner.color #tr_valueMinimum,
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner.color #tr_valueMinimum_ger,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.color #tr_valueMinimum_eng,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.color #tr_valueMinimum_fra,
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner.color #tr_valueMaximum,
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner.color #tr_valueMaximum_ger,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.color #tr_valueMaximum_eng,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.color #tr_valueMaximum_fra,
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner.checkbox #tr_valueMinimum,
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner.checkbox #tr_valueMinimum_ger,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.checkbox #tr_valueMinimum_eng,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.checkbox #tr_valueMinimum_fra,
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner.checkbox #tr_valueMaximum,
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner.checkbox #tr_valueMaximum_ger,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.checkbox #tr_valueMaximum_eng,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.checkbox #tr_valueMaximum_fra,
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner.select #tr_valueMinimum,
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner.select #tr_valueMinimum_ger,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.select #tr_valueMinimum_eng,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.select #tr_valueMinimum_fra,
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner.select #tr_valueMaximum,
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner.select #tr_valueMaximum_ger,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.select #tr_valueMaximum_eng,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.select #tr_valueMaximum_fra,
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner.multiselect #tr_valueMinimum,
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner.multiselect #tr_valueMinimum_ger,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.multiselect #tr_valueMinimum_eng,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.multiselect #tr_valueMinimum_fra,
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner.multiselect #tr_valueMaximum,
-.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.multiselect #tr_valueMaximum_ger {display:none;}
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.multiselect #tr_valueMaximum_ger,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.multiselect #tr_valueMaximum_eng,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.multiselect #tr_valueMaximum_fra {display:none;}
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.custom .ACE_Editor,
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner.custom #tr_rawJSON,
-.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.custom #tr_rawJSON_ger {display:block;}
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.custom #tr_rawJSON_ger,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.custom #tr_rawJSON_eng,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.custom #tr_rawJSON_fra {display:block;}
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner.checkbox #tr_valueSelect,
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner.checkbox #tr_valueSelect_ger,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.checkbox #tr_valueSelect_eng,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.checkbox #tr_valueSelect_fra,
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner.select #tr_valueSelect,
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner.select #tr_valueSelect_ger,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.select #tr_valueSelect_eng,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.select #tr_valueSelect_fra,
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner.multiselect #tr_valueSelect,
-.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.multiselect #tr_valueSelect_ger {display:block;}
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.multiselect #tr_valueSelect_ger,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.multiselect #tr_valueSelect_eng,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.multiselect #tr_valueSelect_fra {display:block;}
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner #tr_valueMinimum input,
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner #tr_valueMinimum_ger input,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner #tr_valueMinimum_eng input,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner #tr_valueMinimum_fra input,
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner #tr_valueMaximum input,
-.zmi.ZMSFormulatorItem #tabProperties .accordion-inner #tr_valueMaximum_ger input {max-width:52px !important;}
-
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner #tr_valueMaximum_ger input,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner #tr_valueMaximum_eng input,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner #tr_valueMaximum_fra input {max-width:52px !important;}
+.zmi .form-insert #tr_valueDefault,
+.zmi .form-insert #tr_valueDefault_ger,
+.zmi .form-insert #tr_valueDefault_eng,
+.zmi .form-insert #tr_valueDefault_fra,
+.zmi .form-insert #tr_valueMinimum,
+.zmi .form-insert #tr_valueMinimum_ger,
+.zmi .form-insert #tr_valueMinimum_eng,
+.zmi .form-insert #tr_valueMinimum_fra,
+.zmi .form-insert #tr_valueMaximum,
+.zmi .form-insert #tr_valueMaximum_ger,
+.zmi .form-insert #tr_valueMaximum_eng,
+.zmi .form-insert #tr_valueMaximum_fra,
+.zmi .form-insert #tr_valueSelect,
+.zmi .form-insert #tr_valueSelect_ger,
+.zmi .form-insert #tr_valueSelect_eng,
+.zmi .form-insert #tr_valueSelect_fra,
+.zmi .form-insert .ACE_Editor,
+.zmi .form-insert #tr_rawJSON,
+.zmi .form-insert #tr_rawJSON_ger,
+.zmi .form-insert #tr_rawJSON_eng,
+.zmi .form-insert #tr_rawJSON_fra {display:none;}
 ]]></data>
                   </item>
                   <item key="id"><![CDATA[f_css_defaults]]></item>
@@ -836,11 +918,75 @@ textarea.form-control.rawJSON {
                   <item></item>
                   <item></item>
                   <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
                 </list>
               </item>
               <item key="insert_custom"><![CDATA[{$}]]></item>
               <item key="insert_deny" type="list">
                 <list>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
+                  <item></item>
                   <item></item>
                   <item></item>
                   <item></item>
@@ -852,7 +998,7 @@ textarea.form-control.rawJSON {
           <item key="id"><![CDATA[ZMSFormulatorItem]]></item>
           <item key="name"><![CDATA[ZMSFormulatorItem]]></item>
           <item key="package"><![CDATA[zms3.formulator]]></item>
-          <item key="revision"><![CDATA[3.2.2]]></item>
+          <item key="revision"><![CDATA[3.2.4]]></item>
           <item key="type"><![CDATA[ZMSObject]]></item>
         </dictionary>
       </item>
@@ -943,23 +1089,23 @@ def getJSONEditor(self):
     output = '''
       %s
       <div id="editor_holder"></div>
-      <button id="submit">Submit</button>
-      <button id="restore">Restore</button>
+      <button id="submit">%s</button>
+      <button id="restore">%s</button>
       <span id="valid_indicator"></span>
       <br />%s
-    '''%(beforeZMSTextarea, afterZMSTextarea)
+    '''%(beforeZMSTextarea, self.getLangStr('SUBMIT',self.REQUEST.get('lang')), self.getLangStr('SUBMIT',self.REQUEST.get('lang')), afterZMSTextarea)
   else:
 	  output = '''
 		%s
 		<div id="editor_holder"></div>
 		<div id="reCAPTCHA" style="margin:1em 0;"></div>
-		<button id="submit">Submit</button>
-		<button id="restore">Restore</button>
+		<button id="submit">%s</button>
+		<button id="restore">%s</button>
 		<span id="valid_indicator"></span>
 		<div class="g-recaptcha" data-sitekey="%s"></div>
 		<script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
 		<br />%s
-	  '''%(beforeZMSTextarea, f.GoogleAPIKey, afterZMSTextarea)
+	  '''%(beforeZMSTextarea, self.getLangStr('SUBMIT',self.REQUEST.get('lang')), self.getLangStr('RESTORE',self.REQUEST.get('lang')), f.GoogleAPIKey, afterZMSTextarea)
 
   self.REQUEST.RESPONSE.setHeader('Cache-Control', 'no-cache')
   self.REQUEST.RESPONSE.setHeader('Pragma', 'no-cache')

@@ -51,31 +51,34 @@ def getSchema(obj):
     JSONDict['properties'][var]['title']            = item.title
     JSONDict['properties'][var]['description']      = item.description
     JSONDict['properties'][var]['propertyOrder']    = i
+    JSONDict['properties'][var]['options']          = {}
 
     if item.default.strip() != '':
       JSONDict['properties'][var]['default']        = item.default 
 
-    if item.minimum>0:
-      if item.type == 'string':
-        JSONDict['properties'][var]['minLength']    = item.minimum
+    if item.minimum>0 or item.mandatory:
+      if item.type in ['string', 'textarea']:
+        JSONDict['properties'][var]['minLength']    = item.minimum > 0 and item.minimum or 1
       else:
-        JSONDict['properties'][var]['minimum']      = item.minimum
+        JSONDict['properties'][var]['minimum']      = item.minimum > 0 and item.minimum or 1
 
     if item.maximum>0:
-      if item.type == 'string':
+      if item.type in ['string', 'textarea']:
         JSONDict['properties'][var]['maxLength']    = item.maximum
       else:
         JSONDict['properties'][var]['maximum']      = item.maximum
     
-    if item.type == 'select' and len(values)>0:
+    if item.type == 'select':
       JSONDict['properties'][var]['type']           = 'string'
       JSONDict['properties'][var]['enum']           = []
-      for val in values:
-        JSONDict['properties'][var]['enum'].append(val)
+      if len(values)>0:
+        for val in values:
+          JSONDict['properties'][var]['enum'].append(val)
     
     if item.type == 'textarea':
       JSONDict['properties'][var]['type']           = 'string'
       JSONDict['properties'][var]['format']         = 'textarea'
+      JSONDict['properties'][var]['options']['input_height']  = '150px'
     
     if item.type == 'color':
       JSONDict['properties'][var]['type']           = 'string'
@@ -85,7 +88,7 @@ def getSchema(obj):
       JSONDict['properties'][var]['type']           = 'string'
       JSONDict['properties'][var]['format']         = 'date'
       
-    if item.type in ['checkbox', 'multiselect'] and len(values)>0:
+    if item.type in ['checkbox', 'multiselect']:
       JSONDict['properties'][var]['type']           = 'array'
       JSONDict['properties'][var]['uniqueItems']    = 'true'
       if item.type == 'multiselect':
@@ -93,8 +96,12 @@ def getSchema(obj):
       JSONDict['properties'][var]['items']          = {}
       JSONDict['properties'][var]['items']['type']  = 'string'
       JSONDict['properties'][var]['items']['enum']  = []
-      for val in values:
-        JSONDict['properties'][var]['items']['enum'].append(val)
+      if len(values)>0:
+        for val in values:
+          JSONDict['properties'][var]['items']['enum'].append(val)
+
+    if item.hidden:
+      JSONDict['properties'][var]['options']['hidden']  = 'true'
 
     if item.type in ['custom'] and item.rawJSON != '':
       JSONDict['properties'][var]                   = json.loads(item.rawJSON)
