@@ -43,6 +43,7 @@ class ZMSFormulator:
     self.noStorage    = this.attr('dataStorageDisabled')
     self.sendViaMail  = this.attr('sendViaMail')
     self.mailAddress  = this.attr('sendViaMailAddress').strip()
+    self.feedbackMsg  = this.attr('feedbackMsg').strip()
     self.items        = []
     self._data        = {}
     
