@@ -217,3 +217,5 @@ class ZMSFormulatorItem:
     self.maximum      = this.attr('valueMaximum')
     self.select       = this.attr('valueSelect')
     self.rawJSON      = this.attr('rawJSON')
+    self.mandatory    = this.attr('mandatoryField')
+    self.hidden       = this.attr('hiddenField')

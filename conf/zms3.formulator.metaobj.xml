@@ -538,6 +538,28 @@ $ZMI.registerReady(function() {
               </item>
               <item type="dictionary">
                 <dictionary>
+                  <item key="default"><![CDATA[0]]></item>
+                  <item key="id"><![CDATA[mandatoryField]]></item>
+                  <item key="mandatory" type="int">0</item>
+                  <item key="multilang" type="int">1</item>
+                  <item key="name"><![CDATA[Mandatory?]]></item>
+                  <item key="repetitive" type="int">0</item>
+                  <item key="type"><![CDATA[boolean]]></item>
+                </dictionary>
+              </item>
+              <item type="dictionary">
+                <dictionary>
+                  <item key="default"><![CDATA[0]]></item>
+                  <item key="id"><![CDATA[hiddenField]]></item>
+                  <item key="mandatory" type="int">0</item>
+                  <item key="multilang" type="int">1</item>
+                  <item key="name"><![CDATA[Hidden?]]></item>
+                  <item key="repetitive" type="int">0</item>
+                  <item key="type"><![CDATA[boolean]]></item>
+                </dictionary>
+              </item>
+              <item type="dictionary">
+                <dictionary>
                   <item key="id"><![CDATA[type]]></item>
                   <item key="keys" type="list">
                     <list>
