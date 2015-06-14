@@ -50,7 +50,7 @@ class ZMSFormulator:
     self.getData()
     
     # init items
-    objs = filter(lambda ob: ob.isActive(self.this.REQUEST), self.this.getObjChildren('formulatorItems', self.this.REQUEST))
+    objs = filter(lambda ob: ob.isActive(self.this.REQUEST), self.this.getObjChildren('formulatorItems', self.this.REQUEST, ['ZMSFormulatorItem']))
     for item in objs:
       self.items.append(ZMSFormulatorItem(item))    
 
