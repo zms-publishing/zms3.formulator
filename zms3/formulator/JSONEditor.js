@@ -93,6 +93,7 @@ document.getElementById('submit').addEventListener('click', function() {
 				ZMSFormulator.disable();
 				document.getElementById('submit').disabled = true;
 				document.getElementById('restore').disabled = true;
+				$('#ZMSFormulatorFeedback').modal('show');
 			}
 			else {
 				document.getElementById('valid_indicator').style.color = 'red';				
