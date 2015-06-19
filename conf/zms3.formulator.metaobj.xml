@@ -581,7 +581,6 @@ $ZMI.registerReady(function() {
                       <item><![CDATA[checkbox]]></item>
                       <item><![CDATA[integer]]></item>
                       <item><![CDATA[float]]></item>
-                      <item><![CDATA[color]]></item>
                       <item><![CDATA[custom]]></item>
                     </list>
                   </item>
