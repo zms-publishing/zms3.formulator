@@ -40,6 +40,7 @@ class ZMSFormulator:
     self.description  = this.attr('attr_dc_description')
     self.options      = this.attr('optionsJS')
     self.onReady      = this.attr('onReadyJS')
+    self.onChange     = this.attr('onChangeJS')
     self.noStorage    = this.attr('dataStorageDisabled')
     self.sendViaMail  = this.attr('sendViaMail')
     self.mailAddress  = this.attr('sendViaMailAddress').strip()

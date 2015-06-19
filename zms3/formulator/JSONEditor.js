@@ -143,4 +143,6 @@ ZMSFormulator.on('change', function() {
 		indicator.style.color = 'green';
 		indicator.textContent = "";
 	}
+	
+	%s
 });

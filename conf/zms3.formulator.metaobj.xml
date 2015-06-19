@@ -182,6 +182,33 @@ ZMSFormulator.options.required_by_default = true;]]>
               </item>
               <item type="dictionary">
                 <dictionary>
+                  <item key="id"><![CDATA[onChangeJS]]></item>
+                  <item key="mandatory" type="int">0</item>
+                  <item key="multilang" type="int">1</item>
+                  <item key="name"><![CDATA[onChange]]></item>
+                  <item key="repetitive" type="int">0</item>
+                  <item key="type"><![CDATA[text]]></item>
+                </dictionary>
+              </item>
+              <item type="dictionary">
+                <dictionary>
+                  <item key="id"><![CDATA[ACE_onChangeJS]]></item>
+                  <item key="mandatory" type="int">0</item>
+                  <item key="multilang" type="int">0</item>
+                  <item key="name"><![CDATA[<!-- ACE-Editor3 onChangeJS -->
+<div class="col-sm-2"></div>
+<div class="col-sm-10" style="top:-2.5em;padding:0;">
+<div class="ACE_Editor">
+<div id="ACE_Editor3"></div>
+</div>
+</div>]]>
+                  </item>
+                  <item key="repetitive" type="int">0</item>
+                  <item key="type"><![CDATA[interface]]></item>
+                </dictionary>
+              </item>
+              <item type="dictionary">
+                <dictionary>
                   <item key="id"><![CDATA[ZMSFORMULATORINTERFACE]]></item>
                   <item key="mandatory" type="int">0</item>
                   <item key="multilang" type="int">0</item>
@@ -389,6 +416,14 @@ $ZMI.registerReady(function() {
 	edit2.getSession().on("change",function() {
 		text2.val(edit2.getSession().getValue()).change();
 	});
+	var edit3 = ace.edit("ACE_Editor3");
+	var text3 = $('textarea#onChangeJS_'+getZMILang()).hide();
+	edit3.setTheme("ace/theme/chrome");
+	edit3.getSession().setMode("ace/mode/javascript");	
+	edit3.getSession().setValue(text3.val());
+	edit3.getSession().on("change",function() {
+		text3.val(edit3.getSession().getValue()).change();
+	});
 });
 </script>
 <style>
@@ -396,7 +431,7 @@ $ZMI.registerReady(function() {
     position: relative;
 	height: 14em;
 }
-#ACE_Editor1, #ACE_Editor2 {
+#ACE_Editor1, #ACE_Editor2, #ACE_Editor3 {
     position: absolute;
     width: 100%;
     height: 100%;
