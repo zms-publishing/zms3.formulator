@@ -33,11 +33,13 @@ var value = ZMSFormulator.getValue();
 
 // Not valid
 if (value.birthday==='') {
+    submit.disabled = true;
     indicator.style.color = 'red';
     indicator.textContent = "Please enter the birthday!";
 }
 // Valid
 else {
+    submit.disabled = false;
     indicator.style.color = 'green';
     indicator.textContent = "";
 }]]></lang></onChangeJS>

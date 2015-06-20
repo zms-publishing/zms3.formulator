@@ -938,7 +938,7 @@ textarea.form-control.rawJSON {
 
 <tal:block tal:define="global
     this options/zmscontext">
-<strong tal:content="python:this.attr('titlealt')">titlealt</strong>
+<strong tal:content="python:this.attr('titlealt')" tal:attributes="style python:this.attr('hiddenField')==True and 'color:lightgrey' or ''">titlealt</strong><sup tal:condition="python:this.attr('mandatoryField')==True" style="font-size:large;color:red;">*</sup>
 <code tal:content="python:this.attr('type')">type</code>
 </tal:block>
 
