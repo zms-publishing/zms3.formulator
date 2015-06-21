@@ -1142,7 +1142,7 @@ def getJSONEditor(self):
       <button id="restore">%s</button>
       <span id="valid_indicator"></span>
       <br />%s
-    '''%(beforeZMSTextarea, self.getLangStr('SUBMIT',self.REQUEST.get('lang')), self.getLangStr('SUBMIT',self.REQUEST.get('lang')), afterZMSTextarea)
+    '''%(beforeZMSTextarea, self.getLangStr('SUBMIT',self.REQUEST.get('lang')), self.getLangStr('RESTORE',self.REQUEST.get('lang')), afterZMSTextarea)
   else:
 	  output = '''
 		%s
