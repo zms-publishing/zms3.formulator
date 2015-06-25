@@ -333,7 +333,7 @@ ZMSFormulator.options.required_by_default = true;]]>
 <tal:block tal:define="global this options/zmscontext">
 <style>
 #editor_holder .checkbox {
-  display:inline-flex !important;
+  line-height: normal;
 }
 </style>
 <div class="col-lg-8 col-lg-offset-3 col-md-10 col-md-offset-1"
