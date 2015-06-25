@@ -46,6 +46,12 @@ xmlns:html="http://www.w3.org/TR/REC-html40">
 <Cell ss:StyleID="string"><Data ss:Type="String">Restaurer</Data></Cell>
 <Cell ss:StyleID="string"><Data ss:Type="String">Restore</Data></Cell>
 </Row>
+<Row>
+<Cell ss:StyleID="string"><Data ss:Type="String">ZMSFORMULATOR_HINT_MULTISELECT</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">Tipp: Sie können mehrere Einträge durch das Halten der cmd- bzw. Strg-Taste auswählen.</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">Hint: Select multiple entries by holding cmd- or Ctrl-key.</Data></Cell>
+</Row>
 </Table>
 </Worksheet>
 </Workbook>
