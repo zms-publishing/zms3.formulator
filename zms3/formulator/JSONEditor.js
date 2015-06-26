@@ -132,15 +132,20 @@ ZMSFormulator.on('change', function() {
 	console.log(errors);
 	 
 	var indicator = document.getElementById('valid_indicator');
+	var submit = document.getElementById('submit');
 
 	// Not valid
 	if (errors.length) {
+		submit.disabled = true;
 		indicator.style.color = 'red';
 		indicator.textContent = "Please check your input!";
 	}
 	// Valid
 	else {
+		submit.disabled = false;
 		indicator.style.color = 'green';
 		indicator.textContent = "";
 	}
+	
+	%s
 });

@@ -28,7 +28,7 @@ def render(obj):
   f.close()
   
   script = '<script src="%s/metaobj_manager/zms3.formulator.lib.jsoneditor.min.js"></script>\n<script>%s</script>'  
-  editor = editor % (obj.thisURLPath, obj.GoogleAPIKey, obj.options, obj.onReady, obj.thisURLPath)
+  editor = editor % (obj.thisURLPath, obj.GoogleAPIKey, obj.options, obj.onReady, obj.thisURLPath, obj.onChange)
   output = script % (obj.baseURLPath, editor)
   
   return output
@@ -48,8 +48,8 @@ def getSchema(obj):
     
     JSONDict['properties'][var]                     = {}
     JSONDict['properties'][var]['type']             = item.type == 'float' and 'number' or item.type
-    JSONDict['properties'][var]['title']            = item.title
-    JSONDict['properties'][var]['description']      = item.description
+    JSONDict['properties'][var]['title']            = item.title + (item.mandatory and ' *' or '')
+    JSONDict['properties'][var]['description']      = item.description + (item.type == 'multiselect' and obj.this.getLangStr('ZMSFORMULATOR_HINT_MULTISELECT',obj.this.REQUEST.get('lang')) or '')
     JSONDict['properties'][var]['propertyOrder']    = i
     JSONDict['properties'][var]['options']          = {}
 

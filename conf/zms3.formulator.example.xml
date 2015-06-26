@@ -27,6 +27,27 @@ if(msg) {
   msg.setValue("Hello World!\nHello Europe!\nHello America!");
   console.log(msg.getValue());
 }]]></lang></onReadyJS>
+<onChangeJS>
+<lang id="ger"><![CDATA[var value = ZMSFormulator.getValue();
+
+// Check the mandatory date field
+if (value.birthday==='') {
+  submit.disabled = true;
+  indicator.style.color = 'red';
+  indicator.textContent = "Please enter the birthday!";
+}
+// Not valid on other errors
+else if (errors.length) {
+  submit.disabled = true;
+  indicator.style.color = 'red';
+  indicator.textContent = "Please check your input!";
+}
+// Valid
+else {
+  submit.disabled = false;    
+  indicator.style.color = 'green';
+  indicator.textContent = "";
+}]]></lang></onChangeJS>
 <attr_dc_coverage><![CDATA[global.ger]]></attr_dc_coverage>
 <optionsJS>
 <lang id="ger"><![CDATA[// Disable additional properties

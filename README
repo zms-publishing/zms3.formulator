@@ -13,6 +13,7 @@ References
 ----------
 
   * https://pypi.python.org/pypi/ZMS3
+  * https://pypi.python.org/pypi/zms3.formulator
   * https://github.com/jdorn/json-editor
   * https://developers.google.com/recaptcha/intro
   * http://www.sqlalchemy.org
@@ -20,4 +21,4 @@ References
 Changelog
 ---------
 
-  * https://bitbucket.org/zms3/formulator/commits/all
+  * https://bitbucket.org/zms3/formulator/commits/branch/master

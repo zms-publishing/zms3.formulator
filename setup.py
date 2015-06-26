@@ -96,7 +96,7 @@ setup(
   version               = VERSION,
   author                = 'HOFFMANN+LIEBENBERG in association with SNTL Publishing, Berlin',
   author_email          = 'zms@sntl-publishing.com',
-  url                   = 'http://www.zms-publishing.com',
+  url                   = 'https://bitbucket.org/zms3/formulator',
   download_url          = 'https://bitbucket.org/zms3/formulator/downloads',
   namespace_packages    = ['zms3'],
   packages              = ['zms3.formulator'],
