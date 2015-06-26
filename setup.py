@@ -25,7 +25,7 @@ for path in sys.path:
   if path.startswith(sys.prefix) and path.endswith('site-packages'):
     site_packages = path
 
-VERSION = '3.3.0dev'
+VERSION = '3.2.4'
 
 INSTALL_REQUIRES = [
 # 'ZMS3>=3.1.0',
@@ -57,7 +57,7 @@ for dirpath, dirnames, filenames in os.walk('.'):
 PACKAGE_DATA.append('*.txt')
 
 CLASSIFIERS = [
-  'Development Status :: 3 - Alpha',
+  'Development Status :: 4 - Beta',
   'Framework :: Zope2',
   'Programming Language :: Python :: 2.7',
   'Operating System :: OS Independent',
@@ -82,7 +82,7 @@ setup(
   version               = VERSION,
   author                = 'HOFFMANN+LIEBENBERG in association with SNTL Publishing, Berlin',
   author_email          = 'zms@sntl-publishing.com',
-  url                   = 'http://www.zms-publishing.com',
+  url                   = 'https://bitbucket.org/zms3/formulator',
   download_url          = 'https://bitbucket.org/zms3/formulator/downloads',
   namespace_packages    = ['zms3'],
   packages              = ['zms3.formulator'],
