@@ -25,7 +25,7 @@ for path in sys.path:
   if path.startswith(sys.prefix) and path.endswith('site-packages'):
     site_packages = path
 
-VERSION = '3.2.4'
+VERSION = '3.3.0dev'
 
 INSTALL_REQUIRES = [
 # 'ZMS3>=3.1.0',
@@ -57,7 +57,7 @@ for dirpath, dirnames, filenames in os.walk('.'):
 PACKAGE_DATA.append('*.txt')
 
 CLASSIFIERS = [
-  'Development Status :: 4 - Beta',
+  'Development Status :: 3 - Alpha',
   'Framework :: Zope2',
   'Programming Language :: Python :: 2.7',
   'Operating System :: OS Independent',
