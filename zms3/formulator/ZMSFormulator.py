@@ -24,6 +24,9 @@ import time
 import json
 import urllib
 import urllib2
+from zms3.formulator import JSONEditor
+from sqlalchemy import *
+from sqlalchemy.exc import *
 
 class ZMSFormulator:
   
@@ -42,6 +45,7 @@ class ZMSFormulator:
     self.onReady      = this.attr('onReadyJS')
     self.onChange     = this.attr('onChangeJS')
     self.noStorage    = this.attr('dataStorageDisabled')
+    self.SQLStorage   = this.attr('dataStorageSQL')
     self.sendViaMail  = this.attr('sendViaMail')
     self.mailAddress  = this.attr('sendViaMailAddress').strip()
     self.feedbackMsg  = this.attr('feedbackMsg').strip()
@@ -58,29 +62,63 @@ class ZMSFormulator:
 
   def getData(self):
     
-    data = self.this.attr('_data')
-    self._data.update(data)
+    if self.SQLStorage:
+      
+      # TODO: get connection string from configuration (1. ZMS-Conf / 2. ZMS-Form)
+      # show indicator for (un)successful connection to configured SQLDB
+      self.engine = create_engine('mysql://localhost/test')
+      metadata = MetaData()
+      try:
+        self.sqldb = Table(self.this.getId(), metadata, autoload=True, autoload_with=self.engine)
+      except NoSuchTableError:
+        self.sqldb = Table(self.this.getId(), metadata,
+                           Column('ZMS_FRM_ITM', BigInteger(), primary_key=True),
+                           Column('ZMS_FRM_OID', BigInteger()),
+                           Column('ZMS_FRM_EID', String(32)),
+                           Column('ZMS_FRM_CID', String(32)),
+                           Column('ZMS_FRM_FID', String(32)),
+                           Column('ZMS_FRM_URL', String(512)),
+                           Column('ZMS_FRM_MDT', Boolean()),                                              
+                           Column('ZMS_FRM_HID', Boolean()),
+                           Column('ZMS_FRM_MIN', Integer()),
+                           Column('ZMS_FRM_MAX', Integer()),
+                           Column('ZMS_FRM_DFT', String(128)),                        
+                           Column('ZMS_FRM_KEY', String(128)),
+                           Column('ZMS_FRM_ALT', String(64)),             
+                           Column('ZMS_FRM_TXT', String(512)),
+                           Column('ZMS_FRM_TYP', String(32)),
+                           Column('ZMS_FRM_ORD', SmallInteger()),
+                           Column('ZMS_FRM_RAW', Text()),
+                           Column('ZMS_FRM_RES', Text()),
+                           Column('ZMS_FRM_TST', DateTime()),
+                           )
+        metadata.create_all(self.engine)
+ 
+      sel = select([
+                    self.sqldb.c.ZMS_FRM_TST, 
+                    self.sqldb.c.ZMS_FRM_KEY, 
+                    self.sqldb.c.ZMS_FRM_ALT, 
+                    self.sqldb.c.ZMS_FRM_RES]
+                   ).order_by(self.sqldb.c.ZMS_FRM_KEY)
+      con = self.engine.connect()
+      res = con.execute(sel)
+      
+      self._data = res
+      
+    else:
+      data = self.this.attr('_data')
+      self._data.update(data)
+    
     return self._data
 
   def clearData(self):
     
-    self._data.clear()
-    zodb = getConfiguration().dbtab.getDatabase('/', is_root=1)._storage
-    if not zodb.isReadOnly() and not self.noStorage:
-      self.this.REQUEST.set('lang', self.this.getPrimaryLanguage())
-      self.this.setObjStateModified(self.this.REQUEST)
-      self.this.attr('_data', self._data)
-      self.this.onChangeObj(self.this.REQUEST)
-      self.this.commitObj(self.this.REQUEST,forced=True)
+    if self.SQLStorage and not self.noStorage:      
+      con = self.engine.connect()
+      con.execute(self.sqldb.delete())
       return True
     else:
-      _globals.writeBlock(self.thisMaster, "[ZMSFormulator.clearData] zodb.isReadOnly")
-      return False
-    
-  def setData(self, data):
-
-    if type(data) is dict:
-      self._data.update(data)
+      self._data.clear()
       zodb = getConfiguration().dbtab.getDatabase('/', is_root=1)._storage
       if not zodb.isReadOnly() and not self.noStorage:
         self.this.REQUEST.set('lang', self.this.getPrimaryLanguage())
@@ -90,8 +128,68 @@ class ZMSFormulator:
         self.this.commitObj(self.this.REQUEST,forced=True)
         return True
       else:
-        _globals.writeBlock(self.thisMaster, "[ZMSFormulator.setData] zodb.isReadOnly")
+        _globals.writeBlock(self.thisMaster, "[ZMSFormulator.clearData] zodb.isReadOnly")
         return False
+    
+  def setData(self, receivedData):
+
+    if type(receivedData) is dict:
+      
+      # save data as record to SQLDB
+      if self.SQLStorage and not self.noStorage:
+        modelledData = JSONEditor.JSONEditor(self)
+        
+        for timestamp in receivedData:
+          for key, val in receivedData[timestamp]:
+            
+            # normalize received ZMSFormulatorItem-Key due to arrays/objects
+            # fetch matching ZMSFormulatorItem-Obj to retrieve ids and values
+            itemkey = key.split('[')[0]
+            itemobj = filter(lambda x: x.titlealt.lower() == itemkey, self.items)[0]
+            
+            if itemobj.type in ['select', 'checkbox', 'multiselect']:
+              ZMS_FRM_RAW = itemobj.select.strip()
+            else:
+              ZMS_FRM_RAW = itemobj.rawJSON
+            
+            from datetime import datetime 
+            ins = self.sqldb.insert().values(
+              ZMS_FRM_TST = datetime.utcfromtimestamp(timestamp),
+              ZMS_FRM_RES = str(val),
+              ZMS_FRM_ORD = modelledData.JSONDict['properties'][itemkey]['propertyOrder'],
+              ZMS_FRM_OID = int(itemobj.oid[4:]),              
+              ZMS_FRM_EID = itemobj.eid,
+              ZMS_FRM_CID = itemobj.cid,                    
+              ZMS_FRM_FID = itemobj.fid,                       
+              ZMS_FRM_URL = itemobj.url,
+              ZMS_FRM_TYP = itemobj.type,                   
+              ZMS_FRM_KEY = key, # put the received key including arrays/objects instead of plain itemobj.titlealt
+              ZMS_FRM_ALT = itemobj.title,
+              ZMS_FRM_TXT = itemobj.description,
+              ZMS_FRM_MDT = itemobj.mandatory,
+              ZMS_FRM_HID = itemobj.hidden,
+              ZMS_FRM_MIN = itemobj.minimum,
+              ZMS_FRM_MAX = itemobj.maximum, 
+              ZMS_FRM_DFT = itemobj.default,
+              ZMS_FRM_RAW = ZMS_FRM_RAW,
+              )
+            con = self.engine.connect()
+            res = con.execute(ins)
+
+      # save data as dictionary to ZODB
+      else: 
+        self._data.update(receivedData)
+        zodb = getConfiguration().dbtab.getDatabase('/', is_root=1)._storage
+        if not zodb.isReadOnly() and not self.noStorage:
+          self.this.REQUEST.set('lang', self.this.getPrimaryLanguage())
+          self.this.setObjStateModified(self.this.REQUEST)
+          self.this.attr('_data', self._data)
+          self.this.onChangeObj(self.this.REQUEST)
+          self.this.commitObj(self.this.REQUEST,forced=True)
+          return True
+        else:
+          _globals.writeBlock(self.thisMaster, "[ZMSFormulator.setData] zodb.isReadOnly")
+          return False
     else:
       _globals.writeError(self.thisMaster, "[ZMSFormulator.setData] unexpected data (not dict)")
       return False
@@ -143,7 +241,7 @@ class ZMSFormulator:
         # remove reCAPTCHA response value from data to be stored
         if pos > 0:
           data.pop(pos)
-        # add current timestamp to data list and store as dictionary
+        # add current timestamp and store data
         self.setData({time.time(): data})
         # send data by mail if configured      
         if self.sendViaMail == True:
@@ -184,25 +282,37 @@ class ZMSFormulator:
 
   def printDataRaw(self):
     
-    d = self.getData()
-    s = '%s entries:\n\n'%len(d)
-    s1 = s2 = ''
-    for t, v in sorted(d.iteritems()):
-      header = ['DATE']
-      output = []
-      output.append(time.strftime('%c', time.gmtime(t)))
-      for i in sorted(v):
-        i1, i2 = i
-        header.append(i1.upper())
-        outstr = self.this.str_item(i2)
-        outstr = outstr.replace('`','').replace('´','').replace('\'','')
-        outstr = outstr.replace('|','').replace('\\','').replace(';','')
-        outstr = outstr.replace('<','').replace('>','').replace('"','')
-        output.append(outstr.replace('\n',', '))
-      s1 = ';'.join(header)
-      s2 += ';'.join(output) + '\n'
+    data = self.getData()
     
-    s = s + self.this.re_sub('[_\[\]]','',s1) + '\n' + s2
+    if isinstance(data, dict):
+      s = '%s entries:\n\n'%len(data)
+      s1 = s2 = ''
+      for t, v in sorted(data.iteritems()):
+        header = ['DATE']
+        output = []
+        output.append(time.strftime('%c', time.gmtime(t)))
+        for i in sorted(v):
+          i1, i2 = i
+          header.append(i1.upper())
+          outstr = self.this.str_item(i2)
+          outstr = outstr.replace('`','').replace('´','').replace('\'','')
+          outstr = outstr.replace('|','').replace('\\','').replace(';','')
+          outstr = outstr.replace('<','').replace('>','').replace('"','')
+          output.append(outstr.replace('\n',', '))
+        s1 = ';'.join(header)
+        s2 += ';'.join(output) + '\n'
+        
+      s = s + self.this.re_sub('[_\[\]]','',s1) + '\n' + s2
+    
+    else:
+      sel = select([self.sqldb.c.ZMS_FRM_TST]).group_by(self.sqldb.c.ZMS_FRM_TST)
+      con = self.engine.connect()
+      res = con.execute(sel)
+      s = '%s entries:\n\n'%res.rowcount   
+      for row in res:
+        s += '%s\n'%str(row[0])
+      
+      # TODO: handle ResultProxy from line 105
     
     return s
 
@@ -210,6 +320,11 @@ class ZMSFormulatorItem:
 
   def __init__(self, this):
     
+    self.eid          = this.getId()
+    self.oid          = this.get_oid()
+    self.cid          = this.getHome().getId()
+    self.fid          = this.getParentNode().getId()
+    self.url          = this.getParentNode().getDeclUrl()     
     self.titlealt     = this.attr('titlealt')
     self.title        = this.attr('title')
     self.description  = this.attr('attr_dc_description')

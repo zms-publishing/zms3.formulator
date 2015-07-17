@@ -278,6 +278,17 @@ ZMSFormulator.options.required_by_default = true;]]>
               <item type="dictionary">
                 <dictionary>
                   <item key="default"><![CDATA[0]]></item>
+                  <item key="id"><![CDATA[dataStorageSQL]]></item>
+                  <item key="mandatory" type="int">0</item>
+                  <item key="multilang" type="int">1</item>
+                  <item key="name"><![CDATA[Use SQLStorage]]></item>
+                  <item key="repetitive" type="int">0</item>
+                  <item key="type"><![CDATA[boolean]]></item>
+                </dictionary>
+              </item>
+              <item type="dictionary">
+                <dictionary>
+                  <item key="default"><![CDATA[0]]></item>
                   <item key="id"><![CDATA[sendViaMail]]></item>
                   <item key="mandatory" type="int">0</item>
                   <item key="multilang" type="int">1</item>
@@ -392,6 +403,15 @@ $ZMI.registerReady(function() {
 	}
 	$('#sendViaMail').change(function() {
 		$('#tr_sendViaMailAddress_'+getZMILang()).toggle();
+	});
+	if ($('#dataStorageDisabled').is(':checked') == false) {
+		$('#tr_dataStorageSQL_'+getZMILang()).show();
+	}
+	else {
+		$('#tr_dataStorageSQL_'+getZMILang()).hide();
+	}
+	$('#dataStorageDisabled').change(function() {
+		$('#tr_dataStorageSQL_'+getZMILang()).toggle();
 	});
     var dom = require("ace/lib/dom");
     // add command to all new editor instances
@@ -1064,16 +1084,16 @@ textarea.form-control.rawJSON {
           </item>
           <item key="access" type="dictionary">
             <dictionary>
-              <item key="delete" type="list">
-                <list>
-                </list>
-              </item>
               <item key="delete_custom"></item>
-              <item key="insert" type="list">
+              <item key="delete_deny" type="list">
                 <list>
                 </list>
               </item>
               <item key="insert_custom"></item>
+              <item key="insert_deny" type="list">
+                <list>
+                </list>
+              </item>
             </dictionary>
           </item>
           <item key="enabled" type="int">0</item>
@@ -1120,8 +1140,9 @@ b.input.value=a,b.refreshValue(),b.is_dirty=!0,b.onChange(!0)})}b.theme.afterInp
                   <item key="custom"><![CDATA[from zms3.formulator import ZMSFormulator, JSONEditor
 
 def getJSONEditor(self):
-  f = ZMSFormulator.ZMSFormulator(self)
-  objs = filter(lambda ob: ob.isActive(self.REQUEST), f.this.getObjChildren('formulatorItems', self.REQUEST, ['ZMSTextarea']))
+  frmu = ZMSFormulator.ZMSFormulator(self)
+  jsed = JSONEditor.JSONEditor(frmu)
+  objs = filter(lambda ob: ob.isActive(self.REQUEST), frmu.this.getObjChildren('formulatorItems', self.REQUEST, ['ZMSTextarea']))
   
   if len(objs)==1:
     beforeZMSTextarea = objs[0].getBodyContent(self.REQUEST)
@@ -1134,7 +1155,7 @@ def getJSONEditor(self):
     afterZMSTextarea  = ''
     
   # Google.API.sitekey.password not configured
-  if f.GoogleAPIKey == 'no_site_key':
+  if frmu.GoogleAPIKey == 'no_site_key':
     output = '''
       %s
       <div id="editor_holder"></div>
@@ -1154,22 +1175,22 @@ def getJSONEditor(self):
 		<div class="g-recaptcha" data-sitekey="%s"></div>
 		<script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
 		<br />%s
-	  '''%(beforeZMSTextarea, self.getLangStr('SUBMIT',self.REQUEST.get('lang')), self.getLangStr('RESTORE',self.REQUEST.get('lang')), f.GoogleAPIKey, afterZMSTextarea)
+	  '''%(beforeZMSTextarea, self.getLangStr('SUBMIT',self.REQUEST.get('lang')), self.getLangStr('RESTORE',self.REQUEST.get('lang')), frmu.GoogleAPIKey, afterZMSTextarea)
 
-  if (f.feedbackMsg!=''):
+  if (frmu.feedbackMsg!=''):
 	  feedback = '''
 	    <div id="ZMSFormulatorFeedback" class="modal fade ZMSFormulatorFeedback-modal-lg" tabindex="-1" role="dialog" aria-labelledby="ZMSFormulatorFeedback" aria-hidden="true">
 	      <div class="modal-dialog modal-lg">
 	        <div class="modal-content" style="padding:1em;">%s</div>
 	      </div>
 	    </div>
-	    '''%(f.feedbackMsg.replace('\n','<br />'))
+	    '''%(frmu.feedbackMsg.replace('\n','<br />'))
   else:
     feedback = ''
 
   self.REQUEST.RESPONSE.setHeader('Cache-Control', 'no-cache')
   self.REQUEST.RESPONSE.setHeader('Pragma', 'no-cache')
-  return output + JSONEditor.render(f) + feedback]]>
+  return output + jsed.render(frmu) + feedback]]>
                   </item>
                   <item key="id"><![CDATA[getJSONEditor]]></item>
                   <item key="mandatory" type="int">0</item>
@@ -1184,10 +1205,11 @@ def getJSONEditor(self):
                   <item key="custom"><![CDATA[from zms3.formulator import ZMSFormulator, JSONEditor
 
 def getJSONSchema(self):
-  f = ZMSFormulator.ZMSFormulator(self)
+  frmu = ZMSFormulator.ZMSFormulator(self)
+  jsed = JSONEditor.JSONEditor(frmu)
   self.REQUEST.RESPONSE.setHeader('Cache-Control', 'no-cache')
   self.REQUEST.RESPONSE.setHeader('Pragma', 'no-cache')
-  return JSONEditor.getSchema(f)]]>
+  return jsed.getSchema()]]>
                   </item>
                   <item key="id"><![CDATA[getJSONSchema]]></item>
                   <item key="mandatory" type="int">0</item>
@@ -1207,10 +1229,10 @@ def printData(self):
   if not authorized:
     raise zExceptions.Unauthorized
   else:
-    f = ZMSFormulator.ZMSFormulator(self)
+    frmu = ZMSFormulator.ZMSFormulator(self)
     self.REQUEST.RESPONSE.setHeader('Cache-Control', 'no-cache')
     self.REQUEST.RESPONSE.setHeader('Pragma', 'no-cache')
-    return f.printDataRaw().replace(';',' | ')]]>
+    return frmu.printDataRaw().replace(';',' | ')]]>
                   </item>
                   <item key="id"><![CDATA[printData]]></item>
                   <item key="mandatory" type="int">0</item>
@@ -1225,8 +1247,8 @@ def printData(self):
                   <item key="custom"><![CDATA[from zms3.formulator import ZMSFormulator
 
 def putData(self):
-  f = ZMSFormulator.ZMSFormulator(self)
-  res = f.receiveData()
+  frmu = ZMSFormulator.ZMSFormulator(self)
+  res = frmu.receiveData()
   self.REQUEST.RESPONSE.setHeader('Cache-Control', 'no-cache')
   self.REQUEST.RESPONSE.setHeader('Pragma', 'no-cache')
   if res:
@@ -1254,8 +1276,8 @@ def resetData(self):
   if not authorized:
     raise zExceptions.Unauthorized
   else:
-    f = ZMSFormulator.ZMSFormulator(self)
-    f.clearData()]]>
+    frmu = ZMSFormulator.ZMSFormulator(self)
+    frmu.clearData()]]>
                   </item>
                   <item key="id"><![CDATA[resetData]]></item>
                   <item key="mandatory" type="int">0</item>
@@ -1275,14 +1297,14 @@ def downloadData(self):
   if not authorized:
     raise zExceptions.Unauthorized
   else:
-    f = ZMSFormulator.ZMSFormulator(self)
+    frmu = ZMSFormulator.ZMSFormulator(self)
     content_type = 'text/csv; charset=utf-8'
-    filename = '"%s_%s.csv"'%(self.getLangStr('TYPE_ZMSFORMULATOR'),f.titlealt)
+    filename = '"%s_%s.csv"'%(self.getLangStr('TYPE_ZMSFORMULATOR'),frmu.titlealt)
     self.REQUEST.RESPONSE.setHeader('Content-Type',content_type)
     self.REQUEST.RESPONSE.setHeader('Content-Disposition','attachment;filename='+filename)
     self.REQUEST.RESPONSE.setHeader('Cache-Control', 'no-cache')
     self.REQUEST.RESPONSE.setHeader('Pragma', 'no-cache')
-    return f.printDataRaw()]]>
+    return frmu.printDataRaw()]]>
                   </item>
                   <item key="id"><![CDATA[downloadData]]></item>
                   <item key="mandatory" type="int">0</item>
@@ -1312,7 +1334,7 @@ def downloadData(self):
           <item key="id"><![CDATA[zms3.formulator.lib]]></item>
           <item key="name"><![CDATA[zms3.formulator.lib]]></item>
           <item key="package"><![CDATA[zms3.formulator]]></item>
-          <item key="revision"><![CDATA[3.2.4]]></item>
+          <item key="revision"><![CDATA[3.3.0]]></item>
           <item key="type"><![CDATA[ZMSLibrary]]></item>
         </dictionary>
       </item>
