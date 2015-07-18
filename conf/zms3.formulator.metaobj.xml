@@ -1299,7 +1299,7 @@ def downloadData(self):
   else:
     frmu = ZMSFormulator.ZMSFormulator(self)
     content_type = 'text/csv; charset=utf-8'
-    filename = '"%s_%s.csv"'%(self.getLangStr('TYPE_ZMSFORMULATOR'),frmu.titlealt)
+    filename = '"%s_%s_%s.csv"'%(self.getLangStr('TYPE_ZMSFORMULATOR'),frmu.titlealt,frmu.this.getId())
     self.REQUEST.RESPONSE.setHeader('Content-Type',content_type)
     self.REQUEST.RESPONSE.setHeader('Content-Disposition','attachment;filename='+filename)
     self.REQUEST.RESPONSE.setHeader('Cache-Control', 'no-cache')

@@ -288,9 +288,9 @@ class ZMSFormulator:
       s = '%s entries:\n\n'%len(data)
       s1 = s2 = ''
       for t, v in sorted(data.iteritems()):
-        header = ['DATE']
+        header = ['timestamp']
         output = []
-        output.append(time.strftime('%c', time.gmtime(t)))
+        output.append(time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime(t)))
         for i in sorted(v):
           i1, i2 = i
           header.append(i1.upper())
@@ -302,17 +302,46 @@ class ZMSFormulator:
         s1 = ';'.join(header)
         s2 += ';'.join(output) + '\n'
         
-      s = s + self.this.re_sub('[_\[\]]','',s1) + '\n' + s2
+      s += s1.upper() + '\n' + s2
     
     else:
       sel = select([self.sqldb.c.ZMS_FRM_TST]).group_by(self.sqldb.c.ZMS_FRM_TST)
       con = self.engine.connect()
       res = con.execute(sel)
-      s = '%s entries:\n\n'%res.rowcount   
-      for row in res:
-        s += '%s\n'%str(row[0])
+      s = '%s entries:\n\n'%res.rowcount
       
-      # TODO: handle ResultProxy from line 105
+      sel = select([self.sqldb.c.ZMS_FRM_KEY]).distinct().order_by(self.sqldb.c.ZMS_FRM_ORD, self.sqldb.c.ZMS_FRM_KEY)
+      con = self.engine.connect()
+      res1 = con.execute(sel)
+
+      sel = select([self.sqldb.c.ZMS_FRM_KEY, self.sqldb.c.ZMS_FRM_ALT, self.sqldb.c.ZMS_FRM_RES, self.sqldb.c.ZMS_FRM_TST]).order_by(self.sqldb.c.ZMS_FRM_TST, self.sqldb.c.ZMS_FRM_ORD, self.sqldb.c.ZMS_FRM_KEY)
+      con = self.engine.connect()
+      res2 = con.execute(sel)
+
+      header = ['timestamp']
+      for head in res1:
+        header.append(head[0])
+        
+      record = []
+      for recd in res2:
+        record.append((recd[0], recd[2], recd[3]))
+
+      output = []
+      for r in record:
+        for h in header:
+          if r[0] == h:
+            outstr = self.this.re_sub('[_\[\]]','',r[1]).replace('\n',', ')
+            if r[0] == header[1]:
+              output.append('\n' + str(r[2]))
+            outstr = outstr.replace('`','').replace('´','').replace('\'','')
+            outstr = outstr.replace('|','').replace('\\','').replace(';','')
+            outstr = outstr.replace('<','').replace('>','').replace('"','')
+            output.append(outstr)
+            
+      s1 = ';'.join(header)
+      s2 = ';'.join(output)
+      
+      s += s1.upper() + s2.replace(';\n', '\n')
     
     return s
 
