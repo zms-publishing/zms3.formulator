@@ -409,9 +409,13 @@ $ZMI.registerReady(function() {
 	}
 	else {
 		$('#tr_dataStorageSQL_'+getZMILang()).hide();
+                $('#dataStorageSQL').attr('checked', false);
 	}
 	$('#dataStorageDisabled').change(function() {
 		$('#tr_dataStorageSQL_'+getZMILang()).toggle();
+                if ($('#dataStorageDisabled').is(':checked') == true) {
+                	$('#dataStorageSQL').attr('checked', false);       
+                }
 	});
     var dom = require("ace/lib/dom");
     // add command to all new editor instances
@@ -572,7 +576,7 @@ $ZMI.registerReady(function() {
           <item key="id"><![CDATA[ZMSFormulator]]></item>
           <item key="name"><![CDATA[ZMSFormulator]]></item>
           <item key="package"><![CDATA[zms3.formulator]]></item>
-          <item key="revision"><![CDATA[3.2.4]]></item>
+          <item key="revision"><![CDATA[3.3.0]]></item>
           <item key="type"><![CDATA[ZMSDocument]]></item>
         </dictionary>
       </item>

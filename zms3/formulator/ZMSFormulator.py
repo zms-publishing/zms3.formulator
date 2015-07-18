@@ -63,7 +63,7 @@ class ZMSFormulator:
 
   def getData(self):
     
-    if self.SQLStorage:
+    if self.SQLStorage and not self.noStorage:
       
       self.engine = create_engine(self.dbconnection)
       metadata = MetaData()

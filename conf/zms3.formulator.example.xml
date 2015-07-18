@@ -123,6 +123,10 @@ required_by_default : true]]></lang></optionsJS>
  id_prefix="formulatorItems">
 <titlealt>
 <lang id="ger"><![CDATA[Message]]></lang></titlealt>
+<hiddenField>
+<lang id="ger">1</lang>
+<lang id="fra">1</lang>
+<lang id="eng">1</lang></hiddenField>
 <valueDefault>
 <lang id="ger"><![CDATA[Hello World!]]></lang></valueDefault>
 <valueMaximum>
@@ -198,6 +202,10 @@ required_by_default : true]]></lang></optionsJS>
  id_prefix="formulatorItems">
 <titlealt>
 <lang id="ger"><![CDATA[Birthday]]></lang></titlealt>
+<mandatoryField>
+<lang id="ger">1</lang>
+<lang id="fra">1</lang>
+<lang id="eng">1</lang></mandatoryField>
 <valueMaximum>
 <lang id="ger">0</lang>
 <lang id="fra">0</lang>
