@@ -154,7 +154,7 @@ class ZMSFormulator:
             
             from datetime import datetime 
             ins = self.sqldb.insert().values(
-              ZMS_FRM_TST = datetime.utcfromtimestamp(timestamp),
+              ZMS_FRM_TST = datetime.fromtimestamp(timestamp),
               ZMS_FRM_RES = str(val),
               ZMS_FRM_ORD = modelledData.JSONDict['properties'][itemkey]['propertyOrder'],
               ZMS_FRM_OID = int(itemobj.oid[4:]),              
@@ -242,7 +242,7 @@ class ZMSFormulator:
         if pos > 0:
           data.pop(pos)
         # add current timestamp and store data
-        self.setData({time.time(): data})
+        self.setData({time.mktime(time.localtime()): data})
         # send data by mail if configured      
         if self.sendViaMail == True:
           self.sendData()
@@ -290,7 +290,7 @@ class ZMSFormulator:
       for t, v in sorted(data.iteritems()):
         header = ['timestamp']
         output = []
-        output.append(time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime(t)))
+        output.append(time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(t)))
         for i in sorted(v):
           i1, i2 = i
           header.append(i1.upper())
