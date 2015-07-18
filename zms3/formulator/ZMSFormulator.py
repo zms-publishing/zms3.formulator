@@ -38,6 +38,7 @@ class ZMSFormulator:
     self.thisMaster   = this.breadcrumbs_obj_path(True)[0]
     self.GoogleAPIKey = self.this.getConfProperty('Google.API.sitekey.password', self.thisMaster.getConfProperty('Google.API.sitekey.password','no_site_key'))
     self.GoogleAPISec = self.this.getConfProperty('Google.API.secretkey.password', self.thisMaster.getConfProperty('Google.API.secretkey.password','no_secret_key'))
+    self.dbconnection = self.this.getConfProperty('ZMSFormulator.dbconnection', self.thisMaster.getConfProperty('ZMSFormulator.dbconnection','mysql://localhost/test'))
     self.titlealt     = this.attr('titlealt')
     self.title        = this.attr('title')
     self.description  = this.attr('attr_dc_description')
@@ -64,9 +65,7 @@ class ZMSFormulator:
     
     if self.SQLStorage:
       
-      # TODO: get connection string from configuration (1. ZMS-Conf / 2. ZMS-Form)
-      # show indicator for (un)successful connection to configured SQLDB
-      self.engine = create_engine('mysql://localhost/test')
+      self.engine = create_engine(self.dbconnection)
       metadata = MetaData()
       try:
         self.sqldb = Table(self.this.getId(), metadata, autoload=True, autoload_with=self.engine)
