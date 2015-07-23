@@ -272,14 +272,14 @@ class ZMSFormulator:
         base = self.this.REQUEST.get('BASE0','')
       mbody.append(base+href)      
       mbody.append('\n\n')
-      mbody.append(self.printDataRaw())
+      mbody.append(self.printDataRaw(frmt='tab'))
       mbody = ''.join(mbody)
       if self.thisMaster.sendMail(self.mailAddress, msubj, mbody, self.this.REQUEST) < 0:
         _globals.writeError(self.thisMaster, "[ZMSFormulator.sendData] failed to send mail")
     else:
       _globals.writeError(self.thisMaster, "[ZMSFormulator.sendData] no mail address specified")      
 
-  def printDataRaw(self):
+  def printDataRaw(self, frmt='csv'):
     
     data = self.getData()
     
@@ -342,6 +342,24 @@ class ZMSFormulator:
       
       s += s1.upper() + s2.replace(';\n', '\n')
     
+    if (frmt == 'tab'):
+      s = ''
+      # render current transmitted item (last element in output-list)
+      # line-by-line tab-separated to be used in sendData by mail
+      # TODO: recognize different length and order of output-lists due to special array-fields
+      if len(output)>=len(header):
+        for item in zip(header, output[-len(header):]):
+          desc = item[0].strip()
+          cont = item[1].strip()
+          if len(desc)<8:
+            tab = '\t\t\t'
+          elif len(desc)<16:
+            tab = '\t\t'
+          else:
+            tab = '\t'
+            
+          s += desc.upper() + tab + cont + '\n'
+        
     return s
 
 class ZMSFormulatorItem:
