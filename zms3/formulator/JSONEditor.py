@@ -25,14 +25,14 @@ class JSONEditor:
   def __init__(self, obj):
     
     self.JSONDict                = {}
-    self.JSONDict['id']          = obj.titlealt.lower()
+    self.JSONDict['id']          = obj.titlealt.upper()
     self.JSONDict['title']       = obj.title
     self.JSONDict['type']        = 'object'
     self.JSONDict['properties']  = {}
   
     for i, item in enumerate(obj.items, start=1):
   
-      var = '%s'%(item.titlealt.lower())
+      var = '%s'%(item.titlealt.upper())
       values = item.select.strip().splitlines()
       
       self.JSONDict['properties'][var]                     = {}

@@ -967,7 +967,7 @@ textarea.form-control.rawJSON {
 
 <tal:block tal:define="global
     this options/zmscontext">
-<strong tal:content="python:this.attr('titlealt')" tal:attributes="style python:this.attr('hiddenField')==True and 'color:lightgrey' or ''">titlealt</strong><sup tal:condition="python:this.attr('mandatoryField')==True" style="font-size:large;color:red;">*</sup>
+<strong tal:content="python:this.attr('titlealt').upper()" tal:attributes="style python:this.attr('hiddenField')==True and 'color:lightgrey' or ''">titlealt</strong><sup tal:condition="python:this.attr('mandatoryField')==True" style="font-size:large;color:red;">*</sup>
 <code tal:content="python:this.attr('type')">type</code>
 </tal:block>
 
@@ -1071,7 +1071,7 @@ textarea.form-control.rawJSON {
           <item key="id"><![CDATA[ZMSFormulatorItem]]></item>
           <item key="name"><![CDATA[ZMSFormulatorItem]]></item>
           <item key="package"><![CDATA[zms3.formulator]]></item>
-          <item key="revision"><![CDATA[3.2.4]]></item>
+          <item key="revision"><![CDATA[3.3.0]]></item>
           <item key="type"><![CDATA[ZMSObject]]></item>
         </dictionary>
       </item>
@@ -1167,7 +1167,7 @@ def getJSONEditor(self):
       <button id="restore">%s</button>
       <span id="valid_indicator"></span>
       <br />%s
-    '''%(beforeZMSTextarea, self.getLangStr('SUBMIT',self.REQUEST.get('lang')), self.getLangStr('SUBMIT',self.REQUEST.get('lang')), afterZMSTextarea)
+    '''%(beforeZMSTextarea, self.getLangStr('SUBMIT',self.REQUEST.get('lang')), self.getLangStr('RESTORE',self.REQUEST.get('lang')), afterZMSTextarea)
   else:
 	  output = '''
 		%s

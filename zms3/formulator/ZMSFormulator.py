@@ -144,12 +144,12 @@ class ZMSFormulator:
             # normalize received ZMSFormulatorItem-Key due to arrays/objects
             # fetch matching ZMSFormulatorItem-Obj to retrieve ids and values
             if '[' in key:
-              itemkey = key.split('[')[0].lower()
+              itemkey = key.split('[')[0].upper()
             else:
-              itemkey = key.lower() 
-            if itemkey == 'recaptcha':
+              itemkey = key.upper() 
+            if itemkey == 'RECAPTCHA':
               continue
-            itemobj = filter(lambda x: x.titlealt.lower() == itemkey, self.items)[0]
+            itemobj = filter(lambda x: x.titlealt.upper() == itemkey, self.items)[0]
             
             if itemobj.type in ['select', 'checkbox', 'multiselect']:
               ZMS_FRM_RAW = itemobj.select.strip()

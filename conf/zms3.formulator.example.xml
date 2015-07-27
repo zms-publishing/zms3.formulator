@@ -18,10 +18,10 @@
 <lang id="ger"><![CDATA[Person]]></lang></titlealt>
 <onReadyJS>
 <lang id="ger"><![CDATA[// Disable part of the form
-ZMSFormulator.getEditor('root.message').disable();
+ZMSFormulator.getEditor('root.MESSAGE').disable();
 
 // Get/Set Value
-var msg = ZMSFormulator.getEditor('root.message');
+var msg = ZMSFormulator.getEditor('root.MESSAGE');
 
 if(msg) {
   msg.setValue("Hello World!\nHello Europe!\nHello America!");
@@ -31,7 +31,7 @@ if(msg) {
 <lang id="ger"><![CDATA[var value = ZMSFormulator.getValue();
 
 // Check the mandatory date field
-if (value.birthday==='') {
+if (value.BIRTHDAY==='') {
   submit.disabled = true;
   indicator.style.color = 'red';
   indicator.textContent = "Please enter the birthday!";
@@ -60,26 +60,26 @@ ZMSFormulator.options.required_by_default = true;
 // We will use this to seed the initial editor 
 // and to provide a "Restore to Default" button.
 ZMSFormulator.options.startval = {
-  "message" : "Will be set via onReady-Javascript below...",
-  "name" : "John Smith",
-  "age" : 35,
-  "gender" : "male",
-  "location" : {
-    "city" : "San Francisco",
-    "state" : "California",
-    "citystate" : ""
+  "MESSSAGE" : "Will be set via onReady-Javascript below...",
+  "NAME" : "John Smith",
+  "AGE" : 35,
+  "GENDER" : "male",
+  "LOCATION" : {
+    "CITY" : "San Francisco",
+    "STATE" : "California",
+    "CITYSTATE" : ""
   },
-  "pets" : [ {
-    "name" : "Spot",
-    "type" : "dog",
-    "fixed" : true
+  "PETS" : [ {
+    "NAME" : "Spot",
+    "TYPE" : "dog",
+    "FIXED" : true
   }, {
-    "name" : "Whiskers",
-    "type" : "cat",
-    "fixed" : false
+    "NAME" : "Whiskers",
+    "TYPE" : "cat",
+    "FIXED" : false
   } ],
-  "interests" : ["Hiking","Biking"],
-  "memberships" : ["ABC", "GHI"]
+  "INTERESTS" : ["Hiking","Biking"],
+  "MEMBERSHIPS" : ["ABC", "GHI"]
 };]]></lang>
 <lang id="fra"><![CDATA[// Disable additional properties
 no_additional_properties : true,
@@ -278,22 +278,22 @@ female]]></lang></valueSelect>
       "title": "Location",
       "propertyOrder": 4,
       "properties": {
-        "city": {
+        "CITY": {
           "title": "City",
           "type": "string"
         },
-        "state": {
+        "STATE": {
           "title": "State",
           "type": "string"
         },
-        "citystate": {
+        "CITYSTATE": {
           "title": "Citystate",
           "type": "string",
           "description": "This is generated automatically from the previous two fields",
-          "template": "{{city}}, {{state}}",
+          "template": "{{CITY}}, {{STATE}}",
           "watch": {
-            "city": "person.location.city",
-            "state": "person.location.state"
+            "CITY": "PERSON.LOCATION.CITY",
+            "STATE": "PERSON.LOCATION.STATE"
           }
         }
       }
@@ -331,7 +331,7 @@ female]]></lang></valueSelect>
       "items": {
         "type": "object",
         "properties": {
-          "type": {
+          "TYPE": {
             "type": "string",
             "title": "Type",
             "enum": [
@@ -343,11 +343,11 @@ female]]></lang></valueSelect>
             ],
             "default": "dog"
           },
-          "name": {
+          "NAME": {
             "type": "string",
             "title": "Name"
           },
-          "fixed": {
+          "FIXED": {
             "type": "boolean",
             "title": "spayed / neutered",
             "default": true
