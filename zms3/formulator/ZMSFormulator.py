@@ -209,7 +209,7 @@ class ZMSFormulator:
       
       isOK = False
       error = None
-      pos = 0
+      pos = -1
 
       # Google.API.sitekey.password not configured
       if self.GoogleAPIKey == 'no_site_key':
@@ -243,7 +243,7 @@ class ZMSFormulator:
       
       if isOK:
         # remove reCAPTCHA response value from data to be stored
-        if pos > 0:
+        if pos >= 0:
           data.pop(pos)
         # add current timestamp and store data
         self.setData({time.mktime(time.localtime()): data})
