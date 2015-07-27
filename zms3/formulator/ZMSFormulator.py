@@ -284,12 +284,15 @@ class ZMSFormulator:
     else:
       _globals.writeError(self.thisMaster, "[ZMSFormulator.sendData] no mail address specified")      
 
-  def printDataRaw(self, frmt='csv'):
+  def printDataRaw(self, frmt='txt'):
     
     data = self.getData()
     
     if isinstance(data, dict):
-      s = '%s entries:\n\n'%len(data)
+      if frmt=='txt':
+        s = '%s entries:\n\n'%len(data)
+      else:
+        s = ''
       s1 = s2 = ''
       for t, v in sorted(data.iteritems()):
         header = ['timestamp']
@@ -312,7 +315,10 @@ class ZMSFormulator:
       sel = select([self.sqldb.c.ZMS_FRM_TST]).group_by(self.sqldb.c.ZMS_FRM_TST)
       con = self.engine.connect()
       res = con.execute(sel)
-      s = '%s entries:\n\n'%res.rowcount
+      if frmt=='txt':
+        s = '%s entries:\n\n'%res.rowcount
+      else:
+        s = ''
       
       sel = select([self.sqldb.c.ZMS_FRM_KEY]).distinct().order_by(self.sqldb.c.ZMS_FRM_ORD, self.sqldb.c.ZMS_FRM_KEY)
       con = self.engine.connect()

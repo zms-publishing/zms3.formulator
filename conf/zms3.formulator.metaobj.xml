@@ -1308,7 +1308,7 @@ def downloadData(self):
     self.REQUEST.RESPONSE.setHeader('Content-Disposition','attachment;filename='+filename)
     self.REQUEST.RESPONSE.setHeader('Cache-Control', 'no-cache')
     self.REQUEST.RESPONSE.setHeader('Pragma', 'no-cache')
-    return frmu.printDataRaw()]]>
+    return frmu.printDataRaw(frmt='csv')]]>
                   </item>
                   <item key="id"><![CDATA[downloadData]]></item>
                   <item key="mandatory" type="int">0</item>
