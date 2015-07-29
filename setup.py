@@ -25,7 +25,34 @@ for path in sys.path:
   if path.startswith(sys.prefix) and path.endswith('site-packages'):
     site_packages = path
 
-VERSION = '3.3.0dev-sqlstorage'
+VERSION = '3.3.0dev'
+
+zmspkg_name = 'formulator'
+branch_name = 'sqlstorage'
+downld_file = 'https://bitbucket.org/zms3/%s/get/%s.zip'%(zmspkg_name, branch_name)
+
+if 'dev' in VERSION:
+  import subprocess
+  # retrieve commit hash from local Git repository if available
+  rtn = subprocess.Popen("git -C %s describe"%(os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))),
+                         stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                         shell=True, universal_newlines=True)
+  rtn = rtn.communicate()[0].strip()
+  rtn = rtn.split('-g')
+  rtn.reverse()
+  
+  # otherwise retrieve commit hash from remote Git repository at Bitbucket
+  if rtn[0].strip() == '':
+    rtn = subprocess.Popen("curl --head " + downld_file,
+                           stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                           shell=True, universal_newlines=True)
+    rtn = rtn.communicate()[0].strip()
+    rtn = rtn.split('.zip')[0].split('filename=zms3-%s-'%zmspkg_name)
+    rtn.reverse()
+  
+  commit_hash = rtn[0].strip()[:7]
+  
+  VERSION = '%s-%s%s'%(VERSION, branch_name, len(commit_hash)==7 and '-'+commit_hash or '')
 
 INSTALL_REQUIRES = [
 # Upstream requirement - install explicitly!
