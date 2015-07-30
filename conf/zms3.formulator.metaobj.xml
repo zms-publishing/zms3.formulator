@@ -253,7 +253,7 @@ ZMSFormulator.options.required_by_default = true;]]>
   reset_allowed_for python:['Manager','ZMSAdministrator','ZMSEditor'];">
 <div class="col-sm-10">
   <button type="button" name="btn" class="btn btn-primary" id="BTN_Download" value="Download">Download</button>
-  <button type="button" name="btn" class="btn btn-primary" id="BTN_Export" value="Export" disabled="disabled">Export</button>
+  <button type="button" name="btn" class="btn btn-primary" id="BTN_Export" value="Export">Excel-Export</button>
   <button type="button" name="btn" class="btn btn-default" id="BTN_Refresh" value="Refresh">Refresh</button>
   <button type="button" name="btn" class="btn btn-default" id="BTN_Reset" value="Reset" tal:condition="python:len(context.intersection_list(auth_user_roles,reset_allowed_for))>0">Reset</button>
 </div>
@@ -281,7 +281,7 @@ ZMSFormulator.options.required_by_default = true;]]>
                   <item key="id"><![CDATA[dataStorageSQL]]></item>
                   <item key="mandatory" type="int">0</item>
                   <item key="multilang" type="int">1</item>
-                  <item key="name"><![CDATA[Use SQLStorage]]></item>
+                  <item key="name"><![CDATA[Use SQL-Storage]]></item>
                   <item key="repetitive" type="int">0</item>
                   <item key="type"><![CDATA[boolean]]></item>
                 </dictionary>
@@ -394,6 +394,9 @@ $ZMI.registerReady(function() {
 	});
 	$('#BTN_Download').click(function() {
 		window.open('downloadData');
+	});
+	$('#BTN_Export').click(function() {
+		window.open('downloadData?encode=excel');
 	});
 	if ($('#sendViaMail').is(':checked') == true) {
 		$('#tr_sendViaMailAddress_'+getZMILang()).show();
@@ -1308,7 +1311,10 @@ def downloadData(self):
     self.REQUEST.RESPONSE.setHeader('Content-Disposition','attachment;filename='+filename)
     self.REQUEST.RESPONSE.setHeader('Cache-Control', 'no-cache')
     self.REQUEST.RESPONSE.setHeader('Pragma', 'no-cache')
-    return frmu.printDataRaw(frmt='csv')]]>
+    if (self.REQUEST.get('encode','')=='excel'):
+        return unicode(frmu.printDataRaw(frmt='csv'),'utf-8').encode('latin-1')
+    else:
+        return frmu.printDataRaw(frmt='csv')]]>
                   </item>
                   <item key="id"><![CDATA[downloadData]]></item>
                   <item key="mandatory" type="int">0</item>
