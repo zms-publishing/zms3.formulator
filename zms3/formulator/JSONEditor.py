@@ -60,9 +60,16 @@ class JSONEditor:
       if item.type == 'select':
         self.JSONDict['properties'][var]['type']           = 'string'
         self.JSONDict['properties'][var]['enum']           = []
+        self.JSONDict['properties'][var]['options']['enum_titles'] = []
         if len(values)>0:
+          if not item.mandatory:
+            self.JSONDict['properties'][var]['enum'].append('')
           for val in values:
             self.JSONDict['properties'][var]['enum'].append(val)
+          if not item.mandatory:
+            self.JSONDict['properties'][var]['options']['enum_titles'].append(obj.this.getLangStr('CAPTION_SELECT'))
+          for val in values:
+            self.JSONDict['properties'][var]['options']['enum_titles'].append(val)
       
       if item.type == 'textarea':
         self.JSONDict['properties'][var]['type']           = 'string'
