@@ -69,6 +69,10 @@ class ZMSFormulator:
       metadata = MetaData()
       try:
         self.sqldb = Table(self.this.getId(), metadata, autoload=True, autoload_with=self.engine)
+        if 'ZMS_FRM_USR' not in self.sqldb.columns:
+          alt = 'ALTER TABLE %s ADD COLUMN `ZMS_FRM_USR` VARCHAR(128) NULL AFTER `ZMS_FRM_URL`;'%self.this.getId()
+          con = self.engine.connect()
+          res = con.execute(alt)
       except NoSuchTableError:
         self.sqldb = Table(self.this.getId(), metadata,
                            Column('ZMS_FRM_ITM', BigInteger(), primary_key=True),
@@ -77,6 +81,7 @@ class ZMSFormulator:
                            Column('ZMS_FRM_CID', String(32)),
                            Column('ZMS_FRM_FID', String(32)),
                            Column('ZMS_FRM_URL', String(512)),
+                           Column('ZMS_FRM_USR', String(128)),
                            Column('ZMS_FRM_MDT', Boolean()),                                              
                            Column('ZMS_FRM_HID', Boolean()),
                            Column('ZMS_FRM_MIN', Integer()),
@@ -166,6 +171,7 @@ class ZMSFormulator:
               ZMS_FRM_CID = itemobj.cid,                    
               ZMS_FRM_FID = itemobj.fid,                       
               ZMS_FRM_URL = itemobj.url,
+              ZMS_FRM_USR = self.this.REQUEST.get('AUTHENTICATED_USER',''),
               ZMS_FRM_TYP = itemobj.type,                   
               ZMS_FRM_KEY = key, # put the received key including arrays/objects instead of plain itemobj.titlealt
               ZMS_FRM_ALT = itemobj.title,
