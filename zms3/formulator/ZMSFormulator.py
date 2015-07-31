@@ -293,7 +293,8 @@ class ZMSFormulator:
   def printDataRaw(self, frmt='txt'):
     
     data = self.getData()
-    
+
+    # Handle ZODB-Dictionary
     if isinstance(data, dict):
       if frmt=='txt':
         s = '%s entries:\n\n'%len(data)
@@ -301,7 +302,7 @@ class ZMSFormulator:
         s = ''
       s1 = s2 = ''
       for t, v in sorted(data.iteritems()):
-        header = ['timestamp']
+        header = ['TIMESTAMP']
         output = []
         output.append(time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(t)))
         for i in sorted(v):
@@ -317,6 +318,7 @@ class ZMSFormulator:
         
       s += s1.upper() + '\n' + s2
     
+    # Handle SQL-Storage
     else:
       sel = select([self.sqldb.c.ZMS_FRM_TST]).group_by(self.sqldb.c.ZMS_FRM_TST)
       con = self.engine.connect()
@@ -330,40 +332,46 @@ class ZMSFormulator:
       con = self.engine.connect()
       res1 = con.execute(sel)
 
-      sel = select([self.sqldb.c.ZMS_FRM_KEY, self.sqldb.c.ZMS_FRM_ALT, self.sqldb.c.ZMS_FRM_RES, self.sqldb.c.ZMS_FRM_TST]).order_by(self.sqldb.c.ZMS_FRM_TST, self.sqldb.c.ZMS_FRM_ORD, self.sqldb.c.ZMS_FRM_KEY)
+      sel = select([self.sqldb.c.ZMS_FRM_KEY, self.sqldb.c.ZMS_FRM_ALT, self.sqldb.c.ZMS_FRM_RES, self.sqldb.c.ZMS_FRM_TST]).order_by(self.sqldb.c.ZMS_FRM_TST, self.sqldb.c.ZMS_FRM_KEY)
       con = self.engine.connect()
       res2 = con.execute(sel)
 
-      header = ['timestamp']
+      header = ['TIMESTAMP']
       for head in res1:
         header.append(head[0])
+      
+      from collections import defaultdict
+      records = defaultdict(dict)
+      for rec in res2: 
+        frm_key = rec[0]
+        frm_res = rec[2]
+        frm_tst = rec[3]
+        records[frm_tst][frm_key] = frm_res
         
-      record = []
-      for recd in res2:
-        record.append((recd[0], recd[2], recd[3]))
-
       output = []
-      for r in record:
+      for tst, key in sorted(records.iteritems()):
+        rec = []
         for h in header:
-          if r[0] == h:
-            outstr = self.this.re_sub('[_\[\]]','',r[1]).replace('\n',', ')
-            if r[0] == header[1]:
-              output.append('\n' + str(r[2]))
+          if key.has_key(h):
+            outstr = self.this.re_sub('[_\[\]]','',key[h]).replace('\n',', ')
             outstr = outstr.replace('`','').replace('´','').replace('\'','')
             outstr = outstr.replace('|','').replace('\\','').replace(';','')
             outstr = outstr.replace('<','').replace('>','').replace('"','')
-            output.append(outstr)
-            
+            rec.append(outstr)
+          elif (h!='TIMESTAMP'):
+            rec.append('')
+        output.append('\n'+str(tst))
+        output.extend(rec)
+
       s1 = ';'.join(header)
       s2 = ';'.join(output)
       
       s += s1.upper() + s2.replace(';\n', '\n')
-    
+
+    # Render current transmitted item (last element in output-list)
+    # line-by-line tab-separated to be used in sendData by mail
     if (frmt == 'tab'):
       s = ''
-      # render current transmitted item (last element in output-list)
-      # line-by-line tab-separated to be used in sendData by mail
-      # TODO: recognize different length and order of output-lists due to special array-fields
       if len(output)>=len(header):
         for item in zip(header, output[-len(header):]):
           desc = item[0].strip()
