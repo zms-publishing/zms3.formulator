@@ -156,15 +156,18 @@ class ZMSFormulator:
               continue
             itemobj = filter(lambda x: x.titlealt.upper() == itemkey, self.items)[0]
             
+            ZMS_FRM_RES = self.this.str_item(val)
+            
             if itemobj.type in ['select', 'checkbox', 'multiselect']:
-              ZMS_FRM_RAW = itemobj.select.strip()
+              ZMS_FRM_RES = ZMS_FRM_RES.replace('\n',', ')
+              ZMS_FRM_RAW = ', '.join(itemobj.select.splitlines())
             else:
               ZMS_FRM_RAW = itemobj.rawJSON
             
             from datetime import datetime 
             ins = self.sqldb.insert().values(
               ZMS_FRM_TST = datetime.fromtimestamp(timestamp),
-              ZMS_FRM_RES = str(val),
+              ZMS_FRM_RES = ZMS_FRM_RES,
               ZMS_FRM_ORD = modelledData.JSONDict['properties'][itemkey]['propertyOrder'],
               ZMS_FRM_OID = int(itemobj.oid[4:]),              
               ZMS_FRM_EID = itemobj.eid,
