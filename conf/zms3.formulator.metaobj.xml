@@ -1180,9 +1180,9 @@ def getJSONEditor(self):
 		<button id="restore">%s</button>
 		<span id="valid_indicator"></span>
 		<div class="g-recaptcha" data-sitekey="%s"></div>
-		<script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
+		<script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit&hl=%s" async defer></script>
 		<br />%s
-	  '''%(beforeZMSTextarea, self.getLangStr('SUBMIT',self.REQUEST.get('lang')), self.getLangStr('RESTORE',self.REQUEST.get('lang')), frmu.GoogleAPIKey, afterZMSTextarea)
+	  '''%(beforeZMSTextarea, self.getLangStr('SUBMIT',self.REQUEST.get('lang')), self.getLangStr('RESTORE',self.REQUEST.get('lang')), frmu.GoogleAPIKey, self.getLanguageLabel(self.REQUEST.get('lang'))[:2].lower(), afterZMSTextarea)
 
   if (frmu.feedbackMsg!=''):
 	  feedback = '''
