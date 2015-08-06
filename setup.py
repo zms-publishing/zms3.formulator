@@ -57,18 +57,6 @@ if 'dev' in VERSION:
 INSTALL_REQUIRES = [
 # Upstream requirement - install explicitly!
 # 'ZMS3>=3.1.0',
-    
-# ATTENTION
-# Do not include these requirements here, because they may update
-# dependent Python Packages using incompatible versions.
-# Suitable versions are fetched by the ZMS3-Installer (see ZMS3/setup.py)
-# 'Products.ZSQLiteDA',
-# 'Products.ZSQLMethods',
-
-# The following Python Packages require a installed MySQL Database System:
-# 'MySQL-python',
-# 'Products.ZMySQLDA',
-
   'sqlalchemy',
 ]
 
@@ -118,7 +106,7 @@ CLASSIFIERS = [
 
 setup(
   name                  = 'zms3.formulator',
-  description           = 'JSON-based HTML-Forms',
+  description           = 'Submit JSON-based HTML-Forms into a SQL-Storage with protection by reCAPTCHA',
 # long_description      = README,
   version               = VERSION,
   author                = 'HOFFMANN+LIEBENBERG in association with SNTL Publishing, Berlin',

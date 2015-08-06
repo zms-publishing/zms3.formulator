@@ -139,7 +139,7 @@ class ZMSFormulator:
 
     if type(receivedData) is dict:
       
-      # save data as record to SQLDB
+      # save data as records to SQLDB
       if self.SQLStorage and not self.noStorage:
         modelledData = JSONEditor.JSONEditor(self)
         
@@ -220,7 +220,7 @@ class ZMSFormulator:
       error = None
       pos = -1
 
-      # Google.API.sitekey.password not configured
+      # Google.API.sitekey.password disabled
       if self.GoogleAPIKey == 'no_site_key':
         isOK = True
 
@@ -262,15 +262,15 @@ class ZMSFormulator:
         return True 
 
       elif error:
-        _globals.writeError(self.thisMaster, "[ZMSFormulator.setData] error occurred while using reCAPTCHA service by Google: %s"%error)        
+        _globals.writeError(self.thisMaster, "[ZMSFormulator.receiveData] error occurred while using reCAPTCHA service by Google: %s"%error)        
         return False        
 
       else:
-        _globals.writeError(self.thisMaster, "[ZMSFormulator.setData] input by robot detected")        
+        _globals.writeError(self.thisMaster, "[ZMSFormulator.receiveData] input by robot detected")        
         return False
     
     else:
-      _globals.writeError(self.thisMaster, "[ZMSFormulator.setData] unexpected data (not list)")
+      _globals.writeError(self.thisMaster, "[ZMSFormulator.receiveData] unexpected data received")
       return False
 
   def sendData(self):      
