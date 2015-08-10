@@ -25,14 +25,15 @@ for path in sys.path:
   if path.startswith(sys.prefix) and path.endswith('site-packages'):
     site_packages = path
 
-VERSION = '3.3.0dev'
+VERSION = '3.2.5'
 
 INSTALL_REQUIRES = [
+# Upstream requirement - install explicitly!
 # 'ZMS3>=3.1.0',
 ]
 
 DATA_FILES = [
-  (os.path.join(site_packages, 'zms3/formulator/'), ['zms3/formulator/JSONEditor.js']),
+  (os.path.join(site_packages, 'zms3/formulator'), ['zms3/formulator/JSONEditor.js']),
   (os.path.join(site_packages, 'zms3/formulator/conf'), ['conf/zms3.formulator.example.xml']),
   (os.path.join(site_packages, 'zms3/formulator/conf'), ['conf/zms3.formulator.langdict.xml']),
   (os.path.join(site_packages, 'zms3/formulator/conf'), ['conf/zms3.formulator.metaobj.xml']),
