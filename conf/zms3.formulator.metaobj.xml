@@ -1239,7 +1239,7 @@ def printData(self):
     frmu = ZMSFormulator.ZMSFormulator(self)
     self.REQUEST.RESPONSE.setHeader('Cache-Control', 'no-cache')
     self.REQUEST.RESPONSE.setHeader('Pragma', 'no-cache')
-    return frmu.printDataRaw().replace(';',' | ')]]>
+    return unicode(frmu.printDataRaw().replace(';',' | '),'utf-8')]]>
                   </item>
                   <item key="id"><![CDATA[printData]]></item>
                   <item key="mandatory" type="int">0</item>
@@ -1314,7 +1314,7 @@ def downloadData(self):
     if (self.REQUEST.get('encode','')=='excel'):
         return unicode(frmu.printDataRaw(frmt='csv'),'utf-8').encode('latin-1')
     else:
-        return frmu.printDataRaw(frmt='csv')]]>
+        return unicode(frmu.printDataRaw(frmt='csv'),'utf-8')]]>
                   </item>
                   <item key="id"><![CDATA[downloadData]]></item>
                   <item key="mandatory" type="int">0</item>
