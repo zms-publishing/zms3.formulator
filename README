@@ -1,10 +1,11 @@
 zms3.formulator
 ===============
 
-This Python Package is an Extension for the `ZMS3 Publishing System <http://www.zms-publishing.com>`_ (Open Source Content Management
-for Science, Technology and Medicine) to integrate the `JSON Editor by Jeremy Dorn <http://jeremydorn.com/json-editor>`_, Redwood City, CA.
+This Python Package is an Extension for the `ZMS3 Publishing System <http://www.zms-publishing.com>`_ (Open Source Content Management for Science, Technology and Medicine) to integrate the `JSON Editor by Jeremy Dorn <http://jeremydorn.com/json-editor>`_, Redwood City, CA.
 
-A JSON Schema is generated based on special content objects and used to transform it into an HTML form.
+A JSON Schema is generated based on special content objects and used to transform it into an HTML Form.
+
+The data submitted by the generated HTML Form can be transmitted into a remote `SQL Storage <http://www.sqlalchemy.org>`_ for further processing and evaluation using standard reporting tools - or data will be stored into the included `ZODB <http://www.zodb.org>`_ and/or sent by mail.
 
 Form submission provides support for the `reCAPTCHA service by Google <https://www.google.com/recaptcha>`_ to protect from spam and abuse.
 
@@ -15,8 +16,10 @@ References
   * https://pypi.python.org/pypi/zms3.formulator
   * https://github.com/jdorn/json-editor
   * https://developers.google.com/recaptcha/intro
+  * http://www.sqlalchemy.org
+  * http://www.zodb.org
 
 Changelog
 ---------
 
-  * https://bitbucket.org/zms3/formulator/commits/branch/master
+  * https://bitbucket.org/zms3/formulator/commits/branch/sqlstorage
