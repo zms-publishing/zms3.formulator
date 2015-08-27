@@ -73,10 +73,15 @@ class ZMSFormulator:
           alt = 'ALTER TABLE %s ADD COLUMN `ZMS_FRM_USR` VARCHAR(128) NULL AFTER `ZMS_FRM_URL`;'%self.this.getId()
           con = self.engine.connect()
           res = con.execute(alt)
+        if 'ZMS_FRM_UID' not in self.sqldb.columns:
+          alt = 'ALTER TABLE %s ADD COLUMN `ZMS_FRM_UID` VARCHAR(128) NULL AFTER `ZMS_FRM_OID`;'%self.this.getId()
+          con = self.engine.connect()
+          res = con.execute(alt)
       except NoSuchTableError:
         self.sqldb = Table(self.this.getId(), metadata,
                            Column('ZMS_FRM_ITM', BigInteger(), primary_key=True),
                            Column('ZMS_FRM_OID', BigInteger()),
+                           Column('ZMS_FRM_UID', String(128)),
                            Column('ZMS_FRM_EID', String(32)),
                            Column('ZMS_FRM_CID', String(32)),
                            Column('ZMS_FRM_FID', String(32)),
@@ -170,6 +175,7 @@ class ZMSFormulator:
               ZMS_FRM_RES = ZMS_FRM_RES,
               ZMS_FRM_ORD = modelledData.JSONDict['properties'][itemkey]['propertyOrder'],
               ZMS_FRM_OID = int(itemobj.oid[4:]),              
+              ZMS_FRM_UID = 'uid:' in itemobj.uid and itemobj.uid[4:] or None,
               ZMS_FRM_EID = itemobj.eid,
               ZMS_FRM_CID = itemobj.cid,                    
               ZMS_FRM_FID = itemobj.fid,                       
@@ -396,6 +402,7 @@ class ZMSFormulatorItem:
     
     self.eid          = this.getId()
     self.oid          = this.get_oid()
+    self.uid          = this.get_uid()
     self.cid          = this.getHome().getId()
     self.fid          = this.getParentNode().getId()
     self.url          = this.getParentNode().getDeclUrl()     
