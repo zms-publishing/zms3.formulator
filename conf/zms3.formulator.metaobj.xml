@@ -346,9 +346,15 @@ ZMSFormulator.options.required_by_default = true;]]>
 #editor_holder .checkbox {
   line-height: normal;
 }
+#editor_holder h3 {
+  display: none;
+}
 </style>
-<div class="col-lg-8 col-lg-offset-3 col-md-10 col-md-offset-1"
-  tal:content="structure python:this.getJSONEditor()"></div>
+<div class="col-lg-8 col-lg-offset-3 col-md-10 col-md-offset-1">
+  <h1 tal:content="structure python:this.getTitle(request)">title</h1>
+  <p tal:condition="python:this.attr('attr_dc_description')" tal:content="structure python:this.attr('attr_dc_description')" class="lead">attr_dc_description</p>
+  <tal:block tal:content="structure python:this.getJSONEditor()"></tal:block>
+</div>
 </tal:block>
 
 <!-- /ZMSFormulator.standard_html -->]]>
@@ -1107,7 +1113,7 @@ textarea.form-control.rawJSON {
           <item key="id"><![CDATA[zms3.formulator]]></item>
           <item key="name"><![CDATA[zms3.formulator]]></item>
           <item key="package"></item>
-          <item key="revision"><![CDATA[3.4.0dev]]></item>
+          <item key="revision"><![CDATA[3.3.1]]></item>
           <item key="type"><![CDATA[ZMSPackage]]></item>
         </dictionary>
       </item>
