@@ -86,17 +86,18 @@ document.getElementById('submit').addEventListener('click', function() {
 		})
 		.always(function(res) {
 			var text = res.responseText;
-			console.log(text);
-			document.getElementById('valid_indicator').textContent = text;			
+			console.log(text);			
 			if (text == 'Data was sent.') {
 				document.getElementById('valid_indicator').style.color = 'green';
 				ZMSFormulator.disable();
 				document.getElementById('submit').disabled = true;
 				document.getElementById('restore').disabled = true;
+				document.getElementById('valid_indicator').textContent = 'Data was sent.';
 				$('#ZMSFormulatorFeedback').modal('show');
 			}
 			else {
 				document.getElementById('valid_indicator').style.color = 'red';				
+				document.getElementById('valid_indicator').textContent = 'An Error occured.';
 			}
 		});	
 	}
