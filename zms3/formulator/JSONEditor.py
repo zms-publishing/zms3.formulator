@@ -89,6 +89,8 @@ class JSONEditor:
         self.JSONDict['properties'][var]['uniqueItems']    = 'true'
         if item.type == 'multiselect':
           self.JSONDict['properties'][var]['format']       = 'select'
+        elif item.type == 'checkbox':
+          self.JSONDict['properties'][var]['format']       = 'checkbox'
         self.JSONDict['properties'][var]['items']          = {}
         self.JSONDict['properties'][var]['items']['type']  = 'string'
         self.JSONDict['properties'][var]['items']['enum']  = []
