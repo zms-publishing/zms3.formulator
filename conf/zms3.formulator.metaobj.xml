@@ -1239,7 +1239,9 @@ def getJSONSchema(self):
 import zExceptions
 
 def printData(self):
-  authorized = self.REQUEST.get('AUTHENTICATED_USER').has_role('Authenticated')
+  current_roles = self.getUserRoles(self.REQUEST['AUTHENTICATED_USER'])
+  allowed_roles = ['Manager','ZMSAdministrator','ZMSEditor']
+  authorized = len(self.intersection_list(current_roles,allowed_roles))>0 and True or False
   if not authorized:
     raise zExceptions.Unauthorized
   else:
@@ -1284,9 +1286,9 @@ def putData(self):
 import zExceptions
 
 def resetData(self):
-  auth_user_roles = self.getUserRoles(self.REQUEST['AUTHENTICATED_USER'])
-  reset_allowed_for = ['Manager','ZMSAdministrator','ZMSEditor']
-  authorized = len(self.intersection_list(auth_user_roles,reset_allowed_for))>0 and True or False
+  current_roles = self.getUserRoles(self.REQUEST['AUTHENTICATED_USER'])
+  allowed_roles = ['Manager','ZMSAdministrator','ZMSEditor']
+  authorized = len(self.intersection_list(current_roles,allowed_roles))>0 and True or False
   if not authorized:
     raise zExceptions.Unauthorized
   else:
@@ -1307,7 +1309,9 @@ def resetData(self):
 import zExceptions
 
 def downloadData(self):
-  authorized = self.REQUEST.get('AUTHENTICATED_USER').has_role('Authenticated')
+  current_roles = self.getUserRoles(self.REQUEST['AUTHENTICATED_USER'])
+  allowed_roles = ['Manager','ZMSAdministrator','ZMSEditor']
+  authorized = len(self.intersection_list(current_roles,allowed_roles))>0 and True or False
   if not authorized:
     raise zExceptions.Unauthorized
   else:
@@ -1351,7 +1355,7 @@ def downloadData(self):
           <item key="id"><![CDATA[zms3.formulator.lib]]></item>
           <item key="name"><![CDATA[zms3.formulator.lib]]></item>
           <item key="package"><![CDATA[zms3.formulator]]></item>
-          <item key="revision"><![CDATA[3.3.2]]></item>
+          <item key="revision"><![CDATA[3.3.3]]></item>
           <item key="type"><![CDATA[ZMSLibrary]]></item>
         </dictionary>
       </item>
