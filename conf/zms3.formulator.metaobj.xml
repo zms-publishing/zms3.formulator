@@ -314,7 +314,7 @@ ZMSFormulator.options.required_by_default = true;]]>
                   <item key="multilang" type="int">0</item>
                   <item key="name"><![CDATA[<!-- DATA Preview -->
 <tal:block tal:define="global this options/zmscontext">
-<pre id="DATA_Preview" style="font-size: x-small;" tal:content="python:this.printData()">data</pre>
+<pre id="DATA_Preview" style="font-size: x-small; height: 25em; overflow: scroll;" tal:content="python:this.printData()">data</pre>
 </tal:block>]]>
                   </item>
                   <item key="repetitive" type="int">0</item>
@@ -585,7 +585,7 @@ $ZMI.registerReady(function() {
           <item key="id"><![CDATA[ZMSFormulator]]></item>
           <item key="name"><![CDATA[ZMSFormulator]]></item>
           <item key="package"><![CDATA[zms3.formulator]]></item>
-          <item key="revision"><![CDATA[3.3.0]]></item>
+          <item key="revision"><![CDATA[3.3.1]]></item>
           <item key="type"><![CDATA[ZMSDocument]]></item>
         </dictionary>
       </item>
