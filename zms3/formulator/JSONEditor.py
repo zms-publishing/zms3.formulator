@@ -112,7 +112,7 @@ class JSONEditor:
     f.close()
     
     script = '<script src="%s/metaobj_manager/zms3.formulator.lib.jsoneditor.min.js"></script>\n<script>%s</script>'  
-    editor = editor % (obj.thisURLPath, obj.GoogleAPIKey, obj.options, obj.onReady, obj.thisURLPath, obj.onChange)
+    editor = editor % (obj.thisURLPath, obj.this.REQUEST.get('lang'), obj.GoogleAPIKey, obj.options, obj.onReady, obj.thisURLPath, obj.onChange)
     output = script % (obj.baseURLPath, editor)
     
     return output

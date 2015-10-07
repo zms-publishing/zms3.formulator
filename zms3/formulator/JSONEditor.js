@@ -31,7 +31,7 @@ var ZMSFormulator = new JSONEditor(document.getElementById('editor_holder'), {
 
 	// The schema for the ZMSFormulator
 	schema : {
-		"$ref" : "%s/getJSONSchema"
+		"$ref" : "%s/getJSONSchema?lang=%s"
 	},
 
 	disable_collapse : true,

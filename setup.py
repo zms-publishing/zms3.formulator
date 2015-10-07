@@ -25,7 +25,7 @@ for path in sys.path:
   if path.startswith(sys.prefix) and path.endswith('site-packages'):
     site_packages = path
 
-VERSION = '3.4.0dev'
+VERSION = '3.3.3'
 
 zmspkg_name = 'formulator'
 branch_name = 'master'
@@ -86,7 +86,7 @@ for dirpath, dirnames, filenames in os.walk('.'):
 PACKAGE_DATA.append('*.txt')
 
 CLASSIFIERS = [
-  'Development Status :: 3 - Alpha',
+  'Development Status :: 4 - Beta',
   'Framework :: Zope2',
   'Programming Language :: Python :: 2.7',
   'Operating System :: OS Independent',

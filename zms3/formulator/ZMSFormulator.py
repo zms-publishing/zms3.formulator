@@ -115,9 +115,12 @@ class ZMSFormulator:
       self._data = res
       
     else:
+      lang = self.this.REQUEST.get('lang', self.this.getPrimaryLanguage())
+      self.this.REQUEST.set('lang', self.this.getPrimaryLanguage())
       data = self.this.attr('_data')
       self._data.update(data)
-    
+      self.this.REQUEST.set('lang', lang)      
+          
     return self._data
 
   def clearData(self):
@@ -130,11 +133,13 @@ class ZMSFormulator:
       self._data.clear()
       zodb = getConfiguration().dbtab.getDatabase('/', is_root=1)._storage
       if not zodb.isReadOnly() and not self.noStorage:
+        lang = self.this.REQUEST.get('lang', self.this.getPrimaryLanguage())
         self.this.REQUEST.set('lang', self.this.getPrimaryLanguage())
         self.this.setObjStateModified(self.this.REQUEST)
         self.this.attr('_data', self._data)
         self.this.onChangeObj(self.this.REQUEST)
         self.this.commitObj(self.this.REQUEST,forced=True)
+        self.this.REQUEST.set('lang', lang)
         return True
       else:
         _globals.writeBlock(self.thisMaster, "[ZMSFormulator.clearData] zodb.isReadOnly")
@@ -200,11 +205,13 @@ class ZMSFormulator:
         self._data.update(receivedData)
         zodb = getConfiguration().dbtab.getDatabase('/', is_root=1)._storage
         if not zodb.isReadOnly() and not self.noStorage:
+          lang = self.this.REQUEST.get('lang', self.this.getPrimaryLanguage())
           self.this.REQUEST.set('lang', self.this.getPrimaryLanguage())
           self.this.setObjStateModified(self.this.REQUEST)
           self.this.attr('_data', self._data)
           self.this.onChangeObj(self.this.REQUEST)
           self.this.commitObj(self.this.REQUEST,forced=True)
+          self.this.REQUEST.set('lang', lang)
           return True
         else:
           _globals.writeBlock(self.thisMaster, "[ZMSFormulator.setData] zodb.isReadOnly")
@@ -405,8 +412,15 @@ class ZMSFormulatorItem:
     self.uid          = this.get_uid()
     self.cid          = this.getHome().getId()
     self.fid          = this.getParentNode().getId()
-    self.url          = this.getParentNode().getDeclUrl()     
+    self.url          = this.getParentNode().getDeclUrl()
+
+    # to keep headlines of DATA in sync for all language versions
+    # use the value of titlealt in primary language always and ignore value of current language version
+    lang = this.REQUEST.get('lang', this.getPrimaryLanguage())
+    this.REQUEST.set('lang', this.getPrimaryLanguage())
     self.titlealt     = this.attr('titlealt')
+    this.REQUEST.set('lang', lang)
+    
     self.title        = this.attr('title')
     self.description  = this.attr('attr_dc_description')
     self.type         = this.attr('type')
