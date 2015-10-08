@@ -976,7 +976,8 @@ textarea.form-control.rawJSON {
 
 <tal:block tal:define="global
     this options/zmscontext">
-<strong tal:content="python:this.attr('titlealt').upper()" tal:attributes="style python:this.attr('hiddenField')==True and 'color:lightgrey' or ''">titlealt</strong><sup tal:condition="python:this.attr('mandatoryField')==True" style="font-size:large;color:red;">*</sup>
+<strong tal:content="python:this.attr('titlealt').upper()" tal:attributes="style python:this.attr('hiddenField')==True and 'color:lightgrey' or ''">titlealt</strong>
+<sup tal:condition="python:this.attr('mandatoryField')==True" style="font-size:small;color:red;">*</sup>
 <code tal:content="python:this.attr('type')">type</code>
 </tal:block>
 
@@ -1080,7 +1081,7 @@ textarea.form-control.rawJSON {
           <item key="id"><![CDATA[ZMSFormulatorItem]]></item>
           <item key="name"><![CDATA[ZMSFormulatorItem]]></item>
           <item key="package"><![CDATA[zms3.formulator]]></item>
-          <item key="revision"><![CDATA[3.3.3]]></item>
+          <item key="revision"><![CDATA[3.3.4]]></item>
           <item key="type"><![CDATA[ZMSObject]]></item>
         </dictionary>
       </item>
@@ -1113,7 +1114,7 @@ textarea.form-control.rawJSON {
           <item key="id"><![CDATA[zms3.formulator]]></item>
           <item key="name"><![CDATA[zms3.formulator]]></item>
           <item key="package"></item>
-          <item key="revision"><![CDATA[3.3.3]]></item>
+          <item key="revision"><![CDATA[3.4.0dev]]></item>
           <item key="type"><![CDATA[ZMSPackage]]></item>
         </dictionary>
       </item>
