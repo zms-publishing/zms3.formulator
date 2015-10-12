@@ -178,7 +178,7 @@ class ZMSFormulator:
             ins = self.sqldb.insert().values(
               ZMS_FRM_TST = datetime.fromtimestamp(timestamp),
               ZMS_FRM_RES = ZMS_FRM_RES,
-              ZMS_FRM_ORD = modelledData.JSONDict['properties'][itemkey]['propertyOrder'],
+              ZMS_FRM_ORD = modelledData.JSONDict['properties'][itemkey].has_key('propertyOrder') and modelledData.JSONDict['properties'][itemkey]['propertyOrder'] or 0,
               ZMS_FRM_OID = int(itemobj.oid[4:]),              
               ZMS_FRM_UID = 'uid:' in itemobj.uid and itemobj.uid[4:] or None,
               ZMS_FRM_EID = itemobj.eid[:32],
