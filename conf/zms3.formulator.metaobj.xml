@@ -142,12 +142,14 @@ ZMSFormulator.options.required_by_default = true;]]>
                   <item key="mandatory" type="int">0</item>
                   <item key="multilang" type="int">0</item>
                   <item key="name"><![CDATA[<!-- ACE-Editor1 optionsJS -->
+<tal:block tal:condition="python:request.get('ZMS_INSERT',None) is None">
 <div class="col-sm-2"></div>
 <div class="col-sm-10" style="top:-2.5em;padding:0;">
 <div class="ACE_Editor">
 <div id="ACE_Editor1"></div>
 </div>
-</div>]]>
+</div>
+</tal:block>]]>
                   </item>
                   <item key="repetitive" type="int">0</item>
                   <item key="type"><![CDATA[interface]]></item>
@@ -213,8 +215,10 @@ ZMSFormulator.options.required_by_default = true;]]>
                   <item key="mandatory" type="int">0</item>
                   <item key="multilang" type="int">0</item>
                   <item key="name"><![CDATA[<!-- JSON-Editor README -->
+<tal:block tal:condition="python:request.get('ZMS_INSERT',None) is None">
 <div class="col-sm-2"></div>
-<div class="col-sm-10" style="font-size:x-small;margin-bottom:2em;">See <a href="https://github.com/jdorn/json-editor/blob/master/README.md" target="_blank">JSON-Editor README</a> for options and usage of custom Schema (JSON).</div>]]>
+<div class="col-sm-10" style="font-size:x-small;margin-bottom:2em;">See <a href="https://github.com/jdorn/json-editor/blob/master/README.md" target="_blank">JSON-Editor README</a> for options and usage of custom Schema (JSON).</div>
+</tal:block>]]>
                   </item>
                   <item key="repetitive" type="int">0</item>
                   <item key="type"><![CDATA[interface]]></item>
@@ -246,7 +250,7 @@ ZMSFormulator.options.required_by_default = true;]]>
                   <item key="mandatory" type="int">0</item>
                   <item key="multilang" type="int">0</item>
                   <item key="name"><![CDATA[<!-- DATA Buttons -->
-<div class="form-group" id="tr_buttons">
+<div class="form-group" id="tr_buttons" tal:condition="python:request.get('ZMS_INSERT',None) is None">
 <div class="col-sm-2"></div>
 <tal:block tal:define="
   auth_user_roles python:context.getUserRoles(request['AUTHENTICATED_USER']);
@@ -313,7 +317,7 @@ ZMSFormulator.options.required_by_default = true;]]>
                   <item key="mandatory" type="int">0</item>
                   <item key="multilang" type="int">0</item>
                   <item key="name"><![CDATA[<!-- DATA Preview -->
-<tal:block tal:define="global this options/zmscontext">
+<tal:block tal:define="global this options/zmscontext" tal:condition="python:request.get('ZMS_INSERT',None) is None">
 <pre id="DATA_Preview" style="font-size: x-small; height: 25em; overflow: scroll;" tal:content="python:this.printData()">data</pre>
 </tal:block>]]>
                   </item>
@@ -373,6 +377,7 @@ ZMSFormulator.options.required_by_default = true;]]>
                   <item key="mandatory" type="int">0</item>
                   <item key="multilang" type="int">0</item>
                   <item key="name"><![CDATA[<script type="text/javascript" charset="UTF-8" src="/++resource++zms_/ace.ajax.org/ace.js"></script>
+<tal:block tal:condition="python:request.get('ZMS_INSERT',None) is None">
 <script type="text/javascript">
 $ZMI.registerReady(function() {
 	$('#BTN_Refresh').click(function() {
@@ -464,6 +469,7 @@ $ZMI.registerReady(function() {
 	});
 });
 </script>
+</tal:block>
 <style>
 .ACE_Editor {
     position: relative;
@@ -488,6 +494,12 @@ $ZMI.registerReady(function() {
 	right: 0;
 	z-index: 100;
 	overflow: hidden;
+}
+</style>
+<style tal:condition="python:request.get('ZMS_INSERT',None) is not None">
+#delimiter_Advanced, #delimiter_Data,
+#form0 > div > div:nth-child(6), #form0 > div > div:nth-child(8) {
+	display: none;
 }
 </style>]]>
                   </item>
@@ -585,7 +597,7 @@ $ZMI.registerReady(function() {
           <item key="id"><![CDATA[ZMSFormulator]]></item>
           <item key="name"><![CDATA[ZMSFormulator]]></item>
           <item key="package"><![CDATA[zms3.formulator]]></item>
-          <item key="revision"><![CDATA[3.3.3]]></item>
+          <item key="revision"><![CDATA[3.3.4]]></item>
           <item key="type"><![CDATA[ZMSDocument]]></item>
         </dictionary>
       </item>
