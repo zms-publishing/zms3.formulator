@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 ################################################################################
 #
 #  Copyright (c) 2015 HOFFMANN+LIEBENBERG in association with SNTL Publishing
@@ -158,13 +159,18 @@ class ZMSFormulator:
             
             # normalize received ZMSFormulatorItem-Key due to arrays/objects
             # fetch matching ZMSFormulatorItem-Obj to retrieve ids and values
-            if '[' in key:
-              itemkey = key.split('[')[0].upper()
+            if '[]' in key:
+              itemkey = key.rsplit('[',1)[0].upper()
             else:
               itemkey = key.upper() 
             if itemkey == 'RECAPTCHA':
               continue
-            itemobj = filter(lambda x: x.titlealt.upper() == itemkey, self.items)[0]
+            
+            item = filter(lambda x: x.titlealt.upper() == itemkey, self.items)
+            if len(item)>0:
+              itemobj = item[0]
+            else:
+              raise ValueError("malformed content model")
             
             ZMS_FRM_RES = self.this.str_item(val)
             
@@ -187,7 +193,7 @@ class ZMSFormulator:
               ZMS_FRM_URL = itemobj.url[:512],
               ZMS_FRM_USR = str(self.this.REQUEST.get('AUTHENTICATED_USER',''))[:128],
               ZMS_FRM_TYP = itemobj.type[:32],                   
-              ZMS_FRM_KEY = key[:128], # put the received key including arrays/objects instead of plain itemobj.titlealt
+              ZMS_FRM_KEY = itemobj.titlealt[:128],
               ZMS_FRM_ALT = itemobj.title[:64],
               ZMS_FRM_TXT = itemobj.description[:512],
               ZMS_FRM_MDT = itemobj.mandatory,
