@@ -159,8 +159,8 @@ class ZMSFormulator:
             
             # normalize received ZMSFormulatorItem-Key due to arrays/objects
             # fetch matching ZMSFormulatorItem-Obj to retrieve ids and values
-            if '[]' in key:
-              itemkey = key.rsplit('[',1)[0].upper()
+            if '[' in key:
+              itemkey = key.split('[')[0].upper()
             else:
               itemkey = key.upper() 
             if itemkey == 'RECAPTCHA':
@@ -193,7 +193,7 @@ class ZMSFormulator:
               ZMS_FRM_URL = itemobj.url[:512],
               ZMS_FRM_USR = str(self.this.REQUEST.get('AUTHENTICATED_USER',''))[:128],
               ZMS_FRM_TYP = itemobj.type[:32],                   
-              ZMS_FRM_KEY = itemobj.titlealt[:128],
+              ZMS_FRM_KEY = key[:128], # put the received key including arrays/objects instead of plain itemobj.titlealt
               ZMS_FRM_ALT = itemobj.title[:64],
               ZMS_FRM_TXT = itemobj.description[:512],
               ZMS_FRM_MDT = itemobj.mandatory,
@@ -424,7 +424,8 @@ class ZMSFormulatorItem:
     # use the value of titlealt in primary language always and ignore value of current language version
     lang = this.REQUEST.get('lang', this.getPrimaryLanguage())
     this.REQUEST.set('lang', this.getPrimaryLanguage())
-    self.titlealt     = this.attr('titlealt')
+    # remove square brackets from user inputs to be used as key which does not interfere with arrays/objects 
+    self.titlealt     = this.attr('titlealt').replace('[','').replace(']','')
     this.REQUEST.set('lang', lang)
     
     self.title        = this.attr('title')
