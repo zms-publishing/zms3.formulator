@@ -86,7 +86,6 @@ document.getElementById('submit').addEventListener('click', function() {
 		})
 		.always(function(res) {
 			var text = res.responseText;
-			console.log(text);			
 			if (text == 'Data was sent.') {
 				document.getElementById('valid_indicator').style.color = 'green';
 				ZMSFormulator.disable();
@@ -95,9 +94,14 @@ document.getElementById('submit').addEventListener('click', function() {
 				document.getElementById('valid_indicator').textContent = 'Data was sent.';
 				$('#ZMSFormulatorFeedback').modal('show');
 			}
+			else if (text == 'Data was not sent. Are you a robot?') {
+				document.getElementById('valid_indicator').style.color = 'red';				
+				document.getElementById('valid_indicator').textContent = 'Data was not sent. Are you a robot?';				
+			}
 			else {
 				document.getElementById('valid_indicator').style.color = 'red';				
 				document.getElementById('valid_indicator').textContent = 'An Error occured.';
+				console.log(text);
 			}
 		});	
 	}
@@ -130,7 +134,6 @@ document.getElementById('enable_disable').addEventListener('click', function() {
 ZMSFormulator.on('change', function() {
 	// Get an array of errors from the validator
 	var errors = ZMSFormulator.validate();
-	console.log(errors);
 	 
 	var indicator = document.getElementById('valid_indicator');
 	var submit = document.getElementById('submit');
