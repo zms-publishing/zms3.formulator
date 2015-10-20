@@ -1,0 +1,2 @@
+global-exclude .gitignore
+global-exclude .DS_Store

@@ -20,12 +20,13 @@
 import os
 import sys
 from setuptools import setup
+from setuptools import find_packages
 
 for path in sys.path:
   if path.startswith(sys.prefix) and path.endswith('site-packages'):
     site_packages = path
 
-VERSION = '3.3.5'
+VERSION = '3.4.0dev'
 
 zmspkg_name = 'formulator'
 branch_name = 'master'
@@ -67,26 +68,10 @@ DATA_FILES = [
   (os.path.join(site_packages, 'zms3/formulator/conf'), ['conf/zms3.formulator.metaobj.xml']),
 ]
 
-PACKAGE_DATA = []
-# Exclude special folders and files
-for dirpath, dirnames, filenames in os.walk('.'):
-  if (
-    '.'                           != dirpath and
-    '.settings'                   not in dirpath and
-    '.git'                        not in dirpath and
-    'dist'                        not in dirpath and
-    'json-editor'                 not in dirpath and
-    'select2'                     not in dirpath
-    ): 
-    if filenames: 
-      for filename in filenames:
-        if filename != '.DS_Store' and filename != '.gitignore':
-          PACKAGE_DATA.append(dirpath[2:]+'/%s' % filename)
-# Include files from root path (because '.' is exclude above)
-PACKAGE_DATA.append('*.txt')
+PACKAGE_DATA = find_packages()
 
 CLASSIFIERS = [
-  'Development Status :: 4 - Beta',
+  'Development Status :: 3 - Alpha',
   'Framework :: Zope2',
   'Programming Language :: Python :: 2.7',
   'Operating System :: OS Independent',
