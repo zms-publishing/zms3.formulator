@@ -50,6 +50,7 @@ class ZMSFormulator:
     self.SQLStorage   = this.attr('dataStorageSQL')
     self.sendViaMail  = this.attr('sendViaMail')
     self.mailAddress  = this.attr('sendViaMailAddress').strip()
+    self.fromAddress  = this.attr('sendViaMailFrom').strip() == '' and self.this.getConfProperty('ZMSAdministrator.email', self.thisMaster.getConfProperty('ZMSAdministrator.email','')) or this.attr('sendViaMailFrom').strip()
     self.feedbackMsg  = this.attr('feedbackMsg').strip()
     self.items        = []
     self._data        = {}
@@ -307,7 +308,7 @@ class ZMSFormulator:
       mbody.append('\n\n')
       mbody.append(self.printDataRaw(frmt='tab'))
       mbody = ''.join(mbody)
-      if self.thisMaster.sendMail(self.mailAddress, msubj, mbody, self.this.REQUEST) < 0:
+      if self.thisMaster.sendMail({'To':self.mailAddress,'From':self.fromAddress}, msubj, mbody, self.this.REQUEST) < 0:
         _globals.writeError(self.thisMaster, "[ZMSFormulator.sendData] failed to send mail")
     else:
       _globals.writeError(self.thisMaster, "[ZMSFormulator.sendData] no mail address specified")      
