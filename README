@@ -3,7 +3,7 @@ zms3.formulator
 
 This Python Package is an Extension for the `ZMS3 Publishing System <http://www.zms-publishing.com>`_ (Open Source Content Management for Science, Technology and Medicine) to integrate the `JSON Editor by Jeremy Dorn <http://jeremydorn.com/json-editor>`_, Redwood City, CA.
 
-A JSON Schema is generated based on special content objects and used to transform it into an HTML Form.
+A JSON Schema is generated based on special content objects and used to transform it into an HTML Form handling all the front-end validations.
 
 The data submitted by the generated HTML Form can be transmitted into a remote `SQL Storage <http://www.sqlalchemy.org>`_ for further processing and evaluation using standard reporting tools - or data will be stored into the included `ZODB <http://www.zodb.org>`_ and/or sent by mail.
 
