@@ -343,7 +343,7 @@ ZMSFormulator.options.required_by_default = true;]]>
                   <item key="multilang" type="int">0</item>
                   <item key="name"><![CDATA[<!-- DATA Preview -->
 <tal:block tal:define="global this options/zmscontext" tal:condition="python:request.get('ZMS_INSERT',None) is None">
-<pre id="DATA_Preview" style="font-size: x-small; height: 25em; overflow: scroll;" tal:content="python:this.printData()" tal:on-error="structure string:<span style='color:red;'>An error occurred: ${error/value}</span>">data</pre>
+<pre id="DATA_Preview" style="font-size: x-small; height: 25em; overflow: scroll;" tal:condition="python:not this.attr('dataStorageDisabled')" tal:content="python:this.printData()" tal:on-error="structure string:<span style='color:red;'>An error occurred: ${error/value}</span>">data</pre>
 </tal:block>]]>
                   </item>
                   <item key="repetitive" type="int">0</item>
@@ -1157,7 +1157,7 @@ textarea.form-control.rawJSON {
           <item key="id"><![CDATA[zms3.formulator]]></item>
           <item key="name"><![CDATA[zms3.formulator]]></item>
           <item key="package"></item>
-          <item key="revision"><![CDATA[3.4.0dev]]></item>
+          <item key="revision"><![CDATA[3.3.6]]></item>
           <item key="type"><![CDATA[ZMSPackage]]></item>
         </dictionary>
       </item>

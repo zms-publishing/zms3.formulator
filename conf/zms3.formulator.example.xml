@@ -82,15 +82,15 @@ ZMSFormulator.options.startval = {
   "MEMBERSHIPS" : ["ABC", "GHI"]
 };]]></lang>
 <lang id="fra"><![CDATA[// Disable additional properties
-no_additional_properties : true,
+ZMSFormulator.options.no_additional_properties = true;
 
 // Require all properties by default
-required_by_default : true]]></lang>
+ZMSFormulator.options.required_by_default = true;]]></lang>
 <lang id="eng"><![CDATA[// Disable additional properties
-no_additional_properties : true,
+ZMSFormulator.options.no_additional_properties = true;
 
 // Require all properties by default
-required_by_default : true]]></lang></optionsJS>
+ZMSFormulator.options.required_by_default = true;]]></lang></optionsJS>
 <attr_dc_description>
 <lang id="ger"><![CDATA[<p>This example demonstrates the following:</p>
     <ul>
