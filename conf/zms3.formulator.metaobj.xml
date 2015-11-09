@@ -686,10 +686,48 @@ $ZMI.registerReady(function() {
               </item>
               <item type="dictionary">
                 <dictionary>
+                  <item key="default"><![CDATA[0]]></item>
+                  <item key="id"><![CDATA[replyToField]]></item>
+                  <item key="mandatory" type="int">0</item>
+                  <item key="multilang" type="int">1</item>
+                  <item key="name"><![CDATA[Use as Reply-To]]></item>
+                  <item key="repetitive" type="int">0</item>
+                  <item key="type"><![CDATA[boolean]]></item>
+                </dictionary>
+              </item>
+              <item type="dictionary">
+                <dictionary>
+                  <item key="default"><![CDATA[0]]></item>
+                  <item key="id"><![CDATA[copyToField]]></item>
+                  <item key="mandatory" type="int">0</item>
+                  <item key="multilang" type="int">1</item>
+                  <item key="name"><![CDATA[Send a copy]]></item>
+                  <item key="repetitive" type="int">0</item>
+                  <item key="type"><![CDATA[boolean]]></item>
+                </dictionary>
+              </item>
+              <item type="dictionary">
+                <dictionary>
+                  <item key="id"><![CDATA[HINT_mail]]></item>
+                  <item key="mandatory" type="int">0</item>
+                  <item key="multilang" type="int">0</item>
+                  <item key="name"><![CDATA[<!-- Mail Address [REPLY/COPY] HINT -->
+<tal:block tal:condition="python:request.get('ZMS_INSERT',None) is None">
+<div class="col-sm-2"></div>
+<div class="col-sm-10" style="font-size:x-small;margin-bottom:2em;">You can use the received value of this <code>ZMSFormulatorItem</code> as default for mail replies on notifications and/or send copies of the submitted data as acknowledgement.</div>
+</tal:block>]]>
+                  </item>
+                  <item key="repetitive" type="int">0</item>
+                  <item key="type"><![CDATA[interface]]></item>
+                </dictionary>
+              </item>
+              <item type="dictionary">
+                <dictionary>
                   <item key="id"><![CDATA[type]]></item>
                   <item key="keys" type="list">
                     <list>
                       <item><![CDATA[string]]></item>
+                      <item><![CDATA[email]]></item>
                       <item><![CDATA[textarea]]></item>
                       <item><![CDATA[date]]></item>
                       <item><![CDATA[select]]></item>
@@ -812,20 +850,38 @@ $ZMI.registerReady(function() {
                   <item key="name"><![CDATA[<script type="text/javascript" charset="UTF-8" src="/++resource++zms_/ace.ajax.org/ace.js"></script>
 <script type="text/javascript">
 $ZMI.registerReady(function() {
-  $('#tabProperties .accordion-inner').attr('class','accordion-inner ' + $('#tr_type_'+getZMILang()+' :selected').text())
+  $('#tabProperties .accordion-inner').attr('class','accordion-inner ' + $('#tr_type_'+getZMILang()+' :selected').text());
+  $('#tr_replyToField_'+getZMILang()).hide();
+  $('#tr_copyToField_'+getZMILang()).hide();
+  $('#tr_copyToField_'+getZMILang()).next('.zmi-interface').hide();
   $('#tr_type_'+getZMILang()+' select').change(function() {
-    $('#tabProperties .accordion-inner').attr('class','accordion-inner ' + $('#tr_type_'+getZMILang()+' :selected').text())
+    $('#tabProperties .accordion-inner').attr('class','accordion-inner ' + $('#tr_type_'+getZMILang()+' :selected').text());
     if ($('#tr_type_'+getZMILang()+' select').val() != 'custom') {
       $('#ACE_Editor1').hide();
       $('.ACE_Editor').height(0);
     }
     else {
-	  $('#ACE_Editor1').show();
+      $('#ACE_Editor1').show();
       $('.ACE_Editor').height('20em');
+    }
+    if ($('#tr_type_'+getZMILang()+' select').val() == 'email') {
+      $('#tr_replyToField_'+getZMILang()).show();
+      $('#tr_copyToField_'+getZMILang()).show();
+      $('#tr_copyToField_'+getZMILang()).next('.zmi-interface').show();
+    }
+    else {
+      $('#tr_replyToField_'+getZMILang()).hide();
+      $('#tr_copyToField_'+getZMILang()).hide();
+      $('#tr_copyToField_'+getZMILang()).next('.zmi-interface').hide();
     }
   });
   if ($('#tr_type_'+getZMILang()+' select').val() != 'custom') {
-	  $('#ACE_Editor1').hide();
+    $('#ACE_Editor1').hide();
+  }
+  if ($('#tr_type_'+getZMILang()+' select').val() == 'email') {
+    $('#tr_replyToField_'+getZMILang()).show();
+    $('#tr_copyToField_'+getZMILang()).show();
+    $('#tr_copyToField_'+getZMILang()).next('.zmi-interface').show();
   }
   var dom = require("ace/lib/dom");
   // add command to all new editor instances
@@ -845,7 +901,7 @@ $ZMI.registerReady(function() {
   edit1.getSession().setMode("ace/mode/javascript");
   edit1.getSession().setValue(text1.val());
   edit1.getSession().on("change",function() {
-    text1.val(edit1.getSession().getValue()).change();
+  text1.val(edit1.getSession().getValue()).change();
   });
 });
 </script>
@@ -855,9 +911,9 @@ $ZMI.registerReady(function() {
   height: 20em;
 }
 #ACE_Editor1, #ACE_Editor2 {
-    position: absolute;
-    width: 100%;
-    height: 100%;
+  position: absolute;
+  width: 100%;
+  height: 100%;
   border: 1px solid #ddd;
 }
 .ace_editor.fullScreen {
@@ -941,6 +997,14 @@ textarea.form-control.rawJSON {
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner.checkbox #tr_valueMaximum_ger,
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner.checkbox #tr_valueMaximum_eng,
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner.checkbox #tr_valueMaximum_fra,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.email #tr_valueMinimum,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.email #tr_valueMinimum_ger,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.email #tr_valueMinimum_eng,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.email #tr_valueMinimum_fra,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.email #tr_valueMaximum,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.email #tr_valueMaximum_ger,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.email #tr_valueMaximum_eng,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.email #tr_valueMaximum_fra,
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner.select #tr_valueMinimum,
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner.select #tr_valueMinimum_ger,
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner.select #tr_valueMinimum_eng,
@@ -1022,6 +1086,8 @@ textarea.form-control.rawJSON {
 <strong tal:content="python:this.attr('titlealt').upper()" tal:attributes="style python:this.attr('hiddenField')==True and 'color:lightgrey' or ''">titlealt</strong>
 <sup tal:condition="python:this.attr('mandatoryField')==True" style="font-size:small;color:red;">*</sup>
 <code tal:content="python:this.attr('type')">type</code>
+<i tal:condition="python:this.attr('type')=='email' and this.attr('replyToField')==True" class="icon-mail-reply" title="Used as Reply-To"></i>
+<i tal:condition="python:this.attr('type')=='email' and this.attr('copyToField')==True" class="icon-mail-reply-all icon-flip-horizontal" title="Send a copy to submitter"></i>
 </tal:block>
 
 <!-- /ZMSFormulatorItem.standard_html -->]]>
@@ -1124,7 +1190,7 @@ textarea.form-control.rawJSON {
           <item key="id"><![CDATA[ZMSFormulatorItem]]></item>
           <item key="name"><![CDATA[ZMSFormulatorItem]]></item>
           <item key="package"><![CDATA[zms3.formulator]]></item>
-          <item key="revision"><![CDATA[3.3.4]]></item>
+          <item key="revision"><![CDATA[3.3.5]]></item>
           <item key="type"><![CDATA[ZMSObject]]></item>
         </dictionary>
       </item>
@@ -1157,7 +1223,7 @@ textarea.form-control.rawJSON {
           <item key="id"><![CDATA[zms3.formulator]]></item>
           <item key="name"><![CDATA[zms3.formulator]]></item>
           <item key="package"></item>
-          <item key="revision"><![CDATA[3.3.6]]></item>
+          <item key="revision"><![CDATA[3.3.7dev]]></item>
           <item key="type"><![CDATA[ZMSPackage]]></item>
         </dictionary>
       </item>

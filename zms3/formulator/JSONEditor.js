@@ -129,6 +129,22 @@ document.getElementById('enable_disable').addEventListener('click', function() {
 });
 */
 
+// Custom validators must return an array of errors or an empty array if valid
+JSONEditor.defaults.custom_validators.push(function(schema, value, path) {
+  var errors = [];
+  if(schema.format==="email") {
+    if(!/^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(value)) {
+      // Errors must be an object with `path`, `property`, and `message`
+      errors.push({
+        path: path,
+        property: 'format',
+        message: 'E-Mails expect a format like "user@domain.tld"'
+      });
+    }
+  }
+  return errors;
+});
+
 // Hook up the validation indicator to update its 
 // status whenever the ZMSFormulator changes
 ZMSFormulator.on('change', function() {

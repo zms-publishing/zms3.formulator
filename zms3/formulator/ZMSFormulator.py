@@ -52,6 +52,8 @@ class ZMSFormulator:
     self.mailAddress  = this.attr('sendViaMailAddress').strip()
     self.fromAddress  = this.attr('sendViaMailFrom').strip() == '' and self.this.getConfProperty('ZMSAdministrator.email', self.thisMaster.getConfProperty('ZMSAdministrator.email','')) or this.attr('sendViaMailFrom').strip()
     self.feedbackMsg  = this.attr('feedbackMsg').strip()
+    self.replyAddress = None
+    self.copyAddress  = None
     self.items        = []
     self._data        = {}
     
@@ -167,13 +169,16 @@ class ZMSFormulator:
             if itemkey == 'RECAPTCHA':
               continue
             
+            ZMS_FRM_RES = self.this.str_item(val)
+            
             item = filter(lambda x: x.titlealt.upper() == itemkey, self.items)
             if len(item)>0:
               itemobj = item[0]
+              if itemobj.type == 'email':
+                self.replyAddress = itemobj.replyToField and ZMS_FRM_RES.strip() or None
+                self.copyAddress = itemobj.copyToField and ZMS_FRM_RES.strip() or None
             else:
               raise ValueError("malformed content model")
-            
-            ZMS_FRM_RES = self.this.str_item(val)
             
             if itemobj.type in ['select', 'checkbox', 'multiselect']:
               ZMS_FRM_RES = ZMS_FRM_RES.replace('\n',', ')
@@ -308,8 +313,20 @@ class ZMSFormulator:
       mbody.append('\n\n')
       mbody.append(self.printDataRaw(frmt='tab'))
       mbody = ''.join(mbody)
-      if self.thisMaster.sendMail({'To':self.mailAddress,'From':self.fromAddress}, msubj, mbody, self.this.REQUEST) < 0:
+      mhead = {'To':self.mailAddress,'From':self.fromAddress}
+      
+      if self.replyAddress is not None:
+        mhead['Reply-To'] = self.replyAddress  
+      
+      rtn = self.thisMaster.sendMail(mhead, msubj, mbody, self.this.REQUEST)
+      if rtn < 0:
         _globals.writeError(self.thisMaster, "[ZMSFormulator.sendData] failed to send mail")
+      
+      if self.copyAddress is not None:
+        mhead2 = {'To':self.copyAddress,'From':self.fromAddress}
+        rtn = self.thisMaster.sendMail(mhead2, msubj, mbody, self.this.REQUEST)
+        if rtn < 0:
+          _globals.writeError(self.thisMaster, "[ZMSFormulator.sendData] failed to send mail as copy")
     else:
       _globals.writeError(self.thisMaster, "[ZMSFormulator.sendData] no mail address specified")      
 
@@ -439,3 +456,5 @@ class ZMSFormulatorItem:
     self.rawJSON      = this.attr('rawJSON')
     self.mandatory    = this.attr('mandatoryField')
     self.hidden       = this.attr('hiddenField')
+    self.replyToField = this.attr('replyToField')
+    self.copyToField  = this.attr('copyToField')

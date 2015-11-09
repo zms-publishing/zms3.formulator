@@ -46,7 +46,7 @@ class JSONEditor:
         self.JSONDict['properties'][var]['default']        = item.default 
   
       if item.minimum>0 or item.mandatory:
-        if item.type in ['string', 'textarea']:
+        if item.type in ['string', 'textarea', 'email']:
           self.JSONDict['properties'][var]['minLength']    = item.minimum > 0 and item.minimum or 1
         else:
           self.JSONDict['properties'][var]['minimum']      = item.minimum > 0 and item.minimum or 1
@@ -83,6 +83,11 @@ class JSONEditor:
       if item.type == 'date':
         self.JSONDict['properties'][var]['type']           = 'string'
         self.JSONDict['properties'][var]['format']         = 'date'
+
+      if item.type == 'email':
+        self.JSONDict['properties'][var]['type']           = 'string'
+        self.JSONDict['properties'][var]['format']         = 'email'
+        self.JSONDict['properties'][var]['pattern']        = '^([a-zA-Z0-9_.+-])+\\@(([a-zA-Z0-9-])+\\.)+([a-zA-Z0-9]{2,4})+$'        
         
       if item.type in ['checkbox', 'multiselect']:
         self.JSONDict['properties'][var]['type']           = 'array'
