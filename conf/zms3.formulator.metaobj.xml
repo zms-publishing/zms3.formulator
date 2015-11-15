@@ -930,6 +930,10 @@ $ZMI.registerReady(function() {
   z-index: 100;
   overflow: hidden;
 }
+#mandatoryField, #hiddenField {
+  position: relative;
+  margin-left: 0px;
+}
 </style>]]>
                   </item>
                   <item key="repetitive" type="int">0</item>
@@ -949,6 +953,8 @@ textarea.form-control.rawJSON {
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner .ACE_Editor,
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner #tr_rawJSON,
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner #tr_rawJSON_ger,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner #tr_rawJSON_eng,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner #tr_rawJSON_fra,
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner #tr_valueSelect,
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner #tr_valueSelect_ger,
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner #tr_valueSelect_eng,
