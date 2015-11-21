@@ -29,24 +29,26 @@ if(msg) {
 }]]></lang></onReadyJS>
 <onChangeJS>
 <lang id="ger"><![CDATA[var value = ZMSFormulator.getValue();
+JSONEditor.defaults.languages.en['hint_checkbirthday']  = 'Please check the birtday!';
+JSONEditor.defaults.languages.ger['hint_checkbirthday'] = 'Bitte geben Sie das Geburtsdatum an!';
 
 // Check the mandatory date field
 if (value.BIRTHDAY==='') {
   submit.disabled = true;
   indicator.style.color = 'red';
-  indicator.textContent = "Please enter the birthday!";
+  indicator.textContent = JSONEditor.defaults.translate('hint_checkbirthday');
 }
 // Not valid on other errors
 else if (errors.length) {
   submit.disabled = true;
   indicator.style.color = 'red';
-  indicator.textContent = "Please check your input!";
+  indicator.textContent = JSONEditor.defaults.translate('hint_checkinput');
 }
 // Valid
 else {
   submit.disabled = false;    
   indicator.style.color = 'green';
-  indicator.textContent = "";
+  indicator.textContent = '';
 }]]></lang></onChangeJS>
 <attr_dc_coverage><![CDATA[global.ger]]></attr_dc_coverage>
 <optionsJS>

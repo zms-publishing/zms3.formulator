@@ -117,7 +117,9 @@ class JSONEditor:
     f.close()
     
     script = '<script src="%s/metaobj_manager/zms3.formulator.lib.jsoneditor.min.js"></script>\n<script>%s</script>'  
-    editor = editor % (obj.thisURLPath, obj.this.REQUEST.get('lang'), obj.GoogleAPIKey, obj.options, obj.onReady, obj.thisURLPath, obj.onChange)
+    editor = editor % (self.getLangDict(obj), obj.thisURLPath,
+                       obj.this.REQUEST.get('lang'), obj.GoogleAPIKey, 
+                       obj.options, obj.onReady, obj.thisURLPath, obj.onChange)
     output = script % (obj.baseURLPath, editor)
     
     return output
@@ -126,3 +128,17 @@ class JSONEditor:
   
     JSONSchema = json.dumps(self.JSONDict, sort_keys=True, indent=4, separators=(',', ': '))
     return JSONSchema
+  
+  def getLangDict(self, obj):
+    
+    lang    = obj.this.REQUEST.get('lang')
+    langstr = ''
+
+    for item in obj.this.getLangDict():
+      if item['key'].startswith('ZMSFORMULATOR_'):
+        langstr += '\n%s: "%s",'%(item['key'].replace('ZMSFORMULATOR_','').lower(), item[lang])
+    
+    return """JSONEditor.defaults.languages.%s = { %s };\nJSONEditor.defaults.language = "%s";
+    """%(lang, langstr, lang)
+    
+    

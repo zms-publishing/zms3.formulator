@@ -23,6 +23,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 */
 
+%s
+
 // Initialize the ZMSFormulator
 var ZMSFormulator = new JSONEditor(document.getElementById('editor_holder'), {
 	
@@ -39,7 +41,6 @@ var ZMSFormulator = new JSONEditor(document.getElementById('editor_holder'), {
 	disable_properties : true,
 	theme : 'bootstrap3'
 });
-
 
 var GoogleAPISitekey = '%s';
 if (GoogleAPISitekey != 'no_site_key') {
@@ -86,21 +87,21 @@ document.getElementById('submit').addEventListener('click', function() {
 		})
 		.always(function(res) {
 			var text = res.responseText;
-			if (text == 'Data was sent.') {
+			if (text == 'OK') {
 				document.getElementById('valid_indicator').style.color = 'green';
 				ZMSFormulator.disable();
 				document.getElementById('submit').disabled = true;
 				document.getElementById('restore').disabled = true;
-				document.getElementById('valid_indicator').textContent = 'Data was sent.';
+				document.getElementById('valid_indicator').textContent = JSONEditor.defaults.translate('hint_datasent');
 				$('#ZMSFormulatorFeedback').modal('show');
 			}
-			else if (text == 'Data was not sent. Are you a robot?') {
+			else if (text == 'NOK') {
 				document.getElementById('valid_indicator').style.color = 'red';				
-				document.getElementById('valid_indicator').textContent = 'Data was not sent. Are you a robot?';				
+				document.getElementById('valid_indicator').textContent = JSONEditor.defaults.translate('hint_datanotsent');				
 			}
 			else {
 				document.getElementById('valid_indicator').style.color = 'red';				
-				document.getElementById('valid_indicator').textContent = 'An Error occured.';
+				document.getElementById('valid_indicator').textContent = JSONEditor.defaults.translate('hint_erroroccured');
 				console.log(text);
 			}
 		});	
@@ -138,7 +139,7 @@ JSONEditor.defaults.custom_validators.push(function(schema, value, path) {
       errors.push({
         path: path,
         property: 'format',
-        message: 'E-Mails expect a format like "user@domain.tld"'
+        message: JSONEditor.defaults.translate('hint_emailsyntax')
       });
     }
   }
@@ -158,13 +159,13 @@ ZMSFormulator.on('change', function() {
 	if (errors.length) {
 		submit.disabled = true;
 		indicator.style.color = 'red';
-		indicator.textContent = "Please check your input!";
+		indicator.textContent = JSONEditor.defaults.translate('hint_checkinput');
 	}
 	// Valid
 	else {
 		submit.disabled = false;
 		indicator.style.color = 'green';
-		indicator.textContent = "";
+		indicator.textContent = '';
 	}
 	
 	%s

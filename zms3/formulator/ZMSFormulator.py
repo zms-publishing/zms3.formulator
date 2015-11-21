@@ -58,7 +58,8 @@ class ZMSFormulator:
     self._data        = {}
     
     # init _data
-    self.getData()
+    if not self.getData():
+      raise SystemError('Storage not available')
     
     # init items
     objs = filter(lambda ob: ob.isActive(self.this.REQUEST), self.this.getObjChildren('formulatorItems', self.this.REQUEST, ['ZMSFormulatorItem']))
@@ -106,6 +107,8 @@ class ZMSFormulator:
                            Column('ZMS_FRM_TST', DateTime()),
                            )
         metadata.create_all(self.engine)
+      except:
+        return None
  
       sel = select([
                     self.sqldb.c.ZMS_FRM_TST, 

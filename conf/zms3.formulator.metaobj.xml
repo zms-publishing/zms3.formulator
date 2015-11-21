@@ -1384,9 +1384,9 @@ def putData(self):
   self.REQUEST.RESPONSE.setHeader('Cache-Control', 'no-cache')
   self.REQUEST.RESPONSE.setHeader('Pragma', 'no-cache')
   if res:
-    return 'Data was sent.'
+    return 'OK'
   else:
-    return 'Data was not sent. Are you a robot?']]>
+    return 'NOK']]>
                   </item>
                   <item key="id"><![CDATA[putData]]></item>
                   <item key="mandatory" type="int">0</item>
@@ -1471,7 +1471,7 @@ def downloadData(self):
           <item key="id"><![CDATA[zms3.formulator.lib]]></item>
           <item key="name"><![CDATA[zms3.formulator.lib]]></item>
           <item key="package"><![CDATA[zms3.formulator]]></item>
-          <item key="revision"><![CDATA[3.3.3]]></item>
+          <item key="revision"><![CDATA[3.3.4]]></item>
           <item key="type"><![CDATA[ZMSLibrary]]></item>
         </dictionary>
       </item>

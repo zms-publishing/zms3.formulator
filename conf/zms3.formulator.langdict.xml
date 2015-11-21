@@ -52,6 +52,198 @@ xmlns:html="http://www.w3.org/TR/REC-html40">
 <Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
 <Cell ss:StyleID="string"><Data ss:Type="String">Hint: Select multiple entries by holding cmd- or Ctrl-key.</Data></Cell>
 </Row>
+<Row>
+<Cell ss:StyleID="string"><Data ss:Type="String">ZMSFORMULATOR_HINT_EMAILSYNTAX</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">E-Mails erwarten ein Format wie \"user@domain.tld\"</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">E-Mails expect a format like \"user@domain.tld\"</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="string"><Data ss:Type="String">ZMSFORMULATOR_HINT_CHECKINPUT</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">Bitte überprüfen Sie Ihre Eingabe!</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">Please check your input!</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="string"><Data ss:Type="String">ZMSFORMULATOR_HINT_DATASENT</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">Die Daten wurden übertragen.</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">Data was sent.</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="string"><Data ss:Type="String">ZMSFORMULATOR_HINT_DATANOTSENT</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">Daten wurden nicht übertragen! Bist du etwa ein Roboter?</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">Data was not sent. Are you a robot?</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="string"><Data ss:Type="String">ZMSFORMULATOR_HINT_ERROROCCURED</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">Es ist ein Fehler aufgetreten!</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">An Error occured!</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="string"><Data ss:Type="String">ZMSFORMULATOR_ERROR_NOTSET</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">Property must be set</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="string"><Data ss:Type="String">ZMSFORMULATOR_ERROR_NOTEMPTY</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">Value required</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="string"><Data ss:Type="String">ZMSFORMULATOR_ERROR_ENUM</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">Value must be one of the enumerated values</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="string"><Data ss:Type="String">ZMSFORMULATOR_ERROR_ANYOF</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">Value must validate against at least one of the provided schemas</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="string"><Data ss:Type="String">ZMSFORMULATOR_ERROR_ONEOF</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">Value must validate against exactly one of the provided schemas. It currently validates against {{0}} of the schemas.</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="string"><Data ss:Type="String">ZMSFORMULATOR_ERROR_NOT</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">Value must not validate against the provided schema</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="string"><Data ss:Type="String">ZMSFORMULATOR_ERROR_TYPE_UNION</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">Value must be one of the provided types</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="string"><Data ss:Type="String">ZMSFORMULATOR_ERROR_TYPE</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">Value must be of type {{0}}</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="string"><Data ss:Type="String">ZMSFORMULATOR_ERROR_DISALLOW_UNION</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">Value must not be one of the provided disallowed types</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="string"><Data ss:Type="String">ZMSFORMULATOR_ERROR_DISALLOW</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">Value must not be of type {{0}}</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="string"><Data ss:Type="String">ZMSFORMULATOR_ERROR_MULTIPLEOF</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">Value must be a multiple of {{0}}</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="string"><Data ss:Type="String">ZMSFORMULATOR_ERROR_MAXIMUM_EXCL</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">Value must be less than {{0}}</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="string"><Data ss:Type="String">ZMSFORMULATOR_ERROR_MAXIMUM_INCL</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">Value must be at most {{0}}</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="string"><Data ss:Type="String">ZMSFORMULATOR_ERROR_MINIMUM_EXCL</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">Value must be greater than {{0}}</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="string"><Data ss:Type="String">ZMSFORMULATOR_ERROR_MINIMUM_INCL</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">Value must be at least {{0}}</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="string"><Data ss:Type="String">ZMSFORMULATOR_ERROR_MAXLENGTH</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">Value must be at most {{0}} characters long</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="string"><Data ss:Type="String">ZMSFORMULATOR_ERROR_MINLENGTH</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">Value must be at least {{0}} characters long</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="string"><Data ss:Type="String">ZMSFORMULATOR_ERROR_PATTERN</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">Value must match the provided pattern</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="string"><Data ss:Type="String">ZMSFORMULATOR_ERROR_ADDITIONALITEMS</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">No additional items allowed in this array</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="string"><Data ss:Type="String">ZMSFORMULATOR_ERROR_MAXITEMS</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">Value must have at most {{0}} items</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="string"><Data ss:Type="String">ZMSFORMULATOR_ERROR_MINITEMS</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">Value must have at least {{0}} items</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="string"><Data ss:Type="String">ZMSFORMULATOR_ERROR_UNIQUEITEMS</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">Array must have unique items</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="string"><Data ss:Type="String">ZMSFORMULATOR_ERROR_MAXPROPERTIES</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">Object must have at most {{0}} properties</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="string"><Data ss:Type="String">ZMSFORMULATOR_ERROR_MINPROPERTIES</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">Object must have at least {{0}} properties</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="string"><Data ss:Type="String">ZMSFORMULATOR_ERROR_REQUIRED</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">Object is missing the required property '{{0}}'</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="string"><Data ss:Type="String">ZMSFORMULATOR_ERROR_ADDITIONAL_PROPERTIES</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">No additional properties allowed, but property {{0}} is set</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="string"><Data ss:Type="String">ZMSFORMULATOR_ERROR_DEPENDENCY</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">Must have property {{0}}</Data></Cell>
+</Row>
 </Table>
 </Worksheet>
 </Workbook>
