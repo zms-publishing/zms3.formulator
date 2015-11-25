@@ -58,7 +58,7 @@ class ZMSFormulator:
     self._data        = {}
     
     # init _data
-    if not self.getData():
+    if self.getData() is None:
       raise SystemError('Storage not available')
     
     # init items
