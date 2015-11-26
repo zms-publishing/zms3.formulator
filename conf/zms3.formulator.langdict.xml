@@ -80,7 +80,7 @@ xmlns:html="http://www.w3.org/TR/REC-html40">
 <Cell ss:StyleID="string"><Data ss:Type="String">ZMSFORMULATOR_HINT_ERROROCCURED</Data></Cell>
 <Cell ss:StyleID="string"><Data ss:Type="String">Es ist ein Fehler aufgetreten!</Data></Cell>
 <Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
-<Cell ss:StyleID="string"><Data ss:Type="String">An Error occured!</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">An Error occurred!</Data></Cell>
 </Row>
 <Row>
 <Cell ss:StyleID="string"><Data ss:Type="String">ZMSFORMULATOR_ERROR_NOTSET</Data></Cell>
