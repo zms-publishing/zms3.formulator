@@ -61,6 +61,19 @@ if (GoogleAPISitekey != 'no_site_key') {
 // onReady (JS)
 ZMSFormulator.on('ready',function() {
 	%s
+	
+	// Handle type=='mailattachment' 
+	// by storing filename at hidden field to keep it for storing/sending
+	// and check filesize by custom validator - see lines 171 + 202
+	$("div[data-schemapath$='FILEDATA']").find("input[type='file']").change(function() {
+	    var filename = $(this).val();
+	    var lastIndex = filename.lastIndexOf("\\");
+	    if (lastIndex >= 0) {
+	        filename = filename.substring(lastIndex + 1);
+	    }
+	    filenamefield = $("div[data-schemapath$='FILENAME']").attr('data-schemapath');
+	    ZMSFormulator.getEditor(filenamefield).setValue(filename);
+	});
 });
 
 // Hook up the submit button to log to the console
@@ -78,7 +91,14 @@ document.getElementById('submit').addEventListener('click', function() {
 		if (GoogleAPISitekey != 'no_site_key') {
 			data['reCAPTCHA'] = grecaptcha.getResponse();
 		}
-				
+		
+		// Disable form and show spinner while processing transfer
+		// re-enable in case of an error below
+		ZMSFormulator.disable();
+		document.getElementById('submit').disabled = true;
+		document.getElementById('restore').disabled = true;
+		document.getElementById('valid_indicator').innerHTML = '<img src="/misc_/zms/loading.gif" alt="Transferring..."/>';
+		
 		$.ajax({
 			type : 'POST',
 			url : '%s/putData',
@@ -89,17 +109,20 @@ document.getElementById('submit').addEventListener('click', function() {
 			var text = res.responseText;
 			if (text == 'OK') {
 				document.getElementById('valid_indicator').style.color = 'green';
-				ZMSFormulator.disable();
-				document.getElementById('submit').disabled = true;
-				document.getElementById('restore').disabled = true;
 				document.getElementById('valid_indicator').textContent = JSONEditor.defaults.translate('hint_datasent');
 				$('#ZMSFormulatorFeedback').modal('show');
 			}
 			else if (text == 'NOK') {
+				ZMSFormulator.enable();
+				document.getElementById('submit').disabled = false;
+				document.getElementById('restore').disabled = false;
 				document.getElementById('valid_indicator').style.color = 'red';				
-				document.getElementById('valid_indicator').textContent = JSONEditor.defaults.translate('hint_datanotsent');				
+				document.getElementById('valid_indicator').textContent = JSONEditor.defaults.translate('hint_datanotsent');			
 			}
 			else {
+				ZMSFormulator.enable();
+				document.getElementById('submit').disabled = false;
+				document.getElementById('restore').disabled = false;
 				document.getElementById('valid_indicator').style.color = 'red';				
 				document.getElementById('valid_indicator').textContent = JSONEditor.defaults.translate('hint_erroroccured');
 				console.log(text);
@@ -143,6 +166,17 @@ JSONEditor.defaults.custom_validators.push(function(schema, value, path) {
       });
     }
   }
+  if(schema.format==="mailattachment") {
+	bytes = Math.floor((value.length-value.split(',')[0].length-1)/1.33333);
+	if(bytes > 3*1024*1024) {
+	  // Errors must be an object with `path`, `property`, and `message`
+	  errors.push({
+	    path: path,
+	    property: 'format',
+	    message: 'hint_emailtoolarge'
+	  });		
+	}
+  }
   return errors;
 });
 
@@ -160,12 +194,21 @@ ZMSFormulator.on('change', function() {
 		submit.disabled = true;
 		indicator.style.color = 'red';
 		indicator.textContent = JSONEditor.defaults.translate('hint_checkinput');
+		if (errors[0].message=='hint_emailtoolarge') {
+			errordiv = $("div[data-schemapath$='"+errors[0].path+"']").find("p[class^='help-block']");
+			errordiv.parent().addClass('has-error');
+			errormsg = errordiv.html();
+			if (errormsg.lastIndexOf("Max.")<0) {
+				errordiv.html(errormsg + ' <strong>Max. 3MB!</strong>');
+			}
+		}
 	}
 	// Valid
 	else {
 		submit.disabled = false;
 		indicator.style.color = 'green';
 		indicator.textContent = '';
+		$("div[class$='has-error']").removeClass('has-error');
 	}
 	
 	%s

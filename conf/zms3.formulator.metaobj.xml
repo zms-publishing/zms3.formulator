@@ -728,6 +728,7 @@ $ZMI.registerReady(function() {
                     <list>
                       <item><![CDATA[string]]></item>
                       <item><![CDATA[email]]></item>
+                      <item><![CDATA[mailattachment]]></item>
                       <item><![CDATA[textarea]]></item>
                       <item><![CDATA[date]]></item>
                       <item><![CDATA[select]]></item>
@@ -1011,6 +1012,20 @@ textarea.form-control.rawJSON {
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner.email #tr_valueMaximum_ger,
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner.email #tr_valueMaximum_eng,
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner.email #tr_valueMaximum_fra,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.mailattachment #tr_mandatoryField,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.mailattachment #tr_hiddenField,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.mailattachment #tr_valueDefault,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.mailattachment #tr_valueDefault_ger,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.mailattachment #tr_valueDefault_eng,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.mailattachment #tr_valueDefault_fra,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.mailattachment #tr_valueMinimum,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.mailattachment #tr_valueMinimum_ger,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.mailattachment #tr_valueMinimum_eng,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.mailattachment #tr_valueMinimum_fra,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.mailattachment #tr_valueMaximum,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.mailattachment #tr_valueMaximum_ger,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.mailattachment #tr_valueMaximum_eng,
+.zmi.ZMSFormulatorItem #tabProperties .accordion-inner.mailattachment #tr_valueMaximum_fra,
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner.select #tr_valueMinimum,
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner.select #tr_valueMinimum_ger,
 .zmi.ZMSFormulatorItem #tabProperties .accordion-inner.select #tr_valueMinimum_eng,
@@ -1196,7 +1211,7 @@ textarea.form-control.rawJSON {
           <item key="id"><![CDATA[ZMSFormulatorItem]]></item>
           <item key="name"><![CDATA[ZMSFormulatorItem]]></item>
           <item key="package"><![CDATA[zms3.formulator]]></item>
-          <item key="revision"><![CDATA[3.3.5]]></item>
+          <item key="revision"><![CDATA[3.3.6]]></item>
           <item key="type"><![CDATA[ZMSObject]]></item>
         </dictionary>
       </item>
@@ -1229,7 +1244,7 @@ textarea.form-control.rawJSON {
           <item key="id"><![CDATA[zms3.formulator]]></item>
           <item key="name"><![CDATA[zms3.formulator]]></item>
           <item key="package"></item>
-          <item key="revision"><![CDATA[3.3.7]]></item>
+          <item key="revision"><![CDATA[3.3.8dev-fileupload]]></item>
           <item key="type"><![CDATA[ZMSPackage]]></item>
         </dictionary>
       </item>

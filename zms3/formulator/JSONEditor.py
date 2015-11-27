@@ -30,13 +30,18 @@ class JSONEditor:
     self.JSONDict['type']        = 'object'
     self.JSONDict['properties']  = {}
   
+    mattach = False
+    
     for i, item in enumerate(obj.items, start=1):
-  
+      
+      if item.type == 'mailattachment' and mattach:
+        continue
+      
       var = '%s'%(item.titlealt.upper())
       values = item.select.strip().splitlines()
       
       self.JSONDict['properties'][var]                     = {}
-      self.JSONDict['properties'][var]['type']             = item.type == 'float' and 'number' or item.type
+      self.JSONDict['properties'][var]['type']             = item.type == 'float' and 'number' or item.type == 'mailattachment' and 'object' or item.type
       self.JSONDict['properties'][var]['title']            = item.title + (item.mandatory and ' *' or '')
       self.JSONDict['properties'][var]['description']      = item.description + (item.type == 'multiselect' and obj.this.getLangStr('ZMSFORMULATOR_HINT_MULTISELECT',obj.this.REQUEST.get('lang')) or '')
       self.JSONDict['properties'][var]['propertyOrder']    = i
@@ -88,6 +93,19 @@ class JSONEditor:
         self.JSONDict['properties'][var]['type']           = 'string'
         self.JSONDict['properties'][var]['format']         = 'email'
         self.JSONDict['properties'][var]['pattern']        = '^([a-zA-Z0-9_.+-])+\\@(([a-zA-Z0-9-])+\\.)+([a-zA-Z0-9]{2,4})+$'        
+
+      if item.type == 'mailattachment':
+        # TODO: just one mailattachment-item per form is supported - see line 37
+        mattach = True
+        self.JSONDict['properties'][var]['properties']     = {}
+        self.JSONDict['properties'][var]['properties']['FILEDATA'] = {}
+        self.JSONDict['properties'][var]['properties']['FILEDATA']['type']  = 'string'
+        self.JSONDict['properties'][var]['properties']['FILEDATA']['title'] = item.title
+        self.JSONDict['properties'][var]['properties']['FILEDATA']['format'] = 'mailattachment'
+        self.JSONDict['properties'][var]['properties']['FILEDATA']['media'] = {'binaryEncoding': 'base64'}
+        self.JSONDict['properties'][var]['properties']['FILENAME'] = {}
+        self.JSONDict['properties'][var]['properties']['FILENAME']['type']  = 'string'
+        self.JSONDict['properties'][var]['properties']['FILENAME']['options'] = {'hidden': True}       
         
       if item.type in ['checkbox', 'multiselect']:
         self.JSONDict['properties'][var]['type']           = 'array'
@@ -107,7 +125,10 @@ class JSONEditor:
         self.JSONDict['properties'][var]['options']['hidden']  = 'true'
   
       if item.type in ['custom'] and item.rawJSON != '':
-        self.JSONDict['properties'][var]                   = json.loads(item.rawJSON)
+        try:
+          self.JSONDict['properties'][var]                  = json.loads(item.rawJSON)
+        except:
+          self.JSONDict['properties'][var]                  = '{ // ERROR in custom JSON }'
 
   def render(self, obj):
     
