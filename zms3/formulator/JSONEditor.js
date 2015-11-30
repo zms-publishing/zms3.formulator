@@ -199,7 +199,7 @@ ZMSFormulator.on('change', function() {
 			errordiv.parent().addClass('has-error');
 			errormsg = errordiv.html();
 			if (errormsg.lastIndexOf("Max.")<0) {
-				errordiv.html(errormsg + ' <strong>Max. 3MB!</strong>');
+				errordiv.html(errormsg + ' <strong style="color:red;">Max. 3MB!</strong>');
 			}
 		}
 	}

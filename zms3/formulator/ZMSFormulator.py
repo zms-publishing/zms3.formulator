@@ -288,8 +288,10 @@ class ZMSFormulator:
       if isOK:
         # remove response values identified above from data to be stored
         if len(remVal)>0:
-          for i in remVal:
-            data.pop(i)
+          for i, pos in enumerate(remVal):
+            if i > 0:
+              pos = pos>0 and pos-1 or pos
+            data.pop(pos)
         # add current timestamp and store data
         self.setData({time.mktime(time.localtime()): data})
         # send data by mail if configured      
