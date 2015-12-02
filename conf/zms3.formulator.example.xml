@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ZMSFolder id="e41334"
- id_prefix="e">
-<attr_dc_accessrights_restricted>0</attr_dc_accessrights_restricted>
+<ZMSFolder uid="myzmsx@e457" id="e457">
 <titlealt>
 <lang id="ger"><![CDATA[ZMSFormular-Examples]]></lang></titlealt>
 <attr_dc_coverage><![CDATA[global.ger]]></attr_dc_coverage>
@@ -12,51 +10,60 @@
 <title>
 <lang id="ger"><![CDATA[ZMSFormular-Examples]]></lang></title>
 <attr_dc_type>
-<lang id="ger"><![CDATA[Resource]]></lang></attr_dc_type><ZMSFormulator id="e41335"
+<lang id="ger"><![CDATA[Resource]]></lang></attr_dc_type><ZMSFormulator uid="myzmsx@e457/e458" id="e458"
  id_prefix="e">
+<attr_dc_accessrights_restricted>0</attr_dc_accessrights_restricted>
 <titlealt>
 <lang id="ger"><![CDATA[Person]]></lang></titlealt>
+<onChangeJS>
+<lang id="ger"><![CDATA[var div_birthday = $("div[data-schemapath$='root.BIRTHDAY']");
+
+// Show hint on error at form item
+if (ZMSFormulator.getValue().BIRTHDAY==='') {
+    if (div_birthday.find("p[class^='help-block']").length===0) {
+        div_birthday.append('<p class="help-block">'+JSONEditor.defaults.translate('hint_checkbirthday')+'</p>');
+    }
+}
+else {
+    div_birthday.find("p[class^='help-block']").remove();
+}]]></lang></onChangeJS>
+<dataStorageDisabled>0</dataStorageDisabled>
 <onReadyJS>
 <lang id="ger"><![CDATA[// Disable part of the form
 ZMSFormulator.getEditor('root.MESSAGE').disable();
 
 // Get/Set Value
 var msg = ZMSFormulator.getEditor('root.MESSAGE');
-
 if(msg) {
   msg.setValue("Hello World!\nHello Europe!\nHello America!");
   console.log(msg.getValue());
-}]]></lang></onReadyJS>
-<onChangeJS>
-<lang id="ger"><![CDATA[var value = ZMSFormulator.getValue();
-JSONEditor.defaults.languages.en['hint_checkbirthday']  = 'Please check the birtday!';
-JSONEditor.defaults.languages.ger['hint_checkbirthday'] = 'Bitte geben Sie das Geburtsdatum an!';
+}
 
-// Check the mandatory date field
-if (value.BIRTHDAY==='') {
-  submit.disabled = true;
-  indicator.style.color = 'red';
-  indicator.textContent = JSONEditor.defaults.translate('hint_checkbirthday');
-}
-// Not valid on other errors
-else if (errors.length) {
-  submit.disabled = true;
-  indicator.style.color = 'red';
-  indicator.textContent = JSONEditor.defaults.translate('hint_checkinput');
-}
-// Valid
-else {
-  submit.disabled = false;    
-  indicator.style.color = 'green';
-  indicator.textContent = '';
-}]]></lang></onChangeJS>
+// Custom validators must return an array of errors 
+// or an empty array if valid
+JSONEditor.defaults.custom_validators.push(function(schema, value, path) {
+  var errors = [];
+  if(path==="root.BIRTHDAY") {
+      if (ZMSFormulator.getValue().BIRTHDAY==='') {
+        // Errors must be an object with `path`, `property`, and `message`
+        errors.push({
+          path: path,
+          property: 'format',
+          message: JSONEditor.defaults.translate('hint_checkbirthday')
+        });   
+      }
+  }
+  return errors;
+});]]></lang></onReadyJS>
 <attr_dc_coverage><![CDATA[global.ger]]></attr_dc_coverage>
 <optionsJS>
-<lang id="ger"><![CDATA[// Disable additional properties
+<lang id="ger"><![CDATA[// Set options
 ZMSFormulator.options.no_additional_properties = true;
-
-// Require all properties by default
 ZMSFormulator.options.required_by_default = true;
+
+// Additional dictionary for translations
+JSONEditor.defaults.languages.en['hint_checkbirthday']  = 'Please check the birtday!';
+JSONEditor.defaults.languages.ger['hint_checkbirthday'] = 'Bitte geben Sie das Geburtsdatum an!';
 
 // This is the starting value for the editor
 // We will use this to seed the initial editor 
@@ -104,24 +111,23 @@ ZMSFormulator.options.required_by_default = true;]]></lang></optionsJS>
     </ul>]]></lang></attr_dc_description>
 <active>
 <lang id="ger">1</lang>
-<lang id="fra">1</lang>
+<lang id="fra">0</lang>
 <lang id="eng">1</lang></active>
 <_data>
 <dictionary>
 </dictionary></_data>
-<sendViaMail>
-<lang id="ger">0</lang>
-<lang id="fra">0</lang>
-<lang id="eng">0</lang></sendViaMail>
+<sendViaMail>0</sendViaMail>
 <title>
-<lang id="ger"><![CDATA[Advanced JSON Editor Example]]></lang></title><ZMSFormulatorItem id="formulatorItems41336"
+<lang id="ger"><![CDATA[Advanced JSON Editor Example]]></lang></title>
+<ZMSFormulatorItem uid="myzmsx@e457/e458/formulatorItems459" id="formulatorItems459"
  id_prefix="formulatorItems">
+<hiddenField>0</hiddenField>
 <titlealt>
 <lang id="ger"><![CDATA[Message]]></lang></titlealt>
-<hiddenField>
-<lang id="ger">1</lang>
-<lang id="fra">1</lang>
-<lang id="eng">1</lang></hiddenField>
+<replyToField>
+<lang id="ger">0</lang>
+<lang id="fra">0</lang>
+<lang id="eng">0</lang></replyToField>
 <valueDefault>
 <lang id="ger"><![CDATA[Hello World!]]></lang></valueDefault>
 <valueMaximum>
@@ -133,20 +139,30 @@ ZMSFormulator.options.required_by_default = true;]]></lang></optionsJS>
 <lang id="fra">0</lang>
 <lang id="eng">0</lang></valueMinimum>
 <attr_dc_coverage><![CDATA[global.ger]]></attr_dc_coverage>
+<type>
+<lang id="ger"><![CDATA[textarea]]></lang></type>
 <active>
 <lang id="ger">1</lang>
 <lang id="fra">1</lang>
 <lang id="eng">1</lang></active>
-<type>
-<lang id="ger"><![CDATA[textarea]]></lang></type>
+<copyToField>
+<lang id="ger">0</lang>
+<lang id="fra">0</lang>
+<lang id="eng">0</lang></copyToField>
 <title>
 <lang id="ger"><![CDATA[Message]]></lang></title>
 <identifier>
-<lang id="ger"><![CDATA[e40731]]></lang></identifier></ZMSFormulatorItem>
-<ZMSFormulatorItem id="formulatorItems41337"
+<lang id="ger"><![CDATA[e40731]]></lang></identifier>
+<mandatoryField>0</mandatoryField></ZMSFormulatorItem>
+<ZMSFormulatorItem uid="myzmsx@e457/e458/formulatorItems460" id="formulatorItems460"
  id_prefix="formulatorItems">
+<hiddenField>0</hiddenField>
 <titlealt>
 <lang id="ger"><![CDATA[Name]]></lang></titlealt>
+<replyToField>
+<lang id="ger">0</lang>
+<lang id="fra">0</lang>
+<lang id="eng">0</lang></replyToField>
 <valueMaximum>
 <lang id="ger">0</lang>
 <lang id="fra">0</lang>
@@ -156,22 +172,32 @@ ZMSFormulator.options.required_by_default = true;]]></lang></optionsJS>
 <lang id="fra">0</lang>
 <lang id="eng">0</lang></valueMinimum>
 <attr_dc_coverage><![CDATA[global.ger]]></attr_dc_coverage>
+<type>
+<lang id="ger"><![CDATA[string]]></lang></type>
 <attr_dc_description>
 <lang id="ger"><![CDATA[First and Last name]]></lang></attr_dc_description>
 <active>
 <lang id="ger">1</lang>
 <lang id="fra">1</lang>
 <lang id="eng">1</lang></active>
-<type>
-<lang id="ger"><![CDATA[string]]></lang></type>
+<copyToField>
+<lang id="ger">0</lang>
+<lang id="fra">0</lang>
+<lang id="eng">0</lang></copyToField>
 <title>
 <lang id="ger"><![CDATA[Name]]></lang></title>
 <identifier>
-<lang id="ger"><![CDATA[e1969]]></lang></identifier></ZMSFormulatorItem>
-<ZMSFormulatorItem id="formulatorItems41338"
+<lang id="ger"><![CDATA[e1969]]></lang></identifier>
+<mandatoryField>0</mandatoryField></ZMSFormulatorItem>
+<ZMSFormulatorItem uid="myzmsx@e457/e458/formulatorItems461" id="formulatorItems461"
  id_prefix="formulatorItems">
+<hiddenField>0</hiddenField>
 <titlealt>
 <lang id="ger"><![CDATA[Age]]></lang></titlealt>
+<replyToField>
+<lang id="ger">0</lang>
+<lang id="fra">0</lang>
+<lang id="eng">0</lang></replyToField>
 <valueDefault>
 <lang id="ger"><![CDATA[21]]></lang></valueDefault>
 <valueMaximum>
@@ -183,24 +209,30 @@ ZMSFormulator.options.required_by_default = true;]]></lang></optionsJS>
 <lang id="fra">0</lang>
 <lang id="eng">0</lang></valueMinimum>
 <attr_dc_coverage><![CDATA[global.ger]]></attr_dc_coverage>
+<type>
+<lang id="ger"><![CDATA[integer]]></lang></type>
 <active>
 <lang id="ger">1</lang>
 <lang id="fra">1</lang>
 <lang id="eng">1</lang></active>
-<type>
-<lang id="ger"><![CDATA[integer]]></lang></type>
+<copyToField>
+<lang id="ger">0</lang>
+<lang id="fra">0</lang>
+<lang id="eng">0</lang></copyToField>
 <title>
 <lang id="ger"><![CDATA[Age]]></lang></title>
 <identifier>
-<lang id="ger"><![CDATA[e1971]]></lang></identifier></ZMSFormulatorItem>
-<ZMSFormulatorItem id="formulatorItems41339"
+<lang id="ger"><![CDATA[e1971]]></lang></identifier>
+<mandatoryField>0</mandatoryField></ZMSFormulatorItem>
+<ZMSFormulatorItem uid="myzmsx@e457/e458/formulatorItems462" id="formulatorItems462"
  id_prefix="formulatorItems">
+<hiddenField>0</hiddenField>
 <titlealt>
 <lang id="ger"><![CDATA[Birthday]]></lang></titlealt>
-<mandatoryField>
-<lang id="ger">1</lang>
-<lang id="fra">1</lang>
-<lang id="eng">1</lang></mandatoryField>
+<replyToField>
+<lang id="ger">0</lang>
+<lang id="fra">0</lang>
+<lang id="eng">0</lang></replyToField>
 <valueMaximum>
 <lang id="ger">0</lang>
 <lang id="fra">0</lang>
@@ -210,20 +242,30 @@ ZMSFormulator.options.required_by_default = true;]]></lang></optionsJS>
 <lang id="fra">0</lang>
 <lang id="eng">0</lang></valueMinimum>
 <attr_dc_coverage><![CDATA[global.ger]]></attr_dc_coverage>
+<type>
+<lang id="ger"><![CDATA[date]]></lang></type>
 <active>
 <lang id="ger">1</lang>
 <lang id="fra">1</lang>
 <lang id="eng">1</lang></active>
-<type>
-<lang id="ger"><![CDATA[date]]></lang></type>
+<copyToField>
+<lang id="ger">0</lang>
+<lang id="fra">0</lang>
+<lang id="eng">0</lang></copyToField>
 <title>
 <lang id="ger"><![CDATA[Birthday]]></lang></title>
 <identifier>
-<lang id="ger"><![CDATA[e40726]]></lang></identifier></ZMSFormulatorItem>
-<ZMSFormulatorItem id="formulatorItems41340"
+<lang id="ger"><![CDATA[e40726]]></lang></identifier>
+<mandatoryField>0</mandatoryField></ZMSFormulatorItem>
+<ZMSFormulatorItem uid="myzmsx@e457/e458/formulatorItems463" id="formulatorItems463"
  id_prefix="formulatorItems">
+<hiddenField>0</hiddenField>
 <titlealt>
 <lang id="ger"><![CDATA[Gender]]></lang></titlealt>
+<replyToField>
+<lang id="ger">0</lang>
+<lang id="fra">0</lang>
+<lang id="eng">0</lang></replyToField>
 <valueDefault>
 <lang id="ger"><![CDATA[female]]></lang></valueDefault>
 <valueMaximum>
@@ -238,20 +280,30 @@ ZMSFormulator.options.required_by_default = true;]]></lang></optionsJS>
 <valueSelect>
 <lang id="ger"><![CDATA[male
 female]]></lang></valueSelect>
+<type>
+<lang id="ger"><![CDATA[select]]></lang></type>
 <active>
 <lang id="ger">1</lang>
 <lang id="fra">1</lang>
 <lang id="eng">1</lang></active>
-<type>
-<lang id="ger"><![CDATA[select]]></lang></type>
+<copyToField>
+<lang id="ger">0</lang>
+<lang id="fra">0</lang>
+<lang id="eng">0</lang></copyToField>
 <title>
 <lang id="ger"><![CDATA[Gender]]></lang></title>
 <identifier>
-<lang id="ger"><![CDATA[e1974]]></lang></identifier></ZMSFormulatorItem>
-<ZMSFormulatorItem id="formulatorItems41341"
+<lang id="ger"><![CDATA[e1974]]></lang></identifier>
+<mandatoryField>0</mandatoryField></ZMSFormulatorItem>
+<ZMSFormulatorItem uid="myzmsx@e457/e458/formulatorItems464" id="formulatorItems464"
  id_prefix="formulatorItems">
+<hiddenField>0</hiddenField>
 <titlealt>
 <lang id="ger"><![CDATA[Location]]></lang></titlealt>
+<replyToField>
+<lang id="ger">0</lang>
+<lang id="fra">0</lang>
+<lang id="eng">0</lang></replyToField>
 <valueMaximum>
 <lang id="ger">0</lang>
 <lang id="fra">0</lang>
@@ -261,10 +313,6 @@ female]]></lang></valueSelect>
 <lang id="fra">0</lang>
 <lang id="eng">0</lang></valueMinimum>
 <attr_dc_coverage><![CDATA[global.ger]]></attr_dc_coverage>
-<active>
-<lang id="ger">1</lang>
-<lang id="fra">1</lang>
-<lang id="eng">1</lang></active>
 <type>
 <lang id="ger"><![CDATA[custom]]></lang></type>
 <rawJSON>
@@ -293,14 +341,28 @@ female]]></lang></valueSelect>
         }
       }
     }]]></lang></rawJSON>
+<active>
+<lang id="ger">1</lang>
+<lang id="fra">1</lang>
+<lang id="eng">1</lang></active>
+<copyToField>
+<lang id="ger">0</lang>
+<lang id="fra">0</lang>
+<lang id="eng">0</lang></copyToField>
 <title>
 <lang id="ger"><![CDATA[Location]]></lang></title>
 <identifier>
-<lang id="ger"><![CDATA[e1979]]></lang></identifier></ZMSFormulatorItem>
-<ZMSFormulatorItem id="formulatorItems41342"
+<lang id="ger"><![CDATA[e1979]]></lang></identifier>
+<mandatoryField>0</mandatoryField></ZMSFormulatorItem>
+<ZMSFormulatorItem uid="myzmsx@e457/e458/formulatorItems465" id="formulatorItems465"
  id_prefix="formulatorItems">
+<hiddenField>0</hiddenField>
 <titlealt>
 <lang id="ger"><![CDATA[Pets]]></lang></titlealt>
+<replyToField>
+<lang id="ger">0</lang>
+<lang id="fra">0</lang>
+<lang id="eng">0</lang></replyToField>
 <valueMaximum>
 <lang id="ger">0</lang>
 <lang id="fra">0</lang>
@@ -310,10 +372,6 @@ female]]></lang></valueSelect>
 <lang id="fra">0</lang>
 <lang id="eng">0</lang></valueMinimum>
 <attr_dc_coverage><![CDATA[global.ger]]></attr_dc_coverage>
-<active>
-<lang id="ger">1</lang>
-<lang id="fra">1</lang>
-<lang id="eng">1</lang></active>
 <type>
 <lang id="ger"><![CDATA[custom]]></lang></type>
 <rawJSON>
@@ -350,14 +408,28 @@ female]]></lang></valueSelect>
         }
       }
     }]]></lang></rawJSON>
+<active>
+<lang id="ger">1</lang>
+<lang id="fra">1</lang>
+<lang id="eng">1</lang></active>
+<copyToField>
+<lang id="ger">0</lang>
+<lang id="fra">0</lang>
+<lang id="eng">0</lang></copyToField>
 <title>
 <lang id="ger"><![CDATA[Pets]]></lang></title>
 <identifier>
-<lang id="ger"><![CDATA[e1977]]></lang></identifier></ZMSFormulatorItem>
-<ZMSFormulatorItem id="formulatorItems41343"
+<lang id="ger"><![CDATA[e1977]]></lang></identifier>
+<mandatoryField>0</mandatoryField></ZMSFormulatorItem>
+<ZMSFormulatorItem uid="myzmsx@e457/e458/formulatorItems466" id="formulatorItems466"
  id_prefix="formulatorItems">
+<hiddenField>0</hiddenField>
 <titlealt>
 <lang id="ger"><![CDATA[Interests]]></lang></titlealt>
+<replyToField>
+<lang id="ger">0</lang>
+<lang id="fra">0</lang>
+<lang id="eng">0</lang></replyToField>
 <valueMaximum>
 <lang id="ger">0</lang>
 <lang id="fra">0</lang>
@@ -371,20 +443,30 @@ female]]></lang></valueSelect>
 <lang id="ger"><![CDATA[Hiking
 Biking
 Swimming]]></lang></valueSelect>
+<type>
+<lang id="ger"><![CDATA[multiselect]]></lang></type>
 <active>
 <lang id="ger">1</lang>
 <lang id="fra">1</lang>
 <lang id="eng">1</lang></active>
-<type>
-<lang id="ger"><![CDATA[multiselect]]></lang></type>
+<copyToField>
+<lang id="ger">0</lang>
+<lang id="fra">0</lang>
+<lang id="eng">0</lang></copyToField>
 <title>
 <lang id="ger"><![CDATA[Interests]]></lang></title>
 <identifier>
-<lang id="ger"><![CDATA[e7314]]></lang></identifier></ZMSFormulatorItem>
-<ZMSFormulatorItem id="formulatorItems41344"
+<lang id="ger"><![CDATA[e7314]]></lang></identifier>
+<mandatoryField>0</mandatoryField></ZMSFormulatorItem>
+<ZMSFormulatorItem uid="myzmsx@e457/e458/formulatorItems467" id="formulatorItems467"
  id_prefix="formulatorItems">
+<hiddenField>0</hiddenField>
 <titlealt>
 <lang id="ger"><![CDATA[Memberships]]></lang></titlealt>
+<replyToField>
+<lang id="ger">0</lang>
+<lang id="fra">0</lang>
+<lang id="eng">0</lang></replyToField>
 <valueMaximum>
 <lang id="ger">0</lang>
 <lang id="fra">0</lang>
@@ -398,15 +480,20 @@ Swimming]]></lang></valueSelect>
 <lang id="ger"><![CDATA[ABC
 DEF
 GHI]]></lang></valueSelect>
+<type>
+<lang id="ger"><![CDATA[checkbox]]></lang></type>
 <active>
 <lang id="ger">1</lang>
 <lang id="fra">1</lang>
 <lang id="eng">1</lang></active>
-<type>
-<lang id="ger"><![CDATA[checkbox]]></lang></type>
+<copyToField>
+<lang id="ger">0</lang>
+<lang id="fra">0</lang>
+<lang id="eng">0</lang></copyToField>
 <title>
 <lang id="ger"><![CDATA[Memberships]]></lang></title>
 <identifier>
-<lang id="ger"><![CDATA[e7316]]></lang></identifier></ZMSFormulatorItem>
+<lang id="ger"><![CDATA[e7316]]></lang></identifier>
+<mandatoryField>0</mandatoryField></ZMSFormulatorItem>
 </ZMSFormulator>
 </ZMSFolder>
