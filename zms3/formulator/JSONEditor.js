@@ -210,6 +210,15 @@ ZMSFormulator.on('change', function() {
 		indicator.textContent = '';
 		$("div[class$='has-error']").removeClass('has-error');
 	}
+	// Translate
+	$("p[class^='help-block'] strong").each(function() {
+		if ($(this).text()==='Type:') {
+			$(this).text(JSONEditor.defaults.translate('hint_filetype'));
+		}
+		else if ($(this).text()==='Size:') {
+			$(this).text(JSONEditor.defaults.translate('hint_filesize'));
+		}
+	});
 	
 	%s
 });

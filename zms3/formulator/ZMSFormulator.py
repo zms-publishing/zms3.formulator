@@ -441,6 +441,7 @@ class ZMSFormulator:
             tab = '\t'
             
           s += desc.upper() + tab + cont + '\n'
+      s += '\n'
         
     return s
 
