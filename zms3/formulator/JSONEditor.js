@@ -157,7 +157,7 @@ document.getElementById('enable_disable').addEventListener('click', function() {
 JSONEditor.defaults.custom_validators.push(function(schema, value, path) {
   var errors = [];
   if(schema.format==="email") {
-    if(!/^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(value)) {
+    if((value!='') && (!/^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(value))) {
       // Errors must be an object with `path`, `property`, and `message`
       errors.push({
         path: path,
@@ -189,26 +189,29 @@ ZMSFormulator.on('change', function() {
 	var indicator = document.getElementById('valid_indicator');
 	var submit = document.getElementById('submit');
 
-	// Not valid
-	if (errors.length) {
-		submit.disabled = true;
-		indicator.style.color = 'red';
-		indicator.textContent = JSONEditor.defaults.translate('hint_checkinput');
-		if (errors[0].message=='hint_emailtoolarge') {
-			errordiv = $("div[data-schemapath$='"+errors[0].path+"']").find("p[class^='help-block']");
-			errordiv.parent().addClass('has-error');
-			errormsg = errordiv.html();
-			if (errormsg.lastIndexOf("Max.")<0) {
-				errordiv.html(errormsg + ' <strong style="color:red;">Max. 3MB!</strong>');
-			}
-		}
-	}
 	// Valid
-	else {
+	if (errors.length===0) {
 		submit.disabled = false;
 		indicator.style.color = 'green';
 		indicator.textContent = '';
 		$("div[class$='has-error']").removeClass('has-error');
+	}
+	// Not valid
+	else {
+		submit.disabled = true;
+		indicator.style.color = 'red';
+		indicator.textContent = JSONEditor.defaults.translate('hint_checkinput');
+		$.each(errors, function() {
+			errordiv = $("div[data-schemapath$='"+$(this)[0].path+"']");
+			errordiv.parent().addClass('has-error');
+			if ($(this)[0].message==='hint_emailtoolarge') {
+				errormsg = errordiv.find("p[class^='help-block']");
+				errortxt = errormsg.html();
+				if (errortxt.lastIndexOf("Max.")<0) {
+					errormsg.html(errortxt + ' <strong style="color:red;">Max. 3MB!</strong>');
+				}
+			}
+		});
 	}
 	// Translate
 	$("p[class^='help-block'] strong").each(function() {

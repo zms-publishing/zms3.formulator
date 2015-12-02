@@ -92,7 +92,7 @@ class JSONEditor:
       if item.type == 'email':
         self.JSONDict['properties'][var]['type']           = 'string'
         self.JSONDict['properties'][var]['format']         = 'email'
-        self.JSONDict['properties'][var]['pattern']        = '^([a-zA-Z0-9_.+-])+\\@(([a-zA-Z0-9-])+\\.)+([a-zA-Z0-9]{2,4})+$'        
+        #self.JSONDict['properties'][var]['pattern']        = '^([a-zA-Z0-9_.+-])+\\@(([a-zA-Z0-9-])+\\.)+([a-zA-Z0-9]{2,4})+$'        
 
       if item.type == 'mailattachment':
         # TODO: just one mailattachment-item per form is supported - see line 37

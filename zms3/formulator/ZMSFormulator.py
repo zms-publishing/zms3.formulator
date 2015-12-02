@@ -173,14 +173,18 @@ class ZMSFormulator:
             if itemkey == 'RECAPTCHA':
               continue
             
-            ZMS_FRM_RES = self.this.str_item(val)
+            ZMS_FRM_RES = self.this.str_item(val).strip()
             
+            # handle response value for first item found in content model
             item = filter(lambda x: x.titlealt.upper() == itemkey, self.items)
             if len(item)>0:
               itemobj = item[0]
               if itemobj.type == 'email':
-                self.replyAddress = itemobj.replyToField and ZMS_FRM_RES.strip() or None
-                self.copyAddress = itemobj.copyToField and ZMS_FRM_RES.strip() or None
+                emailpattern = '^([a-zA-Z0-9_.+-])+\\@(([a-zA-Z0-9-])+\\.)+([a-zA-Z0-9]{2,4})+$'
+                if self.this.re_search(emailpattern, ZMS_FRM_RES) is not None:              
+                  self.replyAddress = itemobj.replyToField and ZMS_FRM_RES or None
+                  self.copyAddress = itemobj.copyToField and ZMS_FRM_RES or None
+            # no matching item found in content model
             else:
               raise ValueError("malformed content model")
             
