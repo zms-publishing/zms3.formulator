@@ -35,16 +35,28 @@ xmlns:html="http://www.w3.org/TR/REC-html40">
 <Cell ss:StyleID="string"><Data ss:Type="String">Form</Data></Cell>
 </Row>
 <Row>
-<Cell ss:StyleID="string"><Data ss:Type="String">SUBMIT</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">ZMSFORMULATOR_BUTTON_SUBMIT</Data></Cell>
 <Cell ss:StyleID="string"><Data ss:Type="String">Absenden</Data></Cell>
 <Cell ss:StyleID="string"><Data ss:Type="String">Soumettre</Data></Cell>
 <Cell ss:StyleID="string"><Data ss:Type="String">Submit</Data></Cell>
 </Row>
 <Row>
-<Cell ss:StyleID="string"><Data ss:Type="String">RESTORE</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">ZMSFORMULATOR_BUTTON_RESTORE</Data></Cell>
 <Cell ss:StyleID="string"><Data ss:Type="String">Zurücksetzen</Data></Cell>
 <Cell ss:StyleID="string"><Data ss:Type="String">Restaurer</Data></Cell>
 <Cell ss:StyleID="string"><Data ss:Type="String">Restore</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="string"><Data ss:Type="String">ZMSFORMULATOR_HINT_FILETYPE</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">Dateityp:</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">File type:</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="string"><Data ss:Type="String">ZMSFORMULATOR_HINT_FILESIZE</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">Dateigröße:</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">File size:</Data></Cell>
 </Row>
 <Row>
 <Cell ss:StyleID="string"><Data ss:Type="String">ZMSFORMULATOR_HINT_MULTISELECT</Data></Cell>

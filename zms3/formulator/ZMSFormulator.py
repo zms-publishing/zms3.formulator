@@ -54,6 +54,7 @@ class ZMSFormulator:
     self.feedbackMsg  = this.attr('feedbackMsg').strip()
     self.replyAddress = None
     self.copyAddress  = None
+    self.mailAttchmnt = None
     self.items        = []
     self._data        = {}
     
@@ -172,14 +173,18 @@ class ZMSFormulator:
             if itemkey == 'RECAPTCHA':
               continue
             
-            ZMS_FRM_RES = self.this.str_item(val)
+            ZMS_FRM_RES = self.this.str_item(val).strip()
             
+            # handle response value for first item found in content model
             item = filter(lambda x: x.titlealt.upper() == itemkey, self.items)
             if len(item)>0:
               itemobj = item[0]
               if itemobj.type == 'email':
-                self.replyAddress = itemobj.replyToField and ZMS_FRM_RES.strip() or None
-                self.copyAddress = itemobj.copyToField and ZMS_FRM_RES.strip() or None
+                emailpattern = '^([a-zA-Z0-9_.+-])+\\@(([a-zA-Z0-9-])+\\.)+([a-zA-Z0-9]{2,4})+$'
+                if self.this.re_search(emailpattern, ZMS_FRM_RES) is not None:              
+                  self.replyAddress = itemobj.replyToField and ZMS_FRM_RES or None
+                  self.copyAddress = itemobj.copyToField and ZMS_FRM_RES or None
+            # no matching item found in content model
             else:
               raise ValueError("malformed content model")
             
@@ -239,15 +244,28 @@ class ZMSFormulator:
     
     if data is None:
       data = self.this.REQUEST.form.items()
-
-    _globals.writeBlock(self.thisMaster, "[ZMSFormulator.receiveData] %s"%data)
     
     if type(data) is list and len(data)>0:
       
       isOK = False
       error = None
-      pos = -1
-
+      remVal = []
+      
+      for i, item in enumerate(data):
+        key, val = item
+        
+        # identify response values in received data which should not be stored
+        if key == 'reCAPTCHA':
+          reCAPTCHA = val
+          remVal.append(i)
+        if key.endswith('[FILEDATA]'):
+          if val.strip() != '':
+            self.mailAttchmnt = self.mailAttchmnt and (self.mailAttchmnt + val) or val
+          remVal.append(i)
+        if key.endswith('[FILENAME]'):        
+          if val.strip() != '':
+            self.mailAttchmnt = 'filename:%s;'%val + (self.mailAttchmnt and self.mailAttchmnt or '')
+      
       # Google.API.sitekey.password disabled
       if self.GoogleAPIKey == 'no_site_key':
         isOK = True
@@ -255,13 +273,6 @@ class ZMSFormulator:
       # check if input was sent by a robot
       # hand over response value to reCAPTCHA service by Google
       else:
-        
-        for i, item in enumerate(data):
-          key, val = item
-          if key == 'reCAPTCHA':
-            reCAPTCHA = val
-            pos = i
-
         url = 'https://www.google.com/recaptcha/api/siteverify'
         val = {'secret' : self.GoogleAPISec,
                'response' : reCAPTCHA}
@@ -279,9 +290,12 @@ class ZMSFormulator:
               error = verification['error-codes']
       
       if isOK:
-        # remove reCAPTCHA response value from data to be stored
-        if pos >= 0:
-          data.pop(pos)
+        # remove response values identified above from data to be stored
+        if len(remVal)>0:
+          for i, pos in enumerate(remVal):
+            if i > 0:
+              pos = pos>0 and pos-1 or pos
+            data.pop(pos)
         # add current timestamp and store data
         self.setData({time.mktime(time.localtime()): data})
         # send data by mail if configured      
@@ -320,8 +334,12 @@ class ZMSFormulator:
       
       if self.replyAddress is not None:
         mhead['Reply-To'] = self.replyAddress  
+
+      try: # requires https://zmslabs.org/trac/changeset/3479
+        rtn = self.thisMaster.sendMail(mhead, msubj, mbody, self.this.REQUEST, self.mailAttchmnt)
+      except:
+        rtn = self.thisMaster.sendMail(mhead, msubj, mbody, self.this.REQUEST)
       
-      rtn = self.thisMaster.sendMail(mhead, msubj, mbody, self.this.REQUEST)
       if rtn < 0:
         _globals.writeError(self.thisMaster, "[ZMSFormulator.sendData] failed to send mail")
       
@@ -427,6 +445,7 @@ class ZMSFormulator:
             tab = '\t'
             
           s += desc.upper() + tab + cont + '\n'
+      s += '\n'
         
     return s
 

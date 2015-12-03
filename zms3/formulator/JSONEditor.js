@@ -61,6 +61,19 @@ if (GoogleAPISitekey != 'no_site_key') {
 // onReady (JS)
 ZMSFormulator.on('ready',function() {
 	%s
+	
+	// Handle type=='mailattachment' 
+	// by storing filename at hidden field to keep it for storing/sending
+	// and check filesize by custom validator - see lines 171 + 202
+	$("div[data-schemapath$='FILEDATA']").find("input[type='file']").change(function() {
+	    var filename = $(this).val();
+	    var lastIndex = filename.lastIndexOf("\\");
+	    if (lastIndex >= 0) {
+	        filename = filename.substring(lastIndex + 1);
+	    }
+	    filenamefield = $("div[data-schemapath$='FILENAME']").attr('data-schemapath');
+	    ZMSFormulator.getEditor(filenamefield).setValue(filename);
+	});
 });
 
 // Hook up the submit button to log to the console
@@ -78,7 +91,14 @@ document.getElementById('submit').addEventListener('click', function() {
 		if (GoogleAPISitekey != 'no_site_key') {
 			data['reCAPTCHA'] = grecaptcha.getResponse();
 		}
-				
+		
+		// Disable form and show spinner while processing transfer
+		// re-enable in case of an error below
+		ZMSFormulator.disable();
+		document.getElementById('submit').disabled = true;
+		document.getElementById('restore').disabled = true;
+		document.getElementById('valid_indicator').innerHTML = '<img src="/misc_/zms/loading.gif" alt="Transferring..."/>';
+		
 		$.ajax({
 			type : 'POST',
 			url : '%s/putData',
@@ -89,17 +109,20 @@ document.getElementById('submit').addEventListener('click', function() {
 			var text = res.responseText;
 			if (text == 'OK') {
 				document.getElementById('valid_indicator').style.color = 'green';
-				ZMSFormulator.disable();
-				document.getElementById('submit').disabled = true;
-				document.getElementById('restore').disabled = true;
 				document.getElementById('valid_indicator').textContent = JSONEditor.defaults.translate('hint_datasent');
 				$('#ZMSFormulatorFeedback').modal('show');
 			}
 			else if (text == 'NOK') {
+				ZMSFormulator.enable();
+				document.getElementById('submit').disabled = false;
+				document.getElementById('restore').disabled = false;
 				document.getElementById('valid_indicator').style.color = 'red';				
-				document.getElementById('valid_indicator').textContent = JSONEditor.defaults.translate('hint_datanotsent');				
+				document.getElementById('valid_indicator').textContent = JSONEditor.defaults.translate('hint_datanotsent');			
 			}
 			else {
+				ZMSFormulator.enable();
+				document.getElementById('submit').disabled = false;
+				document.getElementById('restore').disabled = false;
 				document.getElementById('valid_indicator').style.color = 'red';				
 				document.getElementById('valid_indicator').textContent = JSONEditor.defaults.translate('hint_erroroccured');
 				console.log(text);
@@ -134,7 +157,7 @@ document.getElementById('enable_disable').addEventListener('click', function() {
 JSONEditor.defaults.custom_validators.push(function(schema, value, path) {
   var errors = [];
   if(schema.format==="email") {
-    if(!/^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(value)) {
+    if((value!='') && (!/^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(value))) {
       // Errors must be an object with `path`, `property`, and `message`
       errors.push({
         path: path,
@@ -142,6 +165,17 @@ JSONEditor.defaults.custom_validators.push(function(schema, value, path) {
         message: JSONEditor.defaults.translate('hint_emailsyntax')
       });
     }
+  }
+  if(schema.format==="mailattachment") {
+	bytes = Math.floor((value.length-value.split(',')[0].length-1)/1.33333);
+	if(bytes > 3*1024*1024) {
+	  // Errors must be an object with `path`, `property`, and `message`
+	  errors.push({
+	    path: path,
+	    property: 'format',
+	    message: 'hint_emailtoolarge'
+	  });		
+	}
   }
   return errors;
 });
@@ -155,18 +189,39 @@ ZMSFormulator.on('change', function() {
 	var indicator = document.getElementById('valid_indicator');
 	var submit = document.getElementById('submit');
 
-	// Not valid
-	if (errors.length) {
-		submit.disabled = true;
-		indicator.style.color = 'red';
-		indicator.textContent = JSONEditor.defaults.translate('hint_checkinput');
-	}
 	// Valid
-	else {
+	if (errors.length===0) {
 		submit.disabled = false;
 		indicator.style.color = 'green';
 		indicator.textContent = '';
+		$("div[class$='has-error']").removeClass('has-error');
 	}
+	// Not valid
+	else {
+		submit.disabled = true;
+		indicator.style.color = 'red';
+		indicator.textContent = JSONEditor.defaults.translate('hint_checkinput');
+		$.each(errors, function() {
+			errordiv = $("div[data-schemapath$='"+$(this)[0].path+"']");
+			errordiv.parent().addClass('has-error');
+			if ($(this)[0].message==='hint_emailtoolarge') {
+				errormsg = errordiv.find("p[class^='help-block']");
+				errortxt = errormsg.html();
+				if (errortxt.lastIndexOf("Max.")<0) {
+					errormsg.html(errortxt + ' <strong style="color:red;">Max. 3MB!</strong>');
+				}
+			}
+		});
+	}
+	// Translate
+	$("p[class^='help-block'] strong").each(function() {
+		if ($(this).text()==='Type:') {
+			$(this).text(JSONEditor.defaults.translate('hint_filetype'));
+		}
+		else if ($(this).text()==='Size:') {
+			$(this).text(JSONEditor.defaults.translate('hint_filesize'));
+		}
+	});
 	
 	%s
 });
