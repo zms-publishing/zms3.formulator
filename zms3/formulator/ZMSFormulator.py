@@ -176,7 +176,7 @@ class ZMSFormulator:
             ZMS_FRM_RES = self.this.str_item(val).strip()
             
             # handle response value for first item found in content model
-            item = filter(lambda x: x.titlealt.upper() == itemkey, self.items)
+            item = filter(lambda x: self.this.id_quote(x.titlealt).upper() == itemkey, self.items)
             if len(item)>0:
               itemobj = item[0]
               if itemobj.type == 'email':
@@ -464,8 +464,8 @@ class ZMSFormulatorItem:
     # use the value of titlealt in primary language always and ignore value of current language version
     lang = this.REQUEST.get('lang', this.getPrimaryLanguage())
     this.REQUEST.set('lang', this.getPrimaryLanguage())
-    # remove square brackets from user inputs to be used as key which does not interfere with arrays/objects 
-    self.titlealt     = this.attr('titlealt').replace('[','').replace(']','')
+    # remove square brackets, whitespaces etc. from user inputs to be used as key which does not interfere with formfield names
+    self.titlealt     = this.id_quote(this.attr('titlealt')).upper()
     this.REQUEST.set('lang', lang)
     
     self.title        = this.attr('title')
