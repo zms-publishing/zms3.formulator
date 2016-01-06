@@ -370,12 +370,10 @@ class ZMSFormulator:
           i1, i2 = i
           header.append(i1.upper())
           outstr = self.this.str_item(i2)
-          outstr = outstr.replace('`','').replace('´','').replace('\'','')
-          outstr = outstr.replace('|','').replace('\\','').replace(';','')
-          outstr = outstr.replace('<','').replace('>','').replace('"','')
-          output.append(outstr.replace('\n',', '))
-        s1 = ';'.join(header)
-        s2 += ';'.join(output) + '\n'
+          outstr = outstr.replace(';',',').replace('\n',', ')
+          output.append(_globals.html_quote(outstr))
+        s1 = '#/#'.join(header)
+        s2 += '#/#'.join(output) + '\n'
         
       s += s1.upper() + '\n' + s2
     
@@ -414,20 +412,18 @@ class ZMSFormulator:
         rec = []
         for h in header:
           if key.has_key(h):
-            outstr = self.this.re_sub('[_\[\]]','',key[h]).replace('\n',', ')
-            outstr = outstr.replace('`','').replace('´','').replace('\'','')
-            outstr = outstr.replace('|','').replace('\\','').replace(';','')
-            outstr = outstr.replace('<','').replace('>','').replace('"','')
-            rec.append(outstr)
+            outstr = self.this.re_sub('[_\[\]]','',key[h])
+            outstr = outstr.replace(';',',').replace('\n',', ')
+            rec.append(_globals.html_quote(outstr))
           elif (h!='TIMESTAMP'):
             rec.append('')
         output.append('\n'+str(tst))
         output.extend(rec)
 
-      s1 = ';'.join(header)
-      s2 = ';'.join(output)
+      s1 = '#/#'.join(header)
+      s2 = '#/#'.join(output)
       
-      s += s1.upper() + s2.replace(';\n', '\n')
+      s += s1.upper() + s2.replace('#/#\n', '\n')
 
     # Render current transmitted item (last element in output-list)
     # line-by-line tab-separated to be used in sendData by mail

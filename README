@@ -13,7 +13,7 @@ References
 ----------
 
   * https://pypi.python.org/pypi/ZMS3
-  * https://pypi.python.org/pypi/zms3.formulator
+  * https://bitbucket.org/zms3/formulator
   * https://github.com/jdorn/json-editor
   * https://developers.google.com/recaptcha/intro
   * http://www.sqlalchemy.org
@@ -22,6 +22,6 @@ References
 Changelog
 ---------
 
-  * https://bitbucket.org/zms3/formulator/commits/branch/master
+  * https://bitbucket.org/zms3/formulator/commits/all
 
-Copyright (c) 2014-2015 `HOFFMANN+LIEBENBERG <http://www.hoffmannliebenberg.de>`_ in association with `SNTL Publishing <http://www.sntl-publishing.com>`_, Berlin. Code released under the `GNU Affero General Public License v3 <http://www.gnu.org/licenses/agpl.html>`_ license.
+Copyright (c) 2014-2016 `HOFFMANN+LIEBENBERG <http://www.hoffmannliebenberg.de>`_ in association with `SNTL Publishing <http://www.sntl-publishing.com>`_, Berlin. Code released under the `GNU Affero General Public License v3 <http://www.gnu.org/licenses/agpl.html>`_ license.
