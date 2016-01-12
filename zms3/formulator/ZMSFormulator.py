@@ -370,7 +370,7 @@ class ZMSFormulator:
           i1, i2 = i
           header.append(i1.upper())
           outstr = self.this.str_item(i2)
-          outstr = outstr.replace(';',',').replace('\n',', ')
+          outstr = outstr.replace('\n',', ')
           output.append(_globals.html_quote(outstr))
         s1 = '#/#'.join(header)
         s2 += '#/#'.join(output) + '\n'
@@ -413,7 +413,7 @@ class ZMSFormulator:
         for h in header:
           if key.has_key(h):
             outstr = self.this.re_sub('[_\[\]]','',key[h])
-            outstr = outstr.replace(';',',').replace('\n',', ')
+            outstr = outstr.replace('\n',', ')
             rec.append(_globals.html_quote(outstr))
           elif (h!='TIMESTAMP'):
             rec.append('')
@@ -424,6 +424,18 @@ class ZMSFormulator:
       s2 = '#/#'.join(output)
       
       s += s1.upper() + s2.replace('#/#\n', '\n')
+
+    # Return data for download as CSV file
+    # handle special characters Latin-1 mapping in conf/zms3.formulator.metaobj.xml line 1480 et seq.
+    if (frmt == 'csv'):
+      import csv, cStringIO
+      stream = cStringIO.StringIO()
+      csvdat = csv.writer(stream, dialect='excel', delimiter=';', quoting=csv.QUOTE_ALL)
+      
+      for line in s.splitlines():
+        csvdat.writerow(line.split('#/#'))
+      
+      return stream.getvalue().replace('&quot;','""')
 
     # Render current transmitted item (last element in output-list)
     # line-by-line tab-separated to be used in sendData by mail

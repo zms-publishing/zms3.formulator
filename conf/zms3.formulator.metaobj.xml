@@ -1475,7 +1475,6 @@ def downloadData(self):
     self.REQUEST.RESPONSE.setHeader('Cache-Control', 'no-cache')
     self.REQUEST.RESPONSE.setHeader('Pragma', 'no-cache')
     data = frmu.printDataRaw(frmt='csv')
-    data = data.replace('&quot;','\'')
     if (self.REQUEST.get('encode','')=='excel'):
         data = html.unescape(unicode(data,'utf-8')).encode('latin-1',errors='xmlcharrefreplace')
         data = data.replace('&#8217;','\'')
@@ -1488,7 +1487,7 @@ def downloadData(self):
         data = data.replace('&#65287;','\'')
     else:
         data = html.unescape(unicode(data,'utf-8'))
-    return data.replace('#/#',';')]]>
+    return data]]>
                   </item>
                   <item key="id"><![CDATA[downloadData]]></item>
                   <item key="mandatory" type="int">0</item>
@@ -1518,7 +1517,7 @@ def downloadData(self):
           <item key="id"><![CDATA[zms3.formulator.lib]]></item>
           <item key="name"><![CDATA[zms3.formulator.lib]]></item>
           <item key="package"><![CDATA[zms3.formulator]]></item>
-          <item key="revision"><![CDATA[3.3.5]]></item>
+          <item key="revision"><![CDATA[3.3.6]]></item>
           <item key="type"><![CDATA[ZMSLibrary]]></item>
         </dictionary>
       </item>
