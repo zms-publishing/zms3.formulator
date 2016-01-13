@@ -155,90 +155,89 @@ class ZMSFormulator:
     
   def setData(self, receivedData):
 
-    if type(receivedData) is dict:
-      
-      # save data as records to SQLDB
-      if self.SQLStorage and not self.noStorage:
-        modelledData = JSONEditor.JSONEditor(self)
-        
-        for timestamp in receivedData:
-          for key, val in receivedData[timestamp]:
-            
-            # normalize received ZMSFormulatorItem-Key due to arrays/objects
-            # fetch matching ZMSFormulatorItem-Obj to retrieve ids and values
-            if '[' in key:
-              itemkey = key.split('[')[0].upper()
-            else:
-              itemkey = key.upper() 
-            if itemkey == 'RECAPTCHA':
-              continue
-            
-            ZMS_FRM_RES = self.this.str_item(val).strip()
-            
-            # handle response value for first item found in content model
-            item = filter(lambda x: self.this.id_quote(x.titlealt).upper() == itemkey, self.items)
-            if len(item)>0:
-              itemobj = item[0]
-              if itemobj.type == 'email':
-                emailpattern = '^([a-zA-Z0-9_.+-])+\\@(([a-zA-Z0-9-])+\\.)+([a-zA-Z0-9]{2,4})+$'
-                if self.this.re_search(emailpattern, ZMS_FRM_RES) is not None:              
-                  self.replyAddress = itemobj.replyToField and ZMS_FRM_RES or None
-                  self.copyAddress = itemobj.copyToField and ZMS_FRM_RES or None
-            # no matching item found in content model
-            else:
-              raise ValueError("malformed content model")
-            
-            if itemobj.type in ['select', 'checkbox', 'multiselect']:
-              ZMS_FRM_RES = ZMS_FRM_RES.replace('\n',', ')
-              ZMS_FRM_RAW = ', '.join(itemobj.select.splitlines())
-            else:
-              ZMS_FRM_RAW = itemobj.rawJSON
-            
-            from datetime import datetime 
-            ins = self.sqldb.insert().values(
-              ZMS_FRM_TST = datetime.fromtimestamp(timestamp),
-              ZMS_FRM_RES = ZMS_FRM_RES,
-              ZMS_FRM_ORD = modelledData.JSONDict['properties'][itemkey].has_key('propertyOrder') and modelledData.JSONDict['properties'][itemkey]['propertyOrder'] or 0,
-              ZMS_FRM_OID = int(itemobj.oid[4:]),              
-              ZMS_FRM_UID = 'uid:' in itemobj.uid and itemobj.uid[4:] or None,
-              ZMS_FRM_EID = itemobj.eid[:32],
-              ZMS_FRM_CID = itemobj.cid[:32],                    
-              ZMS_FRM_FID = itemobj.fid[:32],                       
-              ZMS_FRM_URL = itemobj.url[:512],
-              ZMS_FRM_USR = str(self.this.REQUEST.get('AUTHENTICATED_USER',''))[:128],
-              ZMS_FRM_TYP = itemobj.type[:32],                   
-              ZMS_FRM_KEY = key[:128], # put the received key including arrays/objects instead of plain itemobj.titlealt
-              ZMS_FRM_ALT = itemobj.title[:64],
-              ZMS_FRM_TXT = itemobj.description[:512],
-              ZMS_FRM_MDT = itemobj.mandatory,
-              ZMS_FRM_HID = itemobj.hidden,
-              ZMS_FRM_MIN = itemobj.minimum,
-              ZMS_FRM_MAX = itemobj.maximum, 
-              ZMS_FRM_DFT = itemobj.default[:128],
-              ZMS_FRM_RAW = ZMS_FRM_RAW,
-              )
-            con = self.engine.connect()
-            res = con.execute(ins)
-
-      # save data as dictionary to ZODB
-      else: 
-        self._data.update(receivedData)
-        zodb = getConfiguration().dbtab.getDatabase('/', is_root=1)._storage
-        if not zodb.isReadOnly() and not self.noStorage:
-          lang = self.this.REQUEST.get('lang', self.this.getPrimaryLanguage())
-          self.this.REQUEST.set('lang', self.this.getPrimaryLanguage())
-          self.this.setObjStateModified(self.this.REQUEST)
-          self.this.attr('_data', self._data)
-          self.this.onChangeObj(self.this.REQUEST)
-          self.this.commitObj(self.this.REQUEST,forced=True)
-          self.this.REQUEST.set('lang', lang)
-          return True
-        else:
-          _globals.writeBlock(self.thisMaster, "[ZMSFormulator.setData] zodb.isReadOnly")
-          return False
-    else:
+    if type(receivedData) is not dict:
       _globals.writeError(self.thisMaster, "[ZMSFormulator.setData] unexpected data (not dict)")
       return False
+
+    for timestamp in receivedData:
+      for key, val in receivedData[timestamp]:
+        
+        # normalize received ZMSFormulatorItem-Key due to arrays/objects
+        # fetch matching ZMSFormulatorItem-Obj to retrieve ids and values
+        if '[' in key:
+          itemkey = key.split('[')[0].upper()
+        else:
+          itemkey = key.upper() 
+        if itemkey == 'RECAPTCHA':
+          continue
+        
+        ZMS_FRM_RES = self.this.str_item(val).strip()
+        
+        # handle response value for first item found in content model
+        item = filter(lambda x: self.this.id_quote(x.titlealt).upper() == itemkey, self.items)
+        if len(item)>0:
+          itemobj = item[0]
+          if itemobj.type == 'email':
+            emailpattern = '^([a-zA-Z0-9_.+-])+\\@(([a-zA-Z0-9-])+\\.)+([a-zA-Z0-9]{2,4})+$'
+            if self.this.re_search(emailpattern, ZMS_FRM_RES) is not None:              
+              self.replyAddress = itemobj.replyToField and ZMS_FRM_RES or None
+              self.copyAddress = itemobj.copyToField and ZMS_FRM_RES or None
+        # no matching item found in content model
+        else:
+          raise ValueError("malformed content model")
+        
+        if itemobj.type in ['select', 'checkbox', 'multiselect']:
+          ZMS_FRM_RES = ZMS_FRM_RES.replace('\n',', ')
+          ZMS_FRM_RAW = ', '.join(itemobj.select.splitlines())
+        else:
+          ZMS_FRM_RAW = itemobj.rawJSON
+
+        # save data as records to SQLDB
+        if self.SQLStorage and not self.noStorage:
+          modelledData = JSONEditor.JSONEditor(self)
+      
+          from datetime import datetime 
+          ins = self.sqldb.insert().values(
+            ZMS_FRM_TST = datetime.fromtimestamp(timestamp),
+            ZMS_FRM_RES = ZMS_FRM_RES,
+            ZMS_FRM_ORD = modelledData.JSONDict['properties'][itemkey].has_key('propertyOrder') and modelledData.JSONDict['properties'][itemkey]['propertyOrder'] or 0,
+            ZMS_FRM_OID = int(itemobj.oid[4:]),              
+            ZMS_FRM_UID = 'uid:' in itemobj.uid and itemobj.uid[4:] or None,
+            ZMS_FRM_EID = itemobj.eid[:32],
+            ZMS_FRM_CID = itemobj.cid[:32],                    
+            ZMS_FRM_FID = itemobj.fid[:32],                       
+            ZMS_FRM_URL = itemobj.url[:512],
+            ZMS_FRM_USR = str(self.this.REQUEST.get('AUTHENTICATED_USER',''))[:128],
+            ZMS_FRM_TYP = itemobj.type[:32],                   
+            ZMS_FRM_KEY = key[:128], # put the received key including arrays/objects instead of plain itemobj.titlealt
+            ZMS_FRM_ALT = itemobj.title[:64],
+            ZMS_FRM_TXT = itemobj.description[:512],
+            ZMS_FRM_MDT = itemobj.mandatory,
+            ZMS_FRM_HID = itemobj.hidden,
+            ZMS_FRM_MIN = itemobj.minimum,
+            ZMS_FRM_MAX = itemobj.maximum, 
+            ZMS_FRM_DFT = itemobj.default[:128],
+            ZMS_FRM_RAW = ZMS_FRM_RAW,
+            )
+          con = self.engine.connect()
+          res = con.execute(ins)
+
+    # save data as dictionary to ZODB
+    if not self.SQLStorage and not self.noStorage:
+      self._data.update(receivedData)
+      zodb = getConfiguration().dbtab.getDatabase('/', is_root=1)._storage
+      if not zodb.isReadOnly():
+        lang = self.this.REQUEST.get('lang', self.this.getPrimaryLanguage())
+        self.this.REQUEST.set('lang', self.this.getPrimaryLanguage())
+        self.this.setObjStateModified(self.this.REQUEST)
+        self.this.attr('_data', self._data)
+        self.this.onChangeObj(self.this.REQUEST)
+        self.this.commitObj(self.this.REQUEST,forced=True)
+        self.this.REQUEST.set('lang', lang)
+        return True
+      else:
+        _globals.writeBlock(self.thisMaster, "[ZMSFormulator.setData] zodb.isReadOnly")
+        return False
 
   def receiveData(self, data=None):
     
