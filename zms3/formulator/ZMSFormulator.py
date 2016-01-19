@@ -443,7 +443,9 @@ class ZMSFormulator:
       if len(output)>=len(header):
         for item in zip(header, output[-len(header):]):
           desc = item[0].strip()
-          cont = item[1].strip()
+          cont = item[1].strip().replace('&quot;','"').replace('&amp;','&')
+          if cont=='':
+            continue
           if len(desc)<8:
             tab = '\t\t\t'
           elif len(desc)<16:
