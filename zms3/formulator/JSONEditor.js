@@ -64,7 +64,7 @@ ZMSFormulator.on('ready',function() {
 	
 	// Handle type=='mailattachment' 
 	// by storing filename at hidden field to keep it for storing/sending
-	// and check filesize by custom validator - see lines 171 + 202
+	// and check filesize by custom validator - see lines 175 + 206
 	$("div[data-schemapath$='FILEDATA']").find("input[type='file']").change(function() {
 	    var filename = $(this).val();
 	    var lastIndex = filename.lastIndexOf("\\");
@@ -74,6 +74,10 @@ ZMSFormulator.on('ready',function() {
 	    filenamefield = $("div[data-schemapath$='FILENAME']").attr('data-schemapath');
 	    ZMSFormulator.getEditor(filenamefield).setValue(filename);
 	});
+	
+	// Remove label and input for ZMSTextareas inserted between ZMSFormualtorItems
+	$("input[data-schemaformat='text']").prev("label").remove();
+	$("input[data-schemaformat='text']").remove();
 });
 
 // Hook up the submit button to log to the console

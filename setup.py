@@ -1,6 +1,6 @@
 ################################################################################
 #
-#  Copyright (c) 2015 HOFFMANN+LIEBENBERG in association with SNTL Publishing
+#  Copyright (c) 2016 HOFFMANN+LIEBENBERG in association with SNTL Publishing
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU Affero General Public License as published by
@@ -29,7 +29,7 @@ for path in sys.path:
 VERSION = '3.4.0dev'
 
 zmspkg_name = 'formulator'
-branch_name = 'master'
+branch_name = 'optimizing'
 downld_file = 'https://bitbucket.org/zms3/%s/get/%s.zip'%(zmspkg_name, branch_name)
 
 if 'dev' in VERSION:

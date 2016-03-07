@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ################################################################################
 #
-#  Copyright (c) 2015 HOFFMANN+LIEBENBERG in association with SNTL Publishing
+#  Copyright (c) 2016 HOFFMANN+LIEBENBERG in association with SNTL Publishing
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU Affero General Public License as published by
@@ -63,7 +63,7 @@ class ZMSFormulator:
       raise SystemError('Storage not available')
     
     # init items
-    objs = filter(lambda ob: ob.isActive(self.this.REQUEST), self.this.getObjChildren('formulatorItems', self.this.REQUEST, ['ZMSFormulatorItem']))
+    objs = filter(lambda ob: ob.isActive(self.this.REQUEST), self.this.getObjChildren('formulatorItems', self.this.REQUEST, ['ZMSFormulatorItem', 'ZMSTextarea']))
     for item in objs:
       self.items.append(ZMSFormulatorItem(item))    
 
@@ -169,6 +169,8 @@ class ZMSFormulator:
         else:
           itemkey = key.upper() 
         if itemkey == 'RECAPTCHA':
+          continue
+        if itemkey.startswith('TEXTAREA_'):
           continue
         
         ZMS_FRM_RES = self.this.str_item(val).strip()
@@ -468,6 +470,8 @@ class ZMSFormulatorItem:
     self.cid          = this.getHome().getId()
     self.fid          = this.getParentNode().getId()
     self.url          = this.getParentNode().getDeclUrl()
+    self.meta_id      = this.meta_id
+    self.bodycontent  = this.getBodyContent(this.REQUEST)
 
     # to keep headlines of DATA in sync for all language versions
     # use the value of titlealt in primary language always and ignore value of current language version

@@ -1302,31 +1302,18 @@ a.style.fontSize=".6em",a.style.display="inline-block",a},getFormInputDescriptio
 def getJSONEditor(self):
   frmu = ZMSFormulator.ZMSFormulator(self)
   jsed = JSONEditor.JSONEditor(frmu)
-  objs = filter(lambda ob: ob.isActive(self.REQUEST), frmu.this.getObjChildren('formulatorItems', self.REQUEST, ['ZMSTextarea']))
-  
-  if len(objs)==1:
-    beforeZMSTextarea = objs[0].getBodyContent(self.REQUEST)
-    afterZMSTextarea  = ''
-  elif len(objs)>=2:
-    beforeZMSTextarea = objs[0].getBodyContent(self.REQUEST)
-    afterZMSTextarea  = objs[1].getBodyContent(self.REQUEST)
-  else:
-    beforeZMSTextarea = ''
-    afterZMSTextarea  = ''
     
   # Google.API.sitekey.password not configured
   if frmu.GoogleAPIKey == 'no_site_key':
     output = '''
-      %s
       <div id="editor_holder"></div>
       <button id="submit">%s</button>
       <button id="restore">%s</button>
       <span id="valid_indicator"></span>
-      <br />%s
-    '''%(beforeZMSTextarea, self.getLangStr('ZMSFORMULATOR_BUTTON_SUBMIT',self.REQUEST.get('lang')), self.getLangStr('ZMSFORMULATOR_BUTTON_RESTORE',self.REQUEST.get('lang')), afterZMSTextarea)
+      <br />
+    '''%(self.getLangStr('ZMSFORMULATOR_BUTTON_SUBMIT',self.REQUEST.get('lang')), self.getLangStr('ZMSFORMULATOR_BUTTON_RESTORE',self.REQUEST.get('lang')))
   else:
 	  output = '''
-		%s
 		<div id="editor_holder"></div>
 		<div id="reCAPTCHA" style="margin:1em 0;"></div>
 		<button id="submit">%s</button>
@@ -1334,8 +1321,8 @@ def getJSONEditor(self):
 		<span id="valid_indicator"></span>
 		<div class="g-recaptcha" data-sitekey="%s"></div>
 		<script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit&hl=%s" async defer></script>
-		<br />%s
-	  '''%(beforeZMSTextarea, self.getLangStr('ZMSFORMULATOR_BUTTON_SUBMIT',self.REQUEST.get('lang')), self.getLangStr('ZMSFORMULATOR_BUTTON_RESTORE',self.REQUEST.get('lang')), frmu.GoogleAPIKey, self.getLanguageLabel(self.REQUEST.get('lang'))[:2].lower(), afterZMSTextarea)
+		<br />
+	  '''%(self.getLangStr('ZMSFORMULATOR_BUTTON_SUBMIT',self.REQUEST.get('lang')), self.getLangStr('ZMSFORMULATOR_BUTTON_RESTORE',self.REQUEST.get('lang')), frmu.GoogleAPIKey, self.getLanguageLabel(self.REQUEST.get('lang'))[:2].lower())
 
   if (frmu.feedbackMsg!=''):
 	  feedback = '''

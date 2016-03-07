@@ -1,6 +1,6 @@
 ################################################################################
 #
-#  Copyright (c) 2015 HOFFMANN+LIEBENBERG in association with SNTL Publishing
+#  Copyright (c) 2016 HOFFMANN+LIEBENBERG in association with SNTL Publishing
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU Affero General Public License as published by
@@ -34,101 +34,113 @@ class JSONEditor:
     
     for i, item in enumerate(obj.items, start=1):
       
-      if item.type == 'mailattachment' and mattach:
-        continue
-      
-      var = '%s'%(item.titlealt.upper())
-      values = item.select.strip().splitlines()
-      
-      self.JSONDict['properties'][var]                     = {}
-      self.JSONDict['properties'][var]['type']             = item.type == 'float' and 'number' or item.type == 'mailattachment' and 'object' or item.type
-      self.JSONDict['properties'][var]['title']            = item.title + (item.mandatory and ' *' or '')
-      self.JSONDict['properties'][var]['description']      = item.description + (item.type == 'multiselect' and obj.this.getLangStr('ZMSFORMULATOR_HINT_MULTISELECT',obj.this.REQUEST.get('lang')) or '')
-      self.JSONDict['properties'][var]['propertyOrder']    = i
-      self.JSONDict['properties'][var]['options']          = {}
-  
-      if item.default.strip() != '':
-        self.JSONDict['properties'][var]['default']        = item.default 
-  
-      if item.minimum>0 or item.mandatory:
-        if item.type in ['string', 'textarea', 'email']:
-          self.JSONDict['properties'][var]['minLength']    = item.minimum > 0 and item.minimum or 1
-        else:
-          self.JSONDict['properties'][var]['minimum']      = item.minimum > 0 and item.minimum or 1
-  
-      if item.maximum>0:
-        if item.type in ['string', 'textarea']:
-          self.JSONDict['properties'][var]['maxLength']    = item.maximum
-        else:
-          self.JSONDict['properties'][var]['maximum']      = item.maximum
-      
-      if item.type == 'select':
-        self.JSONDict['properties'][var]['type']           = 'string'
-        self.JSONDict['properties'][var]['enum']           = []
-        self.JSONDict['properties'][var]['options']['enum_titles'] = []
-        if len(values)>0:
-          if not item.mandatory:
-            self.JSONDict['properties'][var]['enum'].append('')
-          for val in values:
-            self.JSONDict['properties'][var]['enum'].append(val)
-          if not item.mandatory:
-            self.JSONDict['properties'][var]['options']['enum_titles'].append(obj.this.getLangStr('CAPTION_SELECT'))
-          for val in values:
-            self.JSONDict['properties'][var]['options']['enum_titles'].append(val)
-      
-      if item.type == 'textarea':
-        self.JSONDict['properties'][var]['type']           = 'string'
-        self.JSONDict['properties'][var]['format']         = 'textarea'
-        self.JSONDict['properties'][var]['options']['input_height']  = '150px'
-      
-      if item.type == 'color':
-        self.JSONDict['properties'][var]['type']           = 'string'
-        self.JSONDict['properties'][var]['format']         = 'color'
-  
-      if item.type == 'date':
-        self.JSONDict['properties'][var]['type']           = 'string'
-        self.JSONDict['properties'][var]['format']         = 'date'
-
-      if item.type == 'email':
-        self.JSONDict['properties'][var]['type']           = 'string'
-        self.JSONDict['properties'][var]['format']         = 'email'
-        #self.JSONDict['properties'][var]['pattern']        = '^([a-zA-Z0-9_.+-])+\\@(([a-zA-Z0-9-])+\\.)+([a-zA-Z0-9]{2,4})+$'        
-
-      if item.type == 'mailattachment':
-        # TODO: just one mailattachment-item per form is supported - see line 37
-        mattach = True
-        self.JSONDict['properties'][var]['properties']     = {}
-        self.JSONDict['properties'][var]['properties']['FILEDATA'] = {}
-        self.JSONDict['properties'][var]['properties']['FILEDATA']['type']  = 'string'
-        self.JSONDict['properties'][var]['properties']['FILEDATA']['title'] = item.title
-        self.JSONDict['properties'][var]['properties']['FILEDATA']['format'] = 'mailattachment'
-        self.JSONDict['properties'][var]['properties']['FILEDATA']['media'] = {'binaryEncoding': 'base64'}
-        self.JSONDict['properties'][var]['properties']['FILENAME'] = {}
-        self.JSONDict['properties'][var]['properties']['FILENAME']['type']  = 'string'
-        self.JSONDict['properties'][var]['properties']['FILENAME']['options'] = {'hidden': True}       
+      if item.meta_id == 'ZMSTextarea':
         
-      if item.type in ['checkbox', 'multiselect']:
-        self.JSONDict['properties'][var]['type']           = 'array'
-        self.JSONDict['properties'][var]['uniqueItems']    = 'true'
-        if item.type == 'multiselect':
-          self.JSONDict['properties'][var]['format']       = 'select'
-        elif item.type == 'checkbox':
-          self.JSONDict['properties'][var]['format']       = 'checkbox'
-        self.JSONDict['properties'][var]['items']          = {}
-        self.JSONDict['properties'][var]['items']['type']  = 'string'
-        self.JSONDict['properties'][var]['items']['enum']  = []
-        if len(values)>0:
-          for val in values:
-            self.JSONDict['properties'][var]['items']['enum'].append(val)
+        var = 'TEXTAREA_%s'%(item.eid)
+        
+        self.JSONDict['properties'][var]                   = {}
+        self.JSONDict['properties'][var]['type']           = 'string'
+        self.JSONDict['properties'][var]['format']         = 'text'
+        self.JSONDict['properties'][var]['description']    = item.bodycontent
+        self.JSONDict['properties'][var]['propertyOrder']  = i
+      
+      elif item.meta_id == 'ZMSFormulatorItem':
+      
+        if item.type == 'mailattachment' and mattach:
+          continue
+        
+        var = '%s'%(item.titlealt.upper())
+        values = item.select.strip().splitlines()
+        
+        self.JSONDict['properties'][var]                     = {}
+        self.JSONDict['properties'][var]['type']             = item.type == 'float' and 'number' or item.type == 'mailattachment' and 'object' or item.type
+        self.JSONDict['properties'][var]['title']            = item.title + (item.mandatory and ' *' or '')
+        self.JSONDict['properties'][var]['description']      = item.description + (item.type == 'multiselect' and obj.this.getLangStr('ZMSFORMULATOR_HINT_MULTISELECT',obj.this.REQUEST.get('lang')) or '')
+        self.JSONDict['properties'][var]['propertyOrder']    = i
+        self.JSONDict['properties'][var]['options']          = {}
+        
+        if item.default.strip() != '':
+          self.JSONDict['properties'][var]['default']        = item.default 
+    
+        if item.minimum>0 or item.mandatory:
+          if item.type in ['string', 'textarea', 'email']:
+            self.JSONDict['properties'][var]['minLength']    = item.minimum > 0 and item.minimum or 1
+          else:
+            self.JSONDict['properties'][var]['minimum']      = item.minimum > 0 and item.minimum or 1
+    
+        if item.maximum>0:
+          if item.type in ['string', 'textarea']:
+            self.JSONDict['properties'][var]['maxLength']    = item.maximum
+          else:
+            self.JSONDict['properties'][var]['maximum']      = item.maximum
+        
+        if item.type == 'select':
+          self.JSONDict['properties'][var]['type']           = 'string'
+          self.JSONDict['properties'][var]['enum']           = []
+          self.JSONDict['properties'][var]['options']['enum_titles'] = []
+          if len(values)>0:
+            if not item.mandatory:
+              self.JSONDict['properties'][var]['enum'].append('')
+            for val in values:
+              self.JSONDict['properties'][var]['enum'].append(val)
+            if not item.mandatory:
+              self.JSONDict['properties'][var]['options']['enum_titles'].append(obj.this.getLangStr('CAPTION_SELECT'))
+            for val in values:
+              self.JSONDict['properties'][var]['options']['enum_titles'].append(val)
+        
+        if item.type == 'textarea':
+          self.JSONDict['properties'][var]['type']           = 'string'
+          self.JSONDict['properties'][var]['format']         = 'textarea'
+          self.JSONDict['properties'][var]['options']['input_height']  = '150px'
+        
+        if item.type == 'color':
+          self.JSONDict['properties'][var]['type']           = 'string'
+          self.JSONDict['properties'][var]['format']         = 'color'
+    
+        if item.type == 'date':
+          self.JSONDict['properties'][var]['type']           = 'string'
+          self.JSONDict['properties'][var]['format']         = 'date'
   
-      if item.hidden:
-        self.JSONDict['properties'][var]['options']['hidden']  = 'true'
+        if item.type == 'email':
+          self.JSONDict['properties'][var]['type']           = 'string'
+          self.JSONDict['properties'][var]['format']         = 'email'
+          #self.JSONDict['properties'][var]['pattern']        = '^([a-zA-Z0-9_.+-])+\\@(([a-zA-Z0-9-])+\\.)+([a-zA-Z0-9]{2,4})+$'        
   
-      if item.type in ['custom'] and item.rawJSON != '':
-        try:
-          self.JSONDict['properties'][var]                  = json.loads(item.rawJSON)
-        except:
-          self.JSONDict['properties'][var]                  = '{ // ERROR in custom JSON }'
+        if item.type == 'mailattachment':
+          # TODO: just one mailattachment-item per form is supported - see line 50
+          mattach = True
+          self.JSONDict['properties'][var]['properties']     = {}
+          self.JSONDict['properties'][var]['properties']['FILEDATA'] = {}
+          self.JSONDict['properties'][var]['properties']['FILEDATA']['type']  = 'string'
+          self.JSONDict['properties'][var]['properties']['FILEDATA']['title'] = item.title
+          self.JSONDict['properties'][var]['properties']['FILEDATA']['format'] = 'mailattachment'
+          self.JSONDict['properties'][var]['properties']['FILEDATA']['media'] = {'binaryEncoding': 'base64'}
+          self.JSONDict['properties'][var]['properties']['FILENAME'] = {}
+          self.JSONDict['properties'][var]['properties']['FILENAME']['type']  = 'string'
+          self.JSONDict['properties'][var]['properties']['FILENAME']['options'] = {'hidden': True}       
+          
+        if item.type in ['checkbox', 'multiselect']:
+          self.JSONDict['properties'][var]['type']           = 'array'
+          self.JSONDict['properties'][var]['uniqueItems']    = 'true'
+          if item.type == 'multiselect':
+            self.JSONDict['properties'][var]['format']       = 'select'
+          elif item.type == 'checkbox':
+            self.JSONDict['properties'][var]['format']       = 'checkbox'
+          self.JSONDict['properties'][var]['items']          = {}
+          self.JSONDict['properties'][var]['items']['type']  = 'string'
+          self.JSONDict['properties'][var]['items']['enum']  = []
+          if len(values)>0:
+            for val in values:
+              self.JSONDict['properties'][var]['items']['enum'].append(val)
+    
+        if item.hidden:
+          self.JSONDict['properties'][var]['options']['hidden']  = 'true'
+    
+        if item.type in ['custom'] and item.rawJSON != '':
+          try:
+            self.JSONDict['properties'][var]                  = json.loads(item.rawJSON)
+          except:
+            self.JSONDict['properties'][var]                  = '{ // ERROR in custom JSON }'
 
   def render(self, obj):
     
