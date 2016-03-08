@@ -256,6 +256,12 @@ xmlns:html="http://www.w3.org/TR/REC-html40">
 <Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
 <Cell ss:StyleID="string"><Data ss:Type="String">Object is missing the required property '{{0}}'</Data></Cell>
 </Row>
+<Row>
+<Cell ss:StyleID="string"><Data ss:Type="String">ZMSFORMULATOR_ERROR_MANDATORY</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">Der Wert ist eine Pflichtangabe</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">Value is mandatory</Data></Cell>
+</Row>
 </Table>
 </Worksheet>
 </Workbook>

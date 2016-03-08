@@ -78,6 +78,33 @@ ZMSFormulator.on('ready',function() {
 	// Remove label and input for ZMSTextareas inserted between ZMSFormualtorItems
 	$("input[data-schemaformat='text']").prev("label").remove();
 	$("input[data-schemaformat='text']").remove();
+	
+	// Custom validators must return an array of errors or an empty array if valid
+	// Errors must be an object with `path`, `property`, and `message`
+	JSONEditor.defaults.custom_validators.push(function(schema, value, path) {
+	  var errors = [];
+	  if(schema.format==="email") {
+	    if((value!='') && (!/^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(value))) {
+	      errors.push({
+	        path: path,
+	        property: 'format',
+	        message: JSONEditor.defaults.translate('hint_emailsyntax')
+	      });
+	    }
+	  }
+	  if(schema.format==="mailattachment") {
+		bytes = Math.floor((value.length-value.split(',')[0].length-1)/1.33333);
+		if(bytes > 3*1024*1024) {
+		  errors.push({
+		    path: path,
+		    property: 'format',
+		    message: 'hint_emailtoolarge'
+		  });		
+		}
+	  }
+	  %s
+	  return errors;
+	});	
 });
 
 // Hook up the submit button to log to the console
@@ -156,33 +183,6 @@ document.getElementById('enable_disable').addEventListener('click', function() {
 	}
 });
 */
-
-// Custom validators must return an array of errors or an empty array if valid
-JSONEditor.defaults.custom_validators.push(function(schema, value, path) {
-  var errors = [];
-  if(schema.format==="email") {
-    if((value!='') && (!/^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(value))) {
-      // Errors must be an object with `path`, `property`, and `message`
-      errors.push({
-        path: path,
-        property: 'format',
-        message: JSONEditor.defaults.translate('hint_emailsyntax')
-      });
-    }
-  }
-  if(schema.format==="mailattachment") {
-	bytes = Math.floor((value.length-value.split(',')[0].length-1)/1.33333);
-	if(bytes > 3*1024*1024) {
-	  // Errors must be an object with `path`, `property`, and `message`
-	  errors.push({
-	    path: path,
-	    property: 'format',
-	    message: 'hint_emailtoolarge'
-	  });		
-	}
-  }
-  return errors;
-});
 
 // Hook up the validation indicator to update its 
 // status whenever the ZMSFormulator changes

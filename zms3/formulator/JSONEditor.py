@@ -29,6 +29,7 @@ class JSONEditor:
     self.JSONDict['title']       = obj.title
     self.JSONDict['type']        = 'object'
     self.JSONDict['properties']  = {}
+    self.mandatory_validators    = ''
   
     mattach = False
     
@@ -65,6 +66,19 @@ class JSONEditor:
         if item.minimum>0 or item.mandatory:
           if item.type in ['string', 'textarea', 'email']:
             self.JSONDict['properties'][var]['minLength']    = item.minimum > 0 and item.minimum or 1
+          elif item.type in ['date', 'checkbox', 'multiselect']:
+            self.mandatory_validators += """
+              if(path==="root.%s") {
+                  if (ZMSFormulator.getValue().%s==='' || ZMSFormulator.getValue().%s.length===0) {
+                    errors.push({
+                      path: path,
+                      property: 'format',
+                      message: 'check_%s' in JSONEditor.defaults.languages.%s ? JSONEditor.defaults.translate('check_%s') : JSONEditor.defaults.translate('error_mandatory')
+                    });   
+                  }
+              }
+              """%(item.titlealt.upper(), item.titlealt.upper(), item.titlealt.upper(),
+                   item.titlealt.lower(), obj.this.REQUEST.get('lang'), item.titlealt.lower())
           else:
             self.JSONDict['properties'][var]['minimum']      = item.minimum > 0 and item.minimum or 1
     
@@ -149,10 +163,11 @@ class JSONEditor:
     editor = f.read()
     f.close()
     
-    script = '<script src="%s/metaobj_manager/zms3.formulator.lib.jsoneditor.min.js"></script>\n<script>%s</script>'  
+    script = '<script src="%s/metaobj_manager/zms3.formulator.lib.jsoneditor.min.js"></script>\n<script>%s</script>'
     editor = editor % (self.getLangDict(obj), obj.thisURLPath,
                        obj.this.REQUEST.get('lang'), obj.GoogleAPIKey, 
-                       obj.options, obj.onReady, obj.thisURLPath, obj.onChange)
+                       obj.options, obj.onReady, self.mandatory_validators,
+                       obj.thisURLPath, obj.onChange)
     output = script % (obj.baseURLPath, editor)
     
     return output

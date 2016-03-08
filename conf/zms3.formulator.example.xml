@@ -21,7 +21,7 @@
 // Show hint on error at form item
 if (ZMSFormulator.getValue().BIRTHDAY==='') {
     if (div_birthday.find("p[class^='help-block']").length===0) {
-        div_birthday.append('<p class="help-block">'+JSONEditor.defaults.translate('hint_checkbirthday')+'</p>');
+        div_birthday.append('<p class="help-block">'+JSONEditor.defaults.translate('check_birthday')+'</p>');
     }
 }
 else {
@@ -39,22 +39,7 @@ if(msg) {
   console.log(msg.getValue());
 }
 
-// Custom validators must return an array of errors 
-// or an empty array if valid
-JSONEditor.defaults.custom_validators.push(function(schema, value, path) {
-  var errors = [];
-  if(path==="root.BIRTHDAY") {
-      if (ZMSFormulator.getValue().BIRTHDAY==='') {
-        // Errors must be an object with `path`, `property`, and `message`
-        errors.push({
-          path: path,
-          property: 'format',
-          message: JSONEditor.defaults.translate('hint_checkbirthday')
-        });   
-      }
-  }
-  return errors;
-});]]></lang></onReadyJS>
+]]></lang></onReadyJS>
 <attr_dc_coverage><![CDATA[global.ger]]></attr_dc_coverage>
 <optionsJS>
 <lang id="ger"><![CDATA[// Set options
@@ -62,8 +47,8 @@ ZMSFormulator.options.no_additional_properties = true;
 ZMSFormulator.options.required_by_default = true;
 
 // Additional dictionary for translations
-JSONEditor.defaults.languages.en['hint_checkbirthday']  = 'Please check the birtday!';
-JSONEditor.defaults.languages.ger['hint_checkbirthday'] = 'Bitte geben Sie das Geburtsdatum an!';
+JSONEditor.defaults.languages.en['check_birthday']  = 'Please check the birtday';
+JSONEditor.defaults.languages.ger['check_birthday'] = 'Bitte geben Sie das Geburtsdatum an';
 
 // This is the starting value for the editor
 // We will use this to seed the initial editor 
