@@ -454,6 +454,9 @@ class ZMSFormulator:
             tab = '\t\t'
           else:
             tab = '\t'
+          if desc.endswith('[]'):
+            line = cont.split(', ')
+            cont = ('\n\t'+tab).join(line)
             
           s += desc.upper() + tab + cont + '\n'
       s += '\n'
