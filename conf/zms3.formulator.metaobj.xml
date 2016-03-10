@@ -833,6 +833,7 @@ $ZMI.registerReady(function() {
               </item>
               <item type="dictionary">
                 <dictionary>
+                  <item key="default"><![CDATA[{}]]></item>
                   <item key="id"><![CDATA[rawJSON]]></item>
                   <item key="mandatory" type="int">0</item>
                   <item key="multilang" type="int">1</item>
@@ -1226,7 +1227,7 @@ textarea.form-control.rawJSON {
           <item key="id"><![CDATA[ZMSFormulatorItem]]></item>
           <item key="name"><![CDATA[ZMSFormulatorItem]]></item>
           <item key="package"><![CDATA[zms3.formulator]]></item>
-          <item key="revision"><![CDATA[3.3.7]]></item>
+          <item key="revision"><![CDATA[3.3.8]]></item>
           <item key="type"><![CDATA[ZMSObject]]></item>
         </dictionary>
       </item>
@@ -1523,7 +1524,7 @@ def downloadData(self):
           <item key="id"><![CDATA[zms3.formulator.lib]]></item>
           <item key="name"><![CDATA[zms3.formulator.lib]]></item>
           <item key="package"><![CDATA[zms3.formulator]]></item>
-          <item key="revision"><![CDATA[3.3.8]]></item>
+          <item key="revision"><![CDATA[3.4.0]]></item>
           <item key="type"><![CDATA[ZMSLibrary]]></item>
         </dictionary>
       </item>
