@@ -374,6 +374,9 @@ ZMSFormulator.options.required_by_default = true;]]>
 #editor_holder h3 {
   display: none;
 }
+#editor_holder label.control-label {
+  white-space: normal;
+}
 </style>
 <div tal:attributes="class python:this.REQUEST.get('tmpl','portal_or_oe')!='portal_or_oe' and 'col-lg-8 col-lg-offset-3 col-md-10 col-md-offset-1' or ''" tal:omit-tag="python:this.REQUEST.get('tmpl','portal_or_oe')=='subwebsite'">
   <h1 tal:content="structure python:this.getTitle(request)" tal:condition="python:this.REQUEST.get('tmpl','portal_or_oe')!='subwebsite'">title</h1>
