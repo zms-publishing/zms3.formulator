@@ -413,7 +413,7 @@ class ZMSFormulator:
         rec = []
         for h in header:
           if key.has_key(h):
-            outstr = self.this.re_sub('[_\[\]]','',key[h])
+            outstr = key[h]
             outstr = outstr.replace('\n',', ')
             rec.append(_globals.html_quote(outstr))
           elif (h!='TIMESTAMP'):
