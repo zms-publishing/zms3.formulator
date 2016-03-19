@@ -75,9 +75,19 @@ ZMSFormulator.on('ready',function() {
 	    ZMSFormulator.getEditor(filenamefield).setValue(filename);
 	});
 	
-	// Remove label and input for ZMSTextareas inserted between ZMSFormualtorItems
+	// Remove label and input for ZMSTextareas inserted between ZMSFormulatorItems
 	$("input[data-schemaformat='text']").prev("label").remove();
 	$("input[data-schemaformat='text']").remove();
+
+	// Add form classes to ZMSFormulatorItems of type checkbox to get error indication styles
+	arraydiv = $("div[data-schematype$='array']");
+	$.each(arraydiv, function() {
+		$(this).find("label").addClass('control-label');
+		if (!$(this).find("div").first().hasClass('form-group')) {
+			$(this).find("div").first().addClass('form-control');
+			$(this).find("div").first().css('height','auto');
+		}
+	});
 	
 	// Custom validators must return an array of errors or an empty array if valid
 	// Errors must be an object with `path`, `property`, and `message`
