@@ -60,7 +60,6 @@ if (GoogleAPISitekey != 'no_site_key') {
 
 // onReady (JS)
 ZMSFormulator.on('ready',function() {
-	%s
 	
 	// Handle type=='mailattachment' 
 	// by storing filename at hidden field to keep it for storing/sending
@@ -114,7 +113,10 @@ ZMSFormulator.on('ready',function() {
 	  }
 	  %s
 	  return errors;
-	});	
+	});
+	
+	// Custom onReady JavaScript
+	%s
 });
 
 // Hook up the submit button to log to the console

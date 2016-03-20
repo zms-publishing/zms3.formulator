@@ -1,20 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ZMSFolder uid="myzmsx@e457" id="e457">
-<titlealt>
-<lang id="ger"><![CDATA[ZMSFormular-Examples]]></lang></titlealt>
-<attr_dc_coverage><![CDATA[global.ger]]></attr_dc_coverage>
-<active>
-<lang id="ger">0</lang>
-<lang id="fra">0</lang>
-<lang id="eng">0</lang></active>
-<title>
-<lang id="ger"><![CDATA[ZMSFormular-Examples]]></lang></title>
-<attr_dc_type>
-<lang id="ger"><![CDATA[Resource]]></lang></attr_dc_type><ZMSFormulator uid="myzmsx@e457/e458" id="e458"
+<ZMSFormulator uid="myzmsx@e457/e458" id="e458"
  id_prefix="e">
 <attr_dc_accessrights_restricted>0</attr_dc_accessrights_restricted>
 <titlealt>
-<lang id="ger"><![CDATA[Person]]></lang></titlealt>
+<lang id="ger"><![CDATA[ZMSFormulator]]></lang></titlealt>
 <onChangeJS>
 <lang id="ger"><![CDATA[var div_birthday = $("div[data-schemapath$='root.BIRTHDAY']");
 
@@ -39,6 +28,13 @@ if(msg) {
   console.log(msg.getValue());
 }
 
+// Customize styling of checkboxes
+var mem = $("div[data-schemapath$='root.MEMBERSHIPS']");
+$.each(mem.find("div"), function() {
+  if ($(this).hasClass('checkbox')) {
+    $(this).attr('style','display: grid');
+  }
+});
 ]]></lang></onReadyJS>
 <attr_dc_coverage><![CDATA[global.ger]]></attr_dc_coverage>
 <optionsJS>
@@ -103,7 +99,7 @@ ZMSFormulator.options.required_by_default = true;]]></lang></optionsJS>
 </dictionary></_data>
 <sendViaMail>0</sendViaMail>
 <title>
-<lang id="ger"><![CDATA[Advanced JSON Editor Example]]></lang></title>
+<lang id="ger"><![CDATA[Advanced JSON Editor Example for a Person form]]></lang></title>
 <ZMSFormulatorItem uid="myzmsx@e457/e458/formulatorItems459" id="formulatorItems459"
  id_prefix="formulatorItems">
 <hiddenField>0</hiddenField>
@@ -241,7 +237,7 @@ ZMSFormulator.options.required_by_default = true;]]></lang></optionsJS>
 <lang id="ger"><![CDATA[Birthday]]></lang></title>
 <identifier>
 <lang id="ger"><![CDATA[e40726]]></lang></identifier>
-<mandatoryField>0</mandatoryField></ZMSFormulatorItem>
+<mandatoryField>1</mandatoryField></ZMSFormulatorItem>
 <ZMSFormulatorItem uid="myzmsx@e457/e458/formulatorItems463" id="formulatorItems463"
  id_prefix="formulatorItems">
 <hiddenField>0</hiddenField>
@@ -320,8 +316,8 @@ female]]></lang></valueSelect>
           "description": "This is generated automatically from the previous two fields",
           "template": "{{CITY}}, {{STATE}}",
           "watch": {
-            "CITY": "PERSON.LOCATION.CITY",
-            "STATE": "PERSON.LOCATION.STATE"
+            "CITY": "ZMSFORMULATOR.LOCATION.CITY",
+            "STATE": "ZMSFORMULATOR.LOCATION.STATE"
           }
         }
       }
@@ -479,6 +475,5 @@ GHI]]></lang></valueSelect>
 <lang id="ger"><![CDATA[Memberships]]></lang></title>
 <identifier>
 <lang id="ger"><![CDATA[e7316]]></lang></identifier>
-<mandatoryField>0</mandatoryField></ZMSFormulatorItem>
+<mandatoryField>1</mandatoryField></ZMSFormulatorItem>
 </ZMSFormulator>
-</ZMSFolder>
