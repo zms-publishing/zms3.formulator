@@ -329,8 +329,12 @@ class ZMSFormulator:
         base = self.this.REQUEST.get('BASE0','')
       mbody.append(base+href)      
       mbody.append('\n\n')
-      mbody.append(self.printDataRaw(frmt='tab'))
-      mbody = ''.join(mbody)
+      text = ''.join(mbody) + self.printDataRaw(frmt='tab')
+      html = ''.join(mbody) + self.printDataPretty(frmt='html')
+      mtemp = []
+      mtemp.append({'text': text, 'subtype':'plain'})
+      mtemp.append({'text': '<h1>' + html.replace('\nhttp://','</h1><h3>http://') + '</h3>', 'subtype':'html'})
+      mbody = mtemp
       mhead = {'To':self.mailAddress,'From':self.fromAddress}
       
       if self.replyAddress is not None:
@@ -462,6 +466,26 @@ class ZMSFormulator:
       s += '\n'
         
     return s
+
+  def printDataPretty(self, frmt='html'):
+    
+    return """
+      <html>
+        <head>
+          <style>
+            table { background-color:#efefef; border:1px solid #cdcdcd; }
+            th { text-align:right; font-family:monospace; padding:0 0.5em; }
+            td { text-align:left; font-family:sans-serif; padding:0 0.5em; }
+          </style>
+        </head>
+        <body>
+          <br /><br />
+          <table>
+            <tr><th>%s
+          </table>
+        </body>
+      </html>
+    """%self.printDataRaw(frmt='tab').replace('\n\t\t\t\t','</td></tr>\n<tr><th></th><td>').replace('\n\t\t\t','</td></tr>\n<tr><th></th><td>').replace('\n\t\t','</td></tr>\n<tr><th></th><td>').replace('\n\t','</td></tr>\n<tr><th></th><td>').replace('\t\t\t','</th><td>').replace('\t\t','</th><td>').replace('\t','</th><td>').replace('\n','</td></tr>\n<tr><th>').replace('<tr><td><tr><td>','<tr><th>').replace('</td></tr></td></tr>','</td></tr>').replace('<tr><th></td></tr>\n<tr><td>','')
 
 class ZMSFormulatorItem:
 
