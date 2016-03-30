@@ -26,10 +26,10 @@ for path in sys.path:
   if path.startswith(sys.prefix) and path.endswith('site-packages'):
     site_packages = path
 
-VERSION = '3.4.0dev'
+VERSION = '3.4.0'
 
 zmspkg_name = 'formulator'
-branch_name = 'optimizing'
+branch_name = 'master'
 downld_file = 'https://bitbucket.org/zms3/%s/get/%s.zip'%(zmspkg_name, branch_name)
 
 if 'dev' in VERSION:

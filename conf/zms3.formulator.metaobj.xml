@@ -334,6 +334,31 @@ ZMSFormulator.options.required_by_default = true;]]>
               </item>
               <item type="dictionary">
                 <dictionary>
+                  <item key="default"><![CDATA[0]]></item>
+                  <item key="id"><![CDATA[mailFrmt]]></item>
+                  <item key="mandatory" type="int">0</item>
+                  <item key="multilang" type="int">0</item>
+                  <item key="name"><![CDATA[HTML formatted?]]></item>
+                  <item key="repetitive" type="int">0</item>
+                  <item key="type"><![CDATA[boolean]]></item>
+                </dictionary>
+              </item>              
+              <item type="dictionary">
+                <dictionary>
+                  <item key="default"><![CDATA[table { background-color:#fff; border:1px solid #000; }
+th { text-align:right; vertical-align: bottom; font-family:sans-serif; padding:0 0.5em; font-weight:normal; }
+td { text-align:left; vertical-align: bottom; font-family:sans-serif; padding:0 0.5em; font-size:1.5em; }
+h1, h3 { font-weight:normal; }]]></item>
+                  <item key="id"><![CDATA[mailFrmtCSS]]></item>
+                  <item key="mandatory" type="int">0</item>
+                  <item key="multilang" type="int">0</item>
+                  <item key="name"><![CDATA[Styling]]></item>
+                  <item key="repetitive" type="int">0</item>
+                  <item key="type"><![CDATA[text]]></item>
+                </dictionary>
+              </item>
+              <item type="dictionary">
+                <dictionary>
                   <item key="id"><![CDATA[interface]]></item>
                   <item key="mandatory" type="int">0</item>
                   <item key="multilang" type="int">0</item>
@@ -437,17 +462,40 @@ $ZMI.registerReady(function() {
     $('#tr_sendViaMailAddress').show();
     $('#tr_sendViaMailFrom').show();
     $('#tr_sendViaMailFrom').next('.zmi-interface').show();
+    if ($('#mailFrmt').is(':checked') == true) {
+      $('#tr_mailFrmtCSS').show();
+    }
+    else {
+      $('#tr_mailFrmtCSS').hide();
+    }
   }
   else {
     $('#tr_sendViaMailAddress').hide();
     $('#tr_sendViaMailFrom').hide();
     $('#tr_sendViaMailFrom').next('.zmi-interface').hide();
+    $('#tr_mailFrmt').hide();
+    $('#tr_mailFrmtCSS').hide();
   }
   $('#sendViaMail').change(function() {
     $('#tr_sendViaMailAddress').toggle();
     $('#tr_sendViaMailFrom').toggle();
     $('#tr_sendViaMailFrom').next('.zmi-interface').toggle();
+    $('#tr_mailFrmt').toggle();
+	  if ($('#mailFrmt').is(':checked') == true && $('#sendViaMail').is(':checked') == true) {
+	    $('#tr_mailFrmtCSS').show();
+	  }
+	  else {
+	    $('#tr_mailFrmtCSS').hide();
+	  }
   });
+	$('#mailFrmt').change(function() {
+    if ($('#mailFrmt').is(':checked') == true) {
+      $('#tr_mailFrmtCSS').show();
+    }
+    else {
+      $('#tr_mailFrmtCSS').hide();
+    }
+	});
   if ($('#dataStorageDisabled').is(':checked') == false) {
     $('#tr_dataStorageSQL').show();
   }
@@ -631,7 +679,7 @@ $ZMI.registerReady(function() {
           <item key="id"><![CDATA[ZMSFormulator]]></item>
           <item key="name"><![CDATA[ZMSFormulator]]></item>
           <item key="package"><![CDATA[zms3.formulator]]></item>
-          <item key="revision"><![CDATA[3.3.7]]></item>
+          <item key="revision"><![CDATA[3.4.0]]></item>
           <item key="type"><![CDATA[ZMSDocument]]></item>
         </dictionary>
       </item>
@@ -1263,7 +1311,7 @@ textarea.form-control.rawJSON {
           <item key="id"><![CDATA[zms3.formulator]]></item>
           <item key="name"><![CDATA[zms3.formulator]]></item>
           <item key="package"></item>
-          <item key="revision"><![CDATA[3.4.0dev]]></item>
+          <item key="revision"><![CDATA[3.4.0]]></item>
           <item key="type"><![CDATA[ZMSPackage]]></item>
         </dictionary>
       </item>
