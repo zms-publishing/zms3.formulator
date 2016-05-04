@@ -72,7 +72,6 @@ class ZMSFormulator:
   def getData(self):
     
     if self.SQLStorage and not self.noStorage:
-      
       self.engine = create_engine(self.dbconnection)
       metadata = MetaData()
       try:
@@ -124,12 +123,12 @@ class ZMSFormulator:
       
       self._data = res
       
-    else:
+    elif not self.SQLStorage  and not self.noStorage:
       lang = self.this.REQUEST.get('lang', self.this.getPrimaryLanguage())
       self.this.REQUEST.set('lang', self.this.getPrimaryLanguage())
       data = self.this.attr('_data')
       self._data.update(data)
-      self.this.REQUEST.set('lang', lang)      
+      self.this.REQUEST.set('lang', lang)
           
     return self._data
 
@@ -225,10 +224,14 @@ class ZMSFormulator:
             )
           con = self.engine.connect()
           res = con.execute(ins)
+          
+          self._data = res
+
+    if type(self._data) is dict:
+      self._data.update(receivedData)
 
     # save data as dictionary to ZODB
     if not self.SQLStorage and not self.noStorage:
-      self._data.update(receivedData)
       zodb = getConfiguration().dbtab.getDatabase('/', is_root=1)._storage
       if not zodb.isReadOnly():
         lang = self.this.REQUEST.get('lang', self.this.getPrimaryLanguage())
@@ -363,6 +366,8 @@ class ZMSFormulator:
   def printDataRaw(self, frmt='txt'):
     
     data = self.getData()
+    header = ['TIMESTAMP']
+    output = []
 
     # Handle ZODB-Dictionary
     if isinstance(data, dict):
@@ -372,8 +377,7 @@ class ZMSFormulator:
         s = ''
       s1 = s2 = ''
       for t, v in sorted(data.iteritems()):
-        header = ['TIMESTAMP']
-        output = []
+        
         output.append(time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(t)))
         for i in sorted(v):
           i1, i2 = i
@@ -404,7 +408,6 @@ class ZMSFormulator:
       con = self.engine.connect()
       res2 = con.execute(sel)
 
-      header = ['TIMESTAMP']
       for head in res1:
         header.append(head[0])
       
@@ -416,7 +419,6 @@ class ZMSFormulator:
         frm_tst = rec[3]
         records[frm_tst][frm_key] = frm_res
         
-      output = []
       for tst, key in sorted(records.iteritems()):
         rec = []
         for h in header:

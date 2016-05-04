@@ -26,7 +26,7 @@ for path in sys.path:
   if path.startswith(sys.prefix) and path.endswith('site-packages'):
     site_packages = path
 
-VERSION = '3.4.1dev'
+VERSION = '3.4.1'
 
 zmspkg_name = 'formulator'
 branch_name = 'master'

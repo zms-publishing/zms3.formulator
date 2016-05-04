@@ -12,8 +12,8 @@ Form submission provides support for the `reCAPTCHA service by Google <https://w
 References
 ----------
 
-  * https://pypi.python.org/pypi/ZMS3
   * https://bitbucket.org/zms3/formulator
+  * https://pypi.python.org/pypi/ZMS3
   * https://github.com/jdorn/json-editor
   * https://developers.google.com/recaptcha/intro
   * http://www.sqlalchemy.org
