@@ -21,10 +21,18 @@ import os
 import sys
 from setuptools import setup
 from setuptools import find_packages
+from distutils.sysconfig import get_python_lib
 
+# @see https://docs.python.org/2/library/site.html
+# site_packages = site.getusersitepackages()
+# does not work in virtual environments
+# due to site.py of virtualenv's installation is not compatible
+# @see https://github.com/pypa/virtualenv/issues/355
 for path in sys.path:
   if path.startswith(sys.prefix) and path.endswith('site-packages'):
     site_packages = path
+  else:
+    site_packages = get_python_lib()
 
 VERSION = '3.4.2dev'
 
