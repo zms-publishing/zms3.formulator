@@ -58,6 +58,7 @@ if (GoogleAPISitekey != 'no_site_key') {
 // Options (JS)
 %s
 
+$(function() {
 // onReady (JS)
 ZMSFormulator.on('ready',function() {
 	
@@ -240,4 +241,6 @@ ZMSFormulator.on('change', function() {
 	});
 	
 	%s
+});
+
 });
