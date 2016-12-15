@@ -303,10 +303,11 @@ class ZMSFormulator:
               pos = pos>0 and pos-1 or pos
             data.pop(pos)
         # add current timestamp and store data
-        self.setData({time.mktime(time.localtime()): data})
-        # send data by mail if configured      
+        data = {time.mktime(time.localtime()): data}
+        self.setData(data)
+        # send data by mail if configured
         if self.sendViaMail == True:
-          self.sendData()
+          self.sendData(data)
         return True 
 
       elif error:
@@ -321,7 +322,7 @@ class ZMSFormulator:
       _globals.writeError(self.thisMaster, "[ZMSFormulator.receiveData] unexpected data received")
       return False
 
-  def sendData(self):      
+  def sendData(self, receivedData):
 
     if self.mailAddress != '':
       msubj = '[%s] Data submitted: %s' % (self.this.getLangStr('TYPE_ZMSFORMULATOR'), self.titlealt)
@@ -333,12 +334,12 @@ class ZMSFormulator:
       href = self.this.getHref2IndexHtml(self.this.REQUEST)
       if self.thisMaster.getConfProperty('ZMS.pathcropping',0)==1:
         base = self.this.REQUEST.get('BASE0','')
-      mbody.append(base+href)      
+      mbody.append(base+href)
       mbody.append('\n\n')
-      text = ''.join(mbody) + self.printDataRaw(frmt='tab')
+      text = ''.join(mbody) + self.printDataRaw(receivedData,frmt='tab')
       mtemp.append({'text': text, 'subtype':'plain'})
       if self.mailFrmt is not None:
-        html = self.printDataPretty(frmt='html', ref=''.join(mbody))
+        html = self.printDataPretty(receivedData,frmt='html', ref=''.join(mbody))
         # TODO: cleanup this fragile replace-orgy and abstract frmt-handling
         mtemp.append({'text': html.replace('\nhttp://','</h1><h3>http://').replace('\nhttps://','</h1><h3>https://').replace('\n\n\n','</h3>'), 'subtype':'html'})
       mbody = mtemp
@@ -363,12 +364,16 @@ class ZMSFormulator:
     else:
       _globals.writeError(self.thisMaster, "[ZMSFormulator.sendData] no mail address specified")      
 
-  def printDataRaw(self, frmt='txt'):
+  def printDataRaw(self, receivedData=None, frmt='txt'):
     
     data = self.getData()
     header = ['TIMESTAMP']
     output = []
-
+    
+    # Received data 
+    if isinstance(receivedData, dict):
+      data = receivedData
+    
     # Handle ZODB-Dictionary
     if isinstance(data, dict):
       if frmt=='txt':
@@ -473,7 +478,7 @@ class ZMSFormulator:
         
     return s
 
-  def printDataPretty(self, frmt='html', ref=''):
+  def printDataPretty(self, receivedData, frmt='html', ref=''):
     
     # TODO: cleanup this fragile replace-orgy and abstract frmt-handling
     return """
@@ -492,7 +497,7 @@ class ZMSFormulator:
         </body>
       </html>
     """%(self.mailFrmtCSS, ref,
-         self.printDataRaw(frmt='tab').replace('\n\t\t\t\t','</td></tr>\n<tr><th></th><td>').replace('\n\t\t\t','</td></tr>\n<tr><th></th><td>').replace('\n\t\t','</td></tr>\n<tr><th></th><td>').replace('\n\t','</td></tr>\n<tr><th></th><td>').replace('\t\t\t','</th><td>').replace('\t\t','</th><td>').replace('\t','</th><td>').replace('\n','</td></tr>\n<tr><th>').replace('<tr><td><tr><td>','<tr><th>').replace('</td></tr></td></tr>','</td></tr>').replace('<tr><th></td></tr>\n<tr><td>',''))
+         self.printDataRaw(receivedData,frmt='tab').replace('\n\t\t\t\t','</td></tr>\n<tr><th></th><td>').replace('\n\t\t\t','</td></tr>\n<tr><th></th><td>').replace('\n\t\t','</td></tr>\n<tr><th></th><td>').replace('\n\t','</td></tr>\n<tr><th></th><td>').replace('\t\t\t','</th><td>').replace('\t\t','</th><td>').replace('\t','</th><td>').replace('\n','</td></tr>\n<tr><th>').replace('<tr><td><tr><td>','<tr><th>').replace('</td></tr></td></tr>','</td></tr>').replace('<tr><th></td></tr>\n<tr><td>',''))
 
 class ZMSFormulatorItem:
 
