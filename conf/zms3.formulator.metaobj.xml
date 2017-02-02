@@ -402,6 +402,13 @@ h1, h3 { font-weight:normal; }]]></item>
 #editor_holder label.control-label {
   white-space: normal;
 }
+button {
+  font-family: FrutigerLTW02-45Light,Arial,Helvetica,sans-serif;
+}
+#editor_holder div[data-schemapath*="TEXTAREA"] label,
+#editor_holder div[data-schemapath*="TEXTAREA"] input {
+   display:none;
+}
 </style>
 <div tal:attributes="class python:this.REQUEST.get('tmpl','portal_or_oe')!='portal_or_oe' and 'col-lg-8 col-lg-offset-3 col-md-10 col-md-offset-1' or ''" tal:omit-tag="python:this.REQUEST.get('tmpl','portal_or_oe')=='subwebsite'">
   <h1 tal:content="structure python:this.getTitle(request)" tal:condition="python:this.REQUEST.get('tmpl','portal_or_oe')!='subwebsite'">title</h1>
@@ -2423,7 +2430,7 @@ def downloadData(self):
           <item key="id"><![CDATA[zms3.formulator.lib]]></item>
           <item key="name"><![CDATA[zms3.formulator.lib]]></item>
           <item key="package"><![CDATA[zms3.formulator]]></item>
-          <item key="revision"><![CDATA[3.4.3]]></item>
+          <item key="revision"><![CDATA[3.4.5]]></item>
           <item key="type"><![CDATA[ZMSLibrary]]></item>
         </dictionary>
       </item>
