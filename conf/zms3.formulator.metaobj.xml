@@ -2371,6 +2371,11 @@ def downloadData(self):
     data = frmu.printDataRaw(frmt='csv')
     if (self.REQUEST.get('encode','')=='excel'):
         data = html.unescape(unicode(data,'utf-8')).encode('latin-1',errors='xmlcharrefreplace')
+        tab = {'a&#776;':228,'o&#776;':246,'u&#776;':252,'O&#776;':214,'A&#776;':196,'U&#776;':220,'e&#769;':233,'e&#768;':232,
+               'e&#770;':234,'a&#768;':224,'a&#770;':226,'o&#768;':242,'o&#770;':244,'u&#768;':249,'u&#770;':251}
+        for t in tab:
+          if data.find(t) >= 0:
+            data = data.replace(t, chr(tab[t]))
         # preserve variants of apostrophes
         data = data.replace('&#39;','\'')
         data = data.replace('&#699;','\'')
@@ -2386,15 +2391,15 @@ def downloadData(self):
         data = data.replace('&#42891;','\'')
         data = data.replace('&#42892;','\'')
         data = data.replace('&#65287;','\'')
-        # preserve variants of quotation marks        
+        # preserve variants of quotation marks
         data = data.replace('&#34;','"')
-        data = data.replace('&#171;','"')        
+        data = data.replace('&#171;','"')
         data = data.replace('&#187;','"')
         data = data.replace('&#8220;','"')
-        data = data.replace('&#8221;','"')        
+        data = data.replace('&#8221;','"')
         data = data.replace('&#8222;','"')
         data = data.replace('&#8223;','"')
-        data = data.replace('&#12317;','"')        
+        data = data.replace('&#12317;','"')
         data = data.replace('&#12318;','"')
         data = data.replace('&#12319;','"')
         data = data.replace('&#65282;','"')
@@ -2430,7 +2435,7 @@ def downloadData(self):
           <item key="id"><![CDATA[zms3.formulator.lib]]></item>
           <item key="name"><![CDATA[zms3.formulator.lib]]></item>
           <item key="package"><![CDATA[zms3.formulator]]></item>
-          <item key="revision"><![CDATA[3.4.5]]></item>
+          <item key="revision"><![CDATA[3.4.6]]></item>
           <item key="type"><![CDATA[ZMSLibrary]]></item>
         </dictionary>
       </item>
