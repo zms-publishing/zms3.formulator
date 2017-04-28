@@ -19,7 +19,10 @@
 ################################################################################
 
 from Zope2.App.startup import getConfiguration
-from Products.zms import _globals
+try:
+  from Products.zms import standard as _globals
+except:
+  from Products.zms import _globals
 import zExceptions
 import time
 import json

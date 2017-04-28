@@ -34,7 +34,7 @@ for path in sys.path:
   else:
     site_packages = get_python_lib()
 
-VERSION = '3.4.7'
+VERSION = '3.4.8'
 
 zmspkg_name = 'formulator'
 branch_name = 'master'
