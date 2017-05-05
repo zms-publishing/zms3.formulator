@@ -190,7 +190,7 @@ class ZMSFormulator:
               self.copyAddress = itemobj.copyToField and ZMS_FRM_RES or None
         # no matching item found in content model
         else:
-          raise ValueError("malformed content model")
+          raise ValueError("malformed content model or inexistant model in primary language)")
 
         if itemobj.type in ['select', 'checkbox', 'multiselect']:
           ZMS_FRM_RES = ZMS_FRM_RES.replace('\n',', ')
@@ -531,10 +531,11 @@ class ZMSFormulatorItem:
     # to keep headlines of DATA in sync for all language versions
     # use the value of titlealt in primary language always and ignore value of current language version
     lang = this.REQUEST.get('lang', this.getPrimaryLanguage())
-    # this.REQUEST.set('lang', this.getPrimaryLanguage())
-    this.REQUEST.set('lang', lang)
+    this.REQUEST.set('lang', this.getPrimaryLanguage())
     # titlealt_ remove square brackets, whitespaces etc. from user inputs to be used as key which does not interfere with formfield names
     self.titlealt     = this.id_quote(this.attr('titlealt')).upper()
+    this.REQUEST.set('lang', lang)
+
     self.title        = this.attr('title')
     self.description  = this.attr('attr_dc_description')
     self.type         = this.attr('type')
