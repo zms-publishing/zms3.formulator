@@ -2240,7 +2240,13 @@ def getJSONEditor(self):
 	    </div>
 	    '''%(frmu.feedbackMsg.replace('\n','<br />'))
   else:
-    feedback = ''
+    feedback = '''
+      <div id="ZMSFormulatorFeedback" class="modal fade ZMSFormulatorFeedback-modal-lg" tabindex="-1" role="dialog" aria-labelledby="ZMSFormulatorFeedback" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content" style="padding:1em;">%s</div>
+        </div>
+      </div>
+      '''%(self.getLangStr('ZMSFORMULATOR_FEEDBACK_MSG',self.REQUEST.get('lang')).replace('\n','<br />'))
 
   self.REQUEST.RESPONSE.setHeader('Cache-Control', 'no-cache')
   self.REQUEST.RESPONSE.setHeader('Pragma', 'no-cache')
@@ -2435,7 +2441,7 @@ def downloadData(self):
           <item key="id"><![CDATA[zms3.formulator.lib]]></item>
           <item key="name"><![CDATA[zms3.formulator.lib]]></item>
           <item key="package"><![CDATA[zms3.formulator]]></item>
-          <item key="revision"><![CDATA[3.4.9]]></item>
+          <item key="revision"><![CDATA[3.4.10]]></item>
           <item key="type"><![CDATA[ZMSLibrary]]></item>
         </dictionary>
       </item>
