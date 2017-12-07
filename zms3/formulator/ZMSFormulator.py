@@ -31,6 +31,7 @@ import urllib2
 from zms3.formulator import JSONEditor
 from sqlalchemy import *
 from sqlalchemy.exc import *
+from sqlalchemy.dialects.mysql import DATETIME
 
 class ZMSFormulator:
 
@@ -109,7 +110,7 @@ class ZMSFormulator:
                            Column('ZMS_FRM_ORD', SmallInteger()),
                            Column('ZMS_FRM_RAW', Text()),
                            Column('ZMS_FRM_RES', Text()),
-                           Column('ZMS_FRM_TST', DateTime()),
+                           Column('ZMS_FRM_TST', DATETIME(fsp=6)),
                            )
         metadata.create_all(self.engine)
       except:
@@ -306,7 +307,7 @@ class ZMSFormulator:
               pos = pos>0 and pos-1 or pos
             data.pop(pos)
         # add current timestamp and store data
-        data = {time.mktime(time.localtime()): data}
+        data = {time.time(): data}
         self.setData(data)
         # send data by mail if configured
         if self.sendViaMail == True:
