@@ -262,6 +262,12 @@ xmlns:html="http://www.w3.org/TR/REC-html40">
 <Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
 <Cell ss:StyleID="string"><Data ss:Type="String">Value is mandatory</Data></Cell>
 </Row>
+<Row>
+<Cell ss:StyleID="string"><Data ss:Type="String">ZMSFORMULATOR_FEEDBACK_MSG</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">Vielen Dank, die Daten sind bei uns eingegangen.</Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String"></Data></Cell>
+<Cell ss:StyleID="string"><Data ss:Type="String">Thank you, we have received the data.</Data></Cell>
+</Row>
 </Table>
 </Worksheet>
 </Workbook>

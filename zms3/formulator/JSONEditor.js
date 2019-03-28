@@ -1,28 +1,7 @@
-/*
-
-The MIT License (MIT)
-
-Copyright (c) 2013 Jeremy Dorn, https://github.com/jdorn/json-editor
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of
-this software and associated documentation files (the "Software"), to deal in
-the Software without restriction, including without limitation the rights to
-use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
-the Software, and to permit persons to whom the Software is furnished to do so,
-subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
-COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-*/
-
+/* ------------------------------------------------*/
+/* Python-String-Template processed by JSONEditor: */
+/* Inline-Initialization of ZMSFormulator          */
+/* ------------------------------------------------*/
 %s
 
 // Initialize the ZMSFormulator
@@ -45,13 +24,13 @@ var ZMSFormulator = new JSONEditor(document.getElementById('editor_holder'), {
 var GoogleAPISitekey = '%s';
 if (GoogleAPISitekey != 'no_site_key') {
 	var onloadCallback = function() {
-	    grecaptcha.render('reCAPTCHA', {
-	    	'sitekey' : GoogleAPISitekey,
-	    	'theme' : 'light',
-	    	'callback' : function(response) {
-	            //console.log(response);
-	        }
-	    });
+		grecaptcha.render('reCAPTCHA', {
+			'sitekey' : GoogleAPISitekey,
+			'theme' : 'light',
+			'callback' : function(response) {
+				//console.log(response);
+			}
+		});
 	};
 }
 
@@ -66,13 +45,13 @@ ZMSFormulator.on('ready',function() {
 	// by storing filename at hidden field to keep it for storing/sending
 	// and check filesize by custom validator - see lines 175 + 206
 	$("div[data-schemapath$='FILEDATA']").find("input[type='file']").change(function() {
-	    var filename = $(this).val();
-	    var lastIndex = filename.lastIndexOf("\\");
-	    if (lastIndex >= 0) {
-	        filename = filename.substring(lastIndex + 1);
-	    }
-	    filenamefield = $("div[data-schemapath$='FILENAME']").attr('data-schemapath');
-	    ZMSFormulator.getEditor(filenamefield).setValue(filename);
+		var filename = $(this).val();
+		var lastIndex = filename.lastIndexOf("\\");
+		if (lastIndex >= 0) {
+			filename = filename.substring(lastIndex + 1);
+		}
+		filenamefield = $("div[data-schemapath$='FILENAME']").attr('data-schemapath');
+		ZMSFormulator.getEditor(filenamefield).setValue(filename);
 	});
 	
 	// Remove label and input for ZMSTextareas inserted between ZMSFormulatorItems
@@ -92,28 +71,28 @@ ZMSFormulator.on('ready',function() {
 	// Custom validators must return an array of errors or an empty array if valid
 	// Errors must be an object with `path`, `property`, and `message`
 	JSONEditor.defaults.custom_validators.push(function(schema, value, path) {
-	  var errors = [];
-	  if(schema.format==="email") {
-	    if((value!='') && (!/^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(value))) {
-	      errors.push({
-	        path: path,
-	        property: 'format',
-	        message: JSONEditor.defaults.translate('hint_emailsyntax')
-	      });
-	    }
-	  }
-	  if(schema.format==="mailattachment") {
+		var errors = [];
+		if(schema.format==="email") {
+			if((value!='') && (!/^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(value))) {
+				errors.push({
+					path: path,
+					property: 'format',
+					message: JSONEditor.defaults.translate('hint_emailsyntax')
+				});
+			}
+		}
+		if(schema.format==="mailattachment") {
 		bytes = Math.floor((value.length-value.split(',')[0].length-1)/1.33333);
 		if(bytes > 3*1024*1024) {
-		  errors.push({
-		    path: path,
-		    property: 'format',
-		    message: 'hint_emailtoolarge'
-		  });		
+			errors.push({
+				path: path,
+				property: 'format',
+				message: 'hint_emailtoolarge'
+			});		
 		}
-	  }
-	  %s
-	  return errors;
+		}
+		%s
+		return errors;
 	});
 	
 	// Custom onReady JavaScript
@@ -125,7 +104,11 @@ document.getElementById('submit').addEventListener('click', function() {
 
 	var errors = ZMSFormulator.validate();
 
-	if (!errors.length) {
+	var indicator = document.getElementById('valid_indicator');
+	var submit = document.getElementById('submit');
+
+	// Valid
+	if (errors.length===0) {
 
 		// Get the value from the ZMSFormulator
 		var data = ZMSFormulator.getValue();
@@ -173,8 +156,22 @@ document.getElementById('submit').addEventListener('click', function() {
 			}
 		});	
 	}
+	// Not valid
 	else {
-
+		//submit.disabled = true;
+		indicator.style.color = 'red';
+		indicator.textContent = JSONEditor.defaults.translate('hint_checkinput');
+		$.each(errors, function() {
+			errordiv = $("div[data-schemapath$='"+$(this)[0].path+"']");
+			errordiv.parent().addClass('has-error');
+			if ($(this)[0].message==='hint_emailtoolarge') {
+				errormsg = errordiv.find("p[class^='help-block']");
+				errortxt = errormsg.html();
+				if (errortxt.lastIndexOf("Max.")<0) {
+					errormsg.html(errortxt + ' <strong style="color:red;">Max. 3MB!</strong>');
+				}
+			}
+		});
 	}
 });
 
@@ -215,20 +212,7 @@ ZMSFormulator.on('change', function() {
 	}
 	// Not valid
 	else {
-		submit.disabled = true;
-		indicator.style.color = 'red';
-		indicator.textContent = JSONEditor.defaults.translate('hint_checkinput');
-		$.each(errors, function() {
-			errordiv = $("div[data-schemapath$='"+$(this)[0].path+"']");
-			errordiv.parent().addClass('has-error');
-			if ($(this)[0].message==='hint_emailtoolarge') {
-				errormsg = errordiv.find("p[class^='help-block']");
-				errortxt = errormsg.html();
-				if (errortxt.lastIndexOf("Max.")<0) {
-					errormsg.html(errortxt + ' <strong style="color:red;">Max. 3MB!</strong>');
-				}
-			}
-		});
+
 	}
 	// Translate
 	$("p[class^='help-block'] strong").each(function() {

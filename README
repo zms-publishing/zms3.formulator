@@ -1,18 +1,18 @@
 zms3.formulator
 ===============
 
-This Python Package is an Extension for the `ZMS3 Publishing System <http://www.zms-publishing.com>`_ (Open Source Content Management for Science, Technology and Medicine) to integrate the `JSON Editor by Jeremy Dorn <http://jeremydorn.com/json-editor>`_, Redwood City, CA.
+This Python Package is an Extension for the ZMS3 Publishing System <http://www.zms-publishing.com> (Open Source Content Management for Science, Technology and Medicine) to integrate the `JSON Editor by Jeremy Dorn <http://jeremydorn.com/json-editor>`_, Redwood City, CA.
 
 A JSON Schema is generated based on special content objects and used to transform it into an HTML Form handling all the front-end validations.
 
-The data submitted by the generated HTML Form can be transmitted into a remote `SQL Storage <http://www.sqlalchemy.org>`_ for further processing and evaluation using standard reporting tools - or data will be stored into the included `ZODB <http://www.zodb.org>`_ and/or sent by mail.
+The data submitted by the generated HTML Form can be transmitted into a remote SQL Storage <http://www.sqlalchemy.org> for further processing and evaluation using standard reporting tools - or data will be stored into the included `ZODB <http://www.zodb.org>`_ and/or sent by mail.
 
-Form submission provides support for the `reCAPTCHA service by Google <https://www.google.com/recaptcha>`_ to protect from spam and abuse.
+Form submission provides support for the reCAPTCHA service by Google <https://www.google.com/recaptcha> to protect from spam and abuse.
 
 References
 ----------
 
-  * https://bitbucket.org/zms3/formulator
+  * https://github.com/zms-publishing/zms3.formulator
   * https://pypi.python.org/pypi/ZMS3
   * https://github.com/jdorn/json-editor
   * https://developers.google.com/recaptcha/intro
@@ -22,6 +22,6 @@ References
 Changelog
 ---------
 
-  * https://bitbucket.org/zms3/formulator/commits/all
+  * https://github.com/zms-publishing/zms3.formulator/commits/master
 
-Copyright (c) 2014-2017 `HOFFMANN+LIEBENBERG <http://www.hoffmannliebenberg.de>`_ in association with `SNTL Publishing <http://www.sntl-publishing.com>`_, Berlin. Code released under the `GNU Affero General Public License v3 <http://www.gnu.org/licenses/agpl.html>`_ license.
+Copyright (c) 2014-2019 HOFFMANN+LIEBENBERG <http://www.hoffmannliebenberg.de> in association with SNTL Publishing <http://www.sntl-publishing.com>`_, Berlin. Code released under the GNU Affero General Public License v3 <http://www.gnu.org/licenses/agpl.html> license.

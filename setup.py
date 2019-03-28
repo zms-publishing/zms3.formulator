@@ -1,6 +1,6 @@
 ################################################################################
 #
-#  Copyright (c) 2017 HOFFMANN+LIEBENBERG in association with SNTL Publishing
+#  Copyright (c) 2019 HOFFMANN+LIEBENBERG in association with SNTL Publishing
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU Affero General Public License as published by
@@ -34,11 +34,11 @@ for path in sys.path:
   else:
     site_packages = get_python_lib()
 
-VERSION = '3.4.11'
+VERSION = '3.4.13'
 
 zmspkg_name = 'formulator'
 branch_name = 'master'
-downld_file = 'https://bitbucket.org/zms3/%s/get/%s.zip'%(zmspkg_name, branch_name)
+downld_file = 'https://github.com/zms-publishing/zms3.%s/archive/%s.zip'%(zmspkg_name, branch_name)
 
 if 'dev' in VERSION:
   import subprocess
@@ -104,8 +104,8 @@ setup(
   version               = VERSION,
   author                = 'HOFFMANN+LIEBENBERG in association with SNTL Publishing, Berlin',
   author_email          = 'zms@sntl-publishing.com',
-  url                   = 'https://bitbucket.org/zms3/formulator',
-  download_url          = 'https://bitbucket.org/zms3/formulator/downloads',
+  url                   = 'https://github.com/zms-publishing/zms3.formulator',
+  download_url          = 'https://github.com/zms-publishing/zms3.formulator/releases',
   namespace_packages    = ['zms3'],
   packages              = ['zms3.formulator'],
   package_dir           = {'zms3.formulator': 'zms3/formulator'},
