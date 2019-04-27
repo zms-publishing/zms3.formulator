@@ -319,7 +319,7 @@ ZMSFormulator.options.required_by_default = true;]]>
               </item>
               <item type="dictionary">
                 <dictionary>
-                  <item key="default"><![CDATA[0]]></item>
+                  <item key="default"><![CDATA[1]]></item>
                   <item key="id"><![CDATA[dataStorageSQL]]></item>
                   <item key="mandatory" type="int">0</item>
                   <item key="multilang" type="int">0</item>
@@ -675,7 +675,7 @@ $ZMI.registerReady(function() {
           <item key="id"><![CDATA[ZMSFormulator]]></item>
           <item key="name"><![CDATA[ZMSFormulator]]></item>
           <item key="package"><![CDATA[zms3.formulator]]></item>
-          <item key="revision"><![CDATA[3.4.13]]></item>
+          <item key="revision"><![CDATA[3.4.14]]></item>
           <item key="type"><![CDATA[ZMSDocument]]></item>
         </dictionary>
       </item>
@@ -1214,7 +1214,7 @@ textarea.form-control.rawJSON {
           <item key="id"><![CDATA[ZMSFormulatorItem]]></item>
           <item key="name"><![CDATA[ZMSFormulatorItem]]></item>
           <item key="package"><![CDATA[zms3.formulator]]></item>
-          <item key="revision"><![CDATA[3.4.13]]></item>
+          <item key="revision"><![CDATA[3.4.14]]></item>
           <item key="type"><![CDATA[ZMSObject]]></item>
         </dictionary>
       </item>
@@ -1524,7 +1524,7 @@ def downloadData(self):
           <item key="id"><![CDATA[zms3.formulator.lib]]></item>
           <item key="name"><![CDATA[zms3.formulator.lib]]></item>
           <item key="package"><![CDATA[zms3.formulator]]></item>
-          <item key="revision"><![CDATA[3.4.13]]></item>
+          <item key="revision"><![CDATA[3.4.14]]></item>
           <item key="type"><![CDATA[ZMSLibrary]]></item>
         </dictionary>
       </item>
