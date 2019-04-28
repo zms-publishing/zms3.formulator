@@ -373,6 +373,7 @@ class ZMSFormulator:
     data = self.getData()
     header = ['TIMESTAMP']
     output = []
+    s = '' # text stream
 
     # Received data
     if isinstance(receivedData, dict):
@@ -382,22 +383,21 @@ class ZMSFormulator:
     if isinstance(data, dict):
       if frmt=='txt':
         s = '%s entries:\n\n'%len(data)
-      else:
-        s = ''
-      s1 = s2 = ''
-      for t, v in sorted(data.iteritems()):
 
+      if len(data) > 0:
+        header.extend( [ i[0] for i in data[data.keys()[0]] ] )
+        s += '#/#'.join(header).upper() +'\n'
+
+      for t, v in sorted(data.iteritems()):
+        output = []
         output.append(time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(t)))
         for i in sorted(v):
           i1, i2 = i
-          header.append(i1.upper())
           outstr = self.this.str_item(i2)
           outstr = outstr.replace('\n',', ')
           output.append(_globals.html_quote(outstr))
-        s1 = '#/#'.join(header)
-        s2 += '#/#'.join(output) + '\n'
+        s += '#/#'.join(output) + '\n'
 
-      s += s1.upper() + '\n' + s2
 
     # Handle SQL-Storage
     else:
@@ -406,8 +406,6 @@ class ZMSFormulator:
       res = con.execute(sel)
       if frmt=='txt':
         s = '%s entries:\n\n'%res.rowcount
-      else:
-        s = ''
 
       sel = select([self.sqldb.c.ZMS_FRM_KEY]).distinct().order_by(self.sqldb.c.ZMS_FRM_ORD, self.sqldb.c.ZMS_FRM_KEY)
       con = self.engine.connect()
