@@ -379,25 +379,33 @@ class ZMSFormulator:
     if isinstance(receivedData, dict):
       data = receivedData
 
-    # Handle ZODB-Dictionary
+    # Handle ZODB-Dictionary and REQUEST-Data
     if isinstance(data, dict):
       if frmt=='txt':
         s = '%s entries:\n\n'%len(data)
 
+      # data values
       if len(data) > 0:
-        header.extend( [ i[0] for i in data[data.keys()[0]] ] )
-        s += '#/#'.join(header).upper() +'\n'
+        s1 = ''
+        sorted_v = {}
+        for t, v in sorted(data.iteritems()):
+          output = []
+          output.append(time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(t)))
+          sorted_v = sorted(v)
+          for i in sorted_v:
+            i1, i2 = i
+            outstr = self.this.str_item(i2)
+            outstr = outstr.replace('\n',', ')
+            output.append(_globals.html_quote(outstr))
+          s1 += '#/#'.join(output) + '\n'
 
-      for t, v in sorted(data.iteritems()):
-        output = []
-        output.append(time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(t)))
+        # data header
+        s0 = ''
         for i in sorted(v):
           i1, i2 = i
-          outstr = self.this.str_item(i2)
-          outstr = outstr.replace('\n',', ')
-          output.append(_globals.html_quote(outstr))
-        s += '#/#'.join(output) + '\n'
-
+          header.append(i1)
+        s0 += '#/#'.join(header).upper() +'\n'
+        s = s0 + s1
 
     # Handle SQL-Storage
     else:
