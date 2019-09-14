@@ -1,7 +1,7 @@
 zms3.formulator
 ===============
 
-This Python Package is an Extension for the ZMS3 Publishing System <http://www.zms-publishing.com> (Open Source Content Management for Science, Technology and Medicine) to integrate the `JSON Editor by Jeremy Dorn <http://jeremydorn.com/json-editor>`_, Redwood City, CA.
+This ZMS Content Object Definition is an Extension for the ZMS3 Publishing System <http://www.zms-publishing.com> (Open Source Content Management for Science, Technology and Medicine) to integrate the `JSON Editor by Jeremy Dorn <http://jeremydorn.com/json-editor>`_, Redwood City, CA.
 
 A JSON Schema is generated based on special content objects and used to transform it into an HTML Form handling all the front-end validations.
 

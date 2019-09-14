@@ -19,8 +19,14 @@
 
 import json
 import os
+import Products.zms.standard as standard
 
-class JSONEditor:
+
+def JSONEditor(self, obj):
+  return JSONEditor_class(obj)
+
+
+class JSONEditor_class:
   
   def __init__(self, obj):
     
@@ -158,12 +164,8 @@ class JSONEditor:
 
   def render(self, obj):
     
-    __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
-    f = open(os.path.join(__location__, 'JSONEditor.js'));
-    editor = f.read()
-    f.close()
-    
     script = '<script src="%s/metaobj_manager/zms3.formulator.lib.jsoneditor.min.js"></script>\n<script>%s</script>'
+    editor = standard.http_import(obj.this, obj.this.getMetaobjManager().absolute_url() + '/zms3.formulator.lib.jsoneditor.custom.js')
     editor = editor % (self.getLangDict(obj), obj.thisURLPath,
                        obj.this.REQUEST.get('lang'), obj.GoogleAPIKey, 
                        obj.options, self.mandatory_validators, obj.onReady,

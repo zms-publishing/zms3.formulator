@@ -28,12 +28,16 @@ import time
 import json
 import urllib
 import urllib2
-from zms3.formulator import JSONEditor
 from sqlalchemy import *
 from sqlalchemy.exc import *
 from sqlalchemy.dialects.mysql import DATETIME
 
-class ZMSFormulator:
+
+def ZMSFormulator(self, this):
+  return ZMSFormulator_class(this)
+
+
+class ZMSFormulator_class:
 
   def __init__(self, this):
 
@@ -201,7 +205,7 @@ class ZMSFormulator:
 
         # save data as records to SQLDB
         if self.SQLStorage and not self.noStorage:
-          modelledData = JSONEditor.JSONEditor(self)
+          modelledData = self.this.JSONEditor(self)
 
           from datetime import datetime
           ins = self.sqldb.insert().values(
