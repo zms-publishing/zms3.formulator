@@ -165,8 +165,9 @@ class JSONEditor_class:
   def render(self, obj):
     
     script = '<script src="%s/metaobj_manager/zms3.formulator.lib.jsoneditor.min.js"></script>\n<script>%s</script>'
-    editor = standard.http_import(obj.this, obj.this.getMetaobjManager().absolute_url() + '/zms3.formulator.lib.jsoneditor.custom.js')
-    editor = editor % (self.getLangDict(obj), obj.thisURLPath,
+    # editor = standard.http_import(obj.this, obj.this.getMetaobjManager().absolute_url() + '/zms3.formulator.lib.jsoneditor.custom.js')
+    editor = obj.this.content.metaobj_manager.evalMetaobjAttr('zms3.formulator.lib','jsoneditor.custom.js',options={})
+    editor = str(editor) % (self.getLangDict(obj), obj.thisURLPath,
                        obj.this.REQUEST.get('lang'), obj.GoogleAPIKey, 
                        obj.options, self.mandatory_validators, obj.onReady,
                        obj.thisURLPath, obj.onChange)

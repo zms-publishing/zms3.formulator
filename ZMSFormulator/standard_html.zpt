@@ -1,29 +1,47 @@
 <!-- ZMSFormulator.standard_html -->
 
-<tal:block tal:define="global this options/zmscontext">
-<style>
-#editor_holder .checkbox {
-  line-height: normal;
-}
-#editor_holder h3 {
-  display: none;
-}
-#editor_holder label.control-label {
-  white-space: normal;
-}
-button {
-  font-family: FrutigerLTW02-45Light,Arial,Helvetica,sans-serif;
-}
-#editor_holder div[data-schemapath*="TEXTAREA"] label,
-#editor_holder div[data-schemapath*="TEXTAREA"] input {
-   display:none;
-}
-</style>
-<div tal:attributes="class python:this.REQUEST.get('tmpl','portal_or_oe')!='portal_or_oe' and 'col-lg-8 col-lg-offset-3 col-md-10 col-md-offset-1' or ''" tal:omit-tag="python:this.REQUEST.get('tmpl','portal_or_oe')=='subwebsite'">
-  <h1 tal:content="structure python:this.getTitle(request)" tal:condition="python:this.REQUEST.get('tmpl','portal_or_oe')!='subwebsite'">title</h1>
-  <p tal:condition="python:this.attr('attr_dc_description') and this.REQUEST.get('tmpl','portal_or_oe')!='subwebsite'" tal:content="python:this.attr('attr_dc_description')" class="lead">attr_dc_description</p>
-  <tal:block tal:content="structure python:this.getJSONEditor()"></tal:block>
-</div>
+<div class="ZMSFormulator" 
+	tal:define="global this options/zmscontext">
+	<style>
+		#editor_holder .checkbox {
+			line-height: normal;
+		}
+		#editor_holder h3 {
+			display: none;
+		}
+		#editor_holder label.control-label {
+			white-space: normal;
+		}
+		button {
+			font-family: FrutigerLTW02-45Light,Arial,Helvetica,sans-serif;
+		}
+		#editor_holder div[data-schemapath*="TEXTAREA"] label,
+		#editor_holder div[data-schemapath*="TEXTAREA"] input {
+			display:none;
+		}
+		#valid_indicator {
+			height: 50px;
+			line-height: 50px;
+			display: inline-block;
+			vertical-align: top;
+			font-weight: bold;
+		}
+		.row.has-error label,
+		.row.has-error input,
+		.row.has-error textarea {
+			color:red
+		} 
+		.row.has-error input,
+		.row.has-error textarea {
+			background-color:rgb(255 0 0 / 0.15);
+			border-color:red
+		}
+	</style>
+	<div tal:attributes="class python:this.REQUEST.get('tmpl','portal_or_oe')!='portal_or_oe' and 'col-lg-8 col-lg-offset-3 col-md-10 col-md-offset-1' or ''" tal:omit-tag="python:this.REQUEST.get('tmpl','portal_or_oe')=='subwebsite'">
+		<h1 tal:content="structure python:this.getTitle(request)" tal:condition="python:this.REQUEST.get('tmpl','portal_or_oe')!='subwebsite'">title</h1>
+		<p tal:condition="python:this.attr('attr_dc_description') and this.REQUEST.get('tmpl','portal_or_oe')!='subwebsite'" tal:content="python:this.attr('attr_dc_description')" class="lead">attr_dc_description</p>
+		<tal:block tal:content="structure python:this.getJSONEditor()"></tal:block>
+	</div>
 </tal:block>
 
 <!-- /ZMSFormulator.standard_html -->
